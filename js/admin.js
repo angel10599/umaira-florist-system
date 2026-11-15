@@ -1080,7 +1080,7 @@ class AdminApp {
     const userField = document.getElementById('admin-username');
     const passField = document.getElementById('admin-password');
     if (userField) userField.value = 'admin';
-    if (passField) passField.value = 'umaira2026';
+    if (passField) passField.value = '';
     const errAlert = document.getElementById('login-error-alert');
     if (errAlert) errAlert.classList.add('hidden');
   }

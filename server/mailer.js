@@ -303,9 +303,86 @@ async function sendVerificationOTP({ to, name, otp }) {
   return send({ to, subject, text, html });
 }
 
+/**
+ * Build order confirmation email HTML
+ */
+function buildOrderConfirmationEmailHtml({ name, orderNumber, fulfillment, date, time, paymentMethod, paymentMethodLabel, total, items, giftMessage }) {
+  const safeName = String(name || 'Customer').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const safeOrder = String(orderNumber || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const safeGift = giftMessage ? String(giftMessage).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])) : null;
+  const peso = (n) => '₱' + (Number(n) || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fulfillmentLabel = fulfillment === 'pickup' ? 'Store Pickup' : 'Delivery';
+
+  const itemRows = (items || []).map(item => {
+    const itemName = String(item.name || item.productName || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const qty = item.quantity || item.qty || 1;
+    const price = item.unitPrice || item.price || 0;
+    return `<tr><td style="padding:6px 0;font-size:12px;color:#302C2A;border-bottom:1px solid #F0EDE8;">${itemName}${item.isCustom ? ' <em style="color:#647D69;font-size:11px;">(Custom)</em>' : ''}</td><td style="padding:6px 0;font-size:12px;color:#55504C;text-align:center;border-bottom:1px solid #F0EDE8;">${qty}</td><td style="padding:6px 0;font-size:12px;color:#302C2A;text-align:right;border-bottom:1px solid #F0EDE8;">${peso(price * qty)}</td></tr>`;
+  }).join('');
+
+  const gcashNote = paymentMethod === 'GCash'
+    ? `<div style="background-color:#FFF9F5;border:1px solid #F0E6DE;border-radius:12px;padding:12px 16px;margin:20px 0;"><p style="margin:0;font-size:12px;color:#8C3D52;font-weight:600;">💳 Next Step: Submit Payment</p><p style="margin:6px 0 0;font-size:12px;color:#55504C;">Send <strong>${peso(total)}</strong> to our GCash account and upload your receipt from your order tracking page.</p></div>`
+    : '';
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Order Confirmation — Umaira Florist</title><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background-color:#F7FAF8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#302C2A;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#F7FAF8;padding:32px 16px;">
+    <tr><td align="center">
+      <table role="presentation" width="100%" style="max-width:540px;background-color:#FFFFFF;border:1px solid #E5ECE6;border-radius:24px;box-shadow:0 12px 32px rgba(48,44,42,0.06);overflow:hidden;">
+        <tr><td style="background-color:#FFF9F5;padding:36px 32px 24px;text-align:center;border-bottom:1px solid #E5ECE6;">
+          <span style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#647D69;display:block;margin-bottom:6px;">UMAIRA FLORIST ATELIER</span>
+          <h1 style="margin:0;font-family:Georgia,serif;font-size:24px;font-weight:700;color:#302C2A;">Order Confirmed</h1>
+          <p style="margin:6px 0 0;font-size:12px;color:#6E6864;">Thoughtfully arranged flowers &amp; bespoke bouquets · Manila</p>
+        </td></tr>
+        <tr><td style="padding:32px;">
+          <p style="margin:0 0 8px;font-size:14px;color:#302C2A;">Hello <strong>${safeName}</strong>,</p>
+          <p style="margin:0 0 20px;font-size:13px;line-height:1.6;color:#55504C;">Thank you for your order! We've received it and will begin preparing your arrangement. Here's a summary:</p>
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#F7FAF8;border:1px solid #E5ECE6;border-radius:14px;margin-bottom:20px;">
+            <tr><td style="padding:16px 20px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                <tr><td style="padding:5px 0;font-size:12px;color:#6E6864;width:42%;">Order Number</td><td style="padding:5px 0;font-size:12px;color:#302C2A;font-weight:700;">${safeOrder}</td></tr>
+                <tr><td style="padding:5px 0;font-size:12px;color:#6E6864;">Fulfillment</td><td style="padding:5px 0;font-size:12px;color:#302C2A;font-weight:600;">${fulfillmentLabel}</td></tr>
+                <tr><td style="padding:5px 0;font-size:12px;color:#6E6864;">Date &amp; Time</td><td style="padding:5px 0;font-size:12px;color:#302C2A;font-weight:600;">${String(date || '')} · ${String(time || '')}</td></tr>
+                <tr><td style="padding:5px 0;font-size:12px;color:#6E6864;">Payment</td><td style="padding:5px 0;font-size:12px;color:#302C2A;font-weight:600;">${String(paymentMethodLabel || paymentMethod || '')}</td></tr>
+                <tr><td style="padding:5px 0;font-size:12px;color:#6E6864;">Total</td><td style="padding:5px 0;font-size:13px;color:#302C2A;font-weight:700;">${peso(total)}</td></tr>
+              </table>
+            </td></tr>
+          </table>
+          ${itemRows ? `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom:20px;"><tr><th style="padding:0 0 6px;font-size:11px;font-weight:600;color:#6E6864;text-align:left;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid #E5ECE6;">Item</th><th style="padding:0 0 6px;font-size:11px;font-weight:600;color:#6E6864;text-align:center;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid #E5ECE6;">Qty</th><th style="padding:0 0 6px;font-size:11px;font-weight:600;color:#6E6864;text-align:right;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid #E5ECE6;">Amount</th></tr>${itemRows}</table>` : ''}
+          ${safeGift ? `<div style="background-color:#FFF9F5;border-left:3px solid #B76E79;padding:10px 14px;margin-bottom:20px;border-radius:0 8px 8px 0;"><p style="margin:0;font-size:12px;color:#55504C;font-style:italic;">"${safeGift}"</p><p style="margin:4px 0 0;font-size:10px;color:#9E9894;text-transform:uppercase;letter-spacing:1px;">Gift Message</p></div>` : ''}
+          ${gcashNote}
+          <p style="margin:0;font-size:12px;color:#6E6864;line-height:1.6;">Track your order at any time using your order number on our website.<br><strong>Warm regards,<br>Umaira Florist Atelier</strong></p>
+        </td></tr>
+        <tr><td style="background-color:#FFF9F5;padding:20px 32px;text-align:center;border-top:1px solid #E5ECE6;">
+          <p style="margin:0;font-size:11px;color:#6E6864;">&copy; 2026 Umaira Florist Atelier · BGC, Taguig &amp; Metro Manila, Philippines</p>
+          <p style="margin:4px 0 0;font-size:10px;color:#9E9894;">Handcrafted daily with fresh blooms. All rights reserved.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
+/**
+ * Send order confirmation email to the customer
+ */
+async function sendOrderConfirmation({ to, name, orderNumber, fulfillment, date, time, paymentMethod, paymentMethodLabel, total, items, giftMessage }) {
+  const subject = `Order Confirmed — ${orderNumber} · Umaira Florist`;
+  const peso = (n) => '₱' + (Number(n) || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fulfillmentLabel = fulfillment === 'pickup' ? 'Store Pickup' : 'Delivery';
+  const itemLines = (items || []).map(i => `  - ${i.name || i.productName || 'Item'} x${i.quantity || 1} — ${peso((i.unitPrice || i.price || 0) * (i.quantity || 1))}`).join('\n');
+  const text = `Hello ${name || 'Valued Customer'},\n\nThank you for your order!\n\nOrder Number: ${orderNumber}\nFulfillment: ${fulfillmentLabel}\nDate & Time: ${date || ''} · ${time || ''}\nPayment: ${paymentMethodLabel || paymentMethod || ''}\nTotal: ${peso(total)}\n\nItems:\n${itemLines}${giftMessage ? `\n\nGift Message: "${giftMessage}"` : ''}\n\nTrack your order using your order number on our website.\n\nWarm regards,\nUmaira Florist Atelier`;
+  const html = buildOrderConfirmationEmailHtml({ name, orderNumber, fulfillment, date, time, paymentMethod, paymentMethodLabel, total, items, giftMessage });
+  return send({ to, subject, text, html });
+}
+
 module.exports = {
   send,
   sendVerificationOTP,
   sendGoogleLoginNotification,
+  sendOrderConfirmation,
   isConfigured
 };

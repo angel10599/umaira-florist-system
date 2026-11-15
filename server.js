@@ -246,6 +246,18 @@ async function handleCreateOrder(req, res, body) {
     console.error('Failed to update remaining cart items:', cartErr);
   }
   sendJson(res, 201, summary(result.order));
+
+  // Fire-and-forget order confirmation email — never blocks or fails the response
+  if (mailer.isConfigured()) {
+    const o = result.order;
+    mailer.sendOrderConfirmation({
+      to: o.email, name: `${o.firstName || ''} ${o.lastName || ''}`.trim(),
+      orderNumber: o.orderNumber, fulfillment: o.fulfillment,
+      date: o.date, time: o.time,
+      paymentMethod: o.paymentMethod, paymentMethodLabel: rules.paymentMethodLabel(o.paymentMethod),
+      total: o.total, items: o.items || [], giftMessage: o.giftMessage || null
+    }).catch(e => console.error('[mail] order confirmation failed:', e.message));
+  }
 }
 function store_norm(n) { n = String(n).trim(); return n.startsWith('#') ? n : '#' + n; }
 const summary = (o, duplicate = false) => ({
