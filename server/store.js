@@ -492,6 +492,27 @@ function open(customDbOrPath) {
       .run(JSON.stringify({ synced: true, archived: archiveIds.length, at: t }), t);
   })();
 
+  // One-time migration: archive every inventory item NOT in the official 44-item allowlist.
+  // Fixes Render having extra seeded items beyond what inventory_archive_sync_v1 caught.
+  (function syncInventoryExactV1() {
+    const done = db.prepare("SELECT value_json FROM shop_settings WHERE key='inventory_exact_sync_v1'").get();
+    if (done) return;
+    const keepIds = [
+      'fil-babys-breath','fol-eucalyptus','fil-queen-annes-lace','fol-ruscus','fil-solidago','fil-statice','fil-waxflower',
+      'fl-chrysanthemum','fl-daisy','fl-gerbera-daisy','fl-hydrangea','fl-lisianthus','fl-phalaenopsis-orchid',
+      'fl-pink-carnation','fl-pink-peony','fl-pink-rose','fl-pink-tulip','fl-red-rose','fl-snapdragon',
+      'fl-stargazer-lily','fl-sunflower','fl-white-carnation','fl-white-lily','fl-white-peony','fl-white-rose','fl-white-tulip',
+      'crd-classic-floral','crd-elegant-botanical','crd-sentiment','crd-minimalist-ivory','crd-premium-plum','crd-romantic-blush',
+      'rbn-beige-jute','rbn-grosgrain','rbn-organza','rbn-satin','rbn-chiffon','rbn-velvet',
+      'wrp-black-film','wrp-floral-mesh','wrp-frosted','wrp-korean-matte','wrp-kraft','wrp-non-woven'
+    ];
+    const t = now();
+    db.prepare('UPDATE flowers SET archived=1, updated_at=? WHERE id NOT IN (' +
+      keepIds.map(() => '?').join(',') + ')').run(t, ...keepIds);
+    db.prepare(`INSERT OR IGNORE INTO shop_settings (key,value_json,updated_at) VALUES ('inventory_exact_sync_v1',?,?)`)
+      .run(JSON.stringify({ synced: true, kept: keepIds.length, at: t }), t);
+  })();
+
   // One-time migration: sync all 44 active inventory items with exact local data (names, prices, stock, availability).
   (function syncInventoryDataV1() {
     const done = db.prepare("SELECT value_json FROM shop_settings WHERE key='inventory_data_sync_v1'").get();
