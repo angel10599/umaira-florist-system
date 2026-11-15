@@ -475,6 +475,23 @@ function open(customDbOrPath) {
       .run(JSON.stringify({ synced: true, bouquets: keepIds.length, at: t }), t);
   })();
 
+  // One-time migration: archive the 13 inventory items that were archived locally but seeded active on Render.
+  (function syncInventoryArchiveV1() {
+    const done = db.prepare("SELECT value_json FROM shop_settings WHERE key='inventory_archive_sync_v1'").get();
+    if (done) return;
+    const archiveIds = [
+      'wrp-clear-cellophane','mat-stem-tape','mat-flower-sleeve','fol-italian-ruscus',
+      'wrp-korean-waterproof','fol-leatherleaf-fern','mat-delivery-box','wrp-pearlescent',
+      'wrp-premium-textured','wrp-premium-tissue','fol-silver-dollar-eucalyptus',
+      'wrp-blush-wrap','mat-floral-foam'
+    ];
+    const t = now();
+    db.prepare('UPDATE flowers SET archived=1, updated_at=? WHERE id IN (' +
+      archiveIds.map(() => '?').join(',') + ')').run(t, ...archiveIds);
+    db.prepare(`INSERT OR IGNORE INTO shop_settings (key,value_json,updated_at) VALUES ('inventory_archive_sync_v1',?,?)`)
+      .run(JSON.stringify({ synced: true, archived: archiveIds.length, at: t }), t);
+  })();
+
   // Products created before created_at existed: use the earliest recorded evidence — the catalog import time
   // for imported items, the first stock movement, or the last update. New products get the real time on insert.
   (function backfillCreatedAt() {

@@ -1,36 +1,5 @@
 {
-  "home": [
-    {
-      "id": "flr_1794707036402_85",
-      "src": "/image/backgound/image-removebg-preview%20(1).png",
-      "x": 100,
-      "y": 77,
-      "width": 240,
-      "rotation": 0,
-      "zIndex": 11,
-      "opacity": 0.65
-    },
-    {
-      "id": "flr_1794707201519_616",
-      "src": "/image/backgound/image-removebg-preview%20(14).png",
-      "x": 5,
-      "y": 100,
-      "width": 240,
-      "rotation": 0,
-      "zIndex": 12,
-      "opacity": 0.65
-    },
-    {
-      "id": "flr_1794707907185_966",
-      "src": "/image/backgound/image-removebg-preview%20(7).png",
-      "x": 86,
-      "y": 35,
-      "width": 233,
-      "rotation": 347,
-      "zIndex": 13,
-      "opacity": 0.65
-    }
-  ],
+  "home": [],
   "collections": [
     {
       "id": "flr_1794708638993_132",

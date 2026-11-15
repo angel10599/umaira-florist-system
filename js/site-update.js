@@ -1036,17 +1036,8 @@
   var BLANK_PAGE_CONFIGS = {
     home: {
       name: "Homepage",
-      corners: {
-        tl: '/image/backgound/image-removebg-preview%20(2).png',
-        tr: '/image/backgound/image-removebg-preview%20(1).png',
-        bl: '/image/backgound/image-removebg-preview%20(5).png',
-        br: '/image/backgound/image-removebg-preview%20(8).png'
-      },
-      flanks: [
-        { src: '/image/backgound/image-removebg-preview%20(7).png', cls: 'decor-side-hero-left' },
-        { src: '/image/backgound/image-removebg-preview%20(6).png', cls: 'decor-side-atelier-right' },
-        { src: '/image/backgound/image-removebg-preview%20(4).png', cls: 'decor-side-blooms-left' }
-      ],
+      corners: { tl: '', tr: '', bl: '', br: '' },
+      flanks: [],
       butterflies: []
     },
     account:      { name: "Account", corners: { tl: '', tr: '', bl: '', br: '' }, flanks: [], butterflies: [] },
