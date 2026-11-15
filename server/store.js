@@ -492,6 +492,69 @@ function open(customDbOrPath) {
       .run(JSON.stringify({ synced: true, archived: archiveIds.length, at: t }), t);
   })();
 
+  // One-time migration: sync all 44 active inventory items with exact local data (names, prices, stock, availability).
+  (function syncInventoryDataV1() {
+    const done = db.prepare("SELECT value_json FROM shop_settings WHERE key='inventory_data_sync_v1'").get();
+    if (done) return;
+    const t = now();
+    const upd = db.prepare(`UPDATE flowers SET
+      name=?, botanical_name=?, category=?, price=?, availability=?, stock_count=?,
+      description=?, color=?, unit_cost=?, low_stock_threshold=?, unit_of_measure=?,
+      item_type=?, style=?, supplier_id=?, archived=0, updated_at=?
+      WHERE id=?`);
+    const items = [
+      ['fil-babys-breath',"Baby's Breath",'Gypsophila paniculata','Fillers & Foliage',80,'available',100,'Abundant sprays of tiny starry white florets creating an airy ethereal mist.','#FFFFFF',35,20,'stems','filler',"Occasion: Valentine's Day, Sympathy",'sup-benguet'],
+      ['fol-eucalyptus','Eucalyptus','Eucalyptus cinerea','Fillers & Foliage',60,'available',100,'Aromatic silver-dollar eucalyptus stems with rounded matte blue-green foliage.','#6EE7B7',25,20,'stems','filler','Occasion: Sympathy',null],
+      ['fil-queen-annes-lace',"Queen Anne's Lace",'Daucus carota','Fillers & Foliage',70,'available',100,'Delicate white, lace-like flower clusters evoking romantic airy elegance.','#F8FAFC',30,10,'stems','filler','Airy Lace Filler','sup-manila-imports'],
+      ['fol-ruscus','Ruscus','Ruscus hypoglossum','Fillers & Foliage',55,'sold_out',0,'Glossy deep emerald Italian ruscus stems offering rich structure and contrast.','#15803D',22,10,'stems','foliage','Occasion: Anniversary',null],
+      ['fil-solidago','Solidago','Solidago canadensis','Fillers & Foliage',55,'available',100,'Golden-yellow filler flowers that add warmth, vibrancy, and meadow-like flair.','#FACC15',22,15,'stems','filler','Warm Meadow Filler','sup-manila-imports'],
+      ['fil-statice','Statice','Limonium sinuatum','Fillers & Foliage',60,'available',100,'Small clustered flowers commonly used as colorful, long-lasting fillers.','#818CF8',25,15,'stems','filler','Clustered Filler','sup-benguet'],
+      ['fil-waxflower','Waxflower','Chamelaucium uncinatum','Fillers & Foliage',65,'available',100,'Tiny decorative flowers that add delicate texture and sweet botanical fragrance.','#F472B6',28,15,'stems','filler','Textured Filler','sup-benguet'],
+      ['fl-chrysanthemum','Chrysanthemum','Chrysanthemum morifolium','Fresh Flowers',70,'available',100,'Multi-petal highland button mum with warm golden hues and exceptional longevity.','#F59E0B',32,12,'stems','flower','Occasion: Birthday','sup-benguet'],
+      ['fl-daisy','Daisy','Bellis perennis','Fresh Flowers',65,'available',100,'Sweet meadow daisy with pristine white ray petals and sunny golden center.','#FEF08A',30,12,'stems','flower','Occasion: Birthday, Graduation','sup-benguet'],
+      ['fl-gerbera-daisy','Gerbera Daisy','Gerbera jamesonii','Fresh Flowers',90,'available',100,'Large, bold daisy flower with vivid orange and coral petals, radiating infectious cheer.','#FB923C',40,10,'stems','flower','Occasion: Birthday, Graduation','sup-manila-imports'],
+      ['fl-hydrangea','Hydrangea','Hydrangea macrophylla','Fresh Flowers',220,'available',100,'Voluminous cloud-like floral globe with delicate azure and lilac florets.','#60A5FA',95,6,'stems','flower','Occasion: ','sup-manila-imports'],
+      ['fl-lisianthus','Lisianthus','Eustoma russellianum','Fresh Flowers',130,'available',50,'Delicate bell-shaped blooms with ruffled rose-like petal edges in purple and blush.','#A855F7',60,8,'stems','flower',"Occasion: Valentine's Day, Anniversary",null],
+      ['fl-phalaenopsis-orchid','Phalaenopsis Orchid','Phalaenopsis aphrodite','Fresh Flowers',250,'available',100,'Exotic moth orchid spray with cascading porcelain blooms of remarkable grace.','#C084FC',110,5,'stems','flower','Occasion: Anniversary','sup-benguet'],
+      ['fl-pink-carnation','Pink Carnation','Dianthus caryophyllus (Pink)','Fresh Flowers',75,'available',100,'Ruffled blush pink carnation bloom with sweet clove-like fragrance and resilient vase life.','#F9A8D4',35,10,'stems','flower','Occasion: ','sup-benguet'],
+      ['fl-pink-peony','Pink Peony','Paeonia lactiflora (Pink)','Fresh Flowers',280,'available',100,'Luxuriously dense ruffled peony bloom with intoxicating soft floral perfume.','#F472B6',130,5,'stems','flower','Occasion: Anniversary','sup-manila-imports'],
+      ['fl-pink-rose','Pink Rose','Rosa grandiflora (Pink)','Fresh Flowers',110,'available',100,'Graceful long-stem pastel pink rose with velvety petals and gentle floral fragrance.','#FCD6E9',50,10,'stems','flower',"Occasion: Valentine's Day, Anniversary",'sup-manila-imports'],
+      ['fl-pink-tulip','Pink Tulip','Tulipa gesneriana (Pink)','Fresh Flowers',160,'available',100,'Fresh elegant pink tulip stem with clean lines and smooth satin finish.','#F472B6',75,8,'stems','flower',"Occasion: Valentine's Day, Anniversary",'sup-manila-imports'],
+      ['fl-red-rose','Red Rose','Rosa grandiflora (Red)','Fresh Flowers',120,'available',100,'Classic velvety crimson rose stem expressing timeless passion and devotion.','#DC2626',55,10,'stems','flower',"Occasion: Valentine's Day, Anniversary",'sup-benguet'],
+      ['fl-snapdragon','Snapdragon','Antirrhinum majus','Fresh Flowers',120,'available',100,'Architectural vertical flower spike with dense tiers of vibrant dragon-mouth florets.','#F43F5E',55,8,'stems','flower','Occasion: Birthday, Graduation','sup-benguet'],
+      ['fl-stargazer-lily','Stargazer Lily','Lilium orientalis','Fresh Flowers',180,'available',100,'Dramatic oriental lily bloom with outward-facing deep pink petals and sweet exotic perfume.','#EC4899',80,6,'stems','flower','Occasion: Sympathy','sup-benguet'],
+      ['fl-sunflower','Sunflower','Helianthus annuus','Fresh Flowers',150,'available',100,'Vibrant golden yellow highland sunflower with rich brown center disc.','#EAB308',65,8,'stems','flower','Occasion: Birthday, Graduation','sup-benguet'],
+      ['fl-white-carnation','White Carnation','Dianthus caryophyllus (White)','Fresh Flowers',75,'available',100,'Fluffy white carnation bloom signifying sweet affection and pure good luck.','#F8FAFC',35,10,'stems','flower','Occasion: ','sup-benguet'],
+      ['fl-white-lily','White Lily','Lilium longiflorum','Fresh Flowers',185,'available',100,'Majestic trumpet-shaped white lily expressing peace, majesty, and devotion.','#FFFFFF',80,6,'stems','flower','Occasion: Sympathy','sup-davao-foliage'],
+      ['fl-white-peony','White Peony','Paeonia lactiflora (White)','Fresh Flowers',280,'available',100,'Opulent multi-petaled snowy white peony representing prosperity and romance.','#FFFFFF',130,5,'stems','flower','Occasion: Anniversary','sup-manila-imports'],
+      ['fl-white-rose','White Rose','Rosa grandiflora (White)','Fresh Flowers',115,'available',100,'Pristine porcelain white rose stem conveying reverence, purity, and sophistication.','#FFFFFF',50,10,'stems','flower','Occasion: Sympathy','sup-benguet'],
+      ['fl-white-tulip','White Tulip','Tulipa gesneriana (White)','Fresh Flowers',160,'available',100,'Crisp white tulip bloom symbolizing forgiveness, elegance, and new beginnings.','#F8FAFC',75,8,'stems','flower','Occasion: Anniversary','sup-manila-imports'],
+      ['crd-classic-floral','Classic Floral Card','','Greeting Cards',35,'available',100,'Artisan greeting card with classic botanical floral foil border and luxury envelope.','#F43F5E',10,50,'cards','card','Classic Floral Border',null],
+      ['crd-elegant-botanical','Elegant Botanical Card','','Greeting Cards',35,'available',100,'Modern botanical card pressed with delicate greenery illustrations and premium texture.','#BBF7D0',10,50,'cards','card','Elegant Botanical',null],
+      ['crd-sentiment','Gift Sentiment Greeting Card','','Greeting Cards',35,'available',100,'Letterpress heavy cotton card stock with embossed gold foil Umaira monogram.','#FFF9FA',10,50,'cards','card','Handwritten Sentiment',null],
+      ['crd-minimalist-ivory','Minimalist Ivory Card','','Greeting Cards',35,'available',100,'Clean minimalist heavy ivory cardstock for subtle, refined, heartfelt handwritten notes.','#FEF3C7',10,50,'cards','card','Minimalist Ivory',null],
+      ['crd-premium-plum','Premium Plum Card','','Greeting Cards',45,'available',98,'Deep velvet plum card with gold foil Umaira signature emblem and embossed keepsake sleeve.','#4C0519',15,50,'cards','card','Signature Velvet Plum',null],
+      ['crd-romantic-blush','Romantic Blush Card','','Greeting Cards',35,'available',100,'Soft blush card with warm embossing designed for heartfelt anniversary and romance notes.','#FBCFE8',10,50,'cards','card','Romantic Blush',null],
+      ['rbn-beige-jute','Beige Jute Ribbon','','Ribbons',40,'available',100,'Textured natural woven jute ribbon for organic and bohemian bouquets.','#D4C3A3',15,20,'meters','ribbon','[{"name":"Natural Jute","hex":"#D4C3A3"}]',null],
+      ['rbn-grosgrain','Grosgrain Ribbon','','Ribbons',50,'available',100,'Durable ribbed grosgrain band providing neat structured bow accents.','#3B82F6',20,15,'meters','ribbon','[{"name":"Cream Beige","hex":"#E8DEC8"},{"name":"Blush Rose","hex":"#E49AB0"},{"name":"Dusty Navy","hex":"#34495E"},{"name":"Forest Pine","hex":"#2D4B39"}]',null],
+      ['rbn-organza','Organza Ribbon','','Ribbons',35,'available',100,'Translucent, ethereal woven organza ribbon with subtle shimmer and featherweight drape.','#F472B6',15,20,'meters','ribbon','[{"name":"Sheer White","hex":"#FFFFFF"},{"name":"Soft Peach","hex":"#FBD5C4"},{"name":"Lavender Mist","hex":"#E6E6FA"},{"name":"Golden Shimmer","hex":"#F3E5AB"}]',null],
+      ['rbn-satin','Satin Ribbon','','Ribbons',45,'available',100,'Double-face lustrous silky satin ribbon tied into flowing formal bows.','#C7356D',18,20,'meters','ribbon','[{"name":"Rose Pink","hex":"#C7356D"},{"name":"Champagne Gold","hex":"#D4AF37"},{"name":"Pearl White","hex":"#FAFAFA"},{"name":"Deep Plum","hex":"#4A154B"},{"name":"Burgundy Wine","hex":"#800020"}]',null],
+      ['rbn-chiffon','Sheer Chiffon Ribbon','','Ribbons',55,'available',100,'Raw-edge frayed silk chiffon ribbon that drifts softly in natural breezes.','#FBCFE8',22,15,'meters','ribbon','[{"name":"Soft Rosewater","hex":"#FBCFE8"},{"name":"Ivory Cream","hex":"#FDFBF7"},{"name":"Sage Whisper","hex":"#CBD5C0"},{"name":"Smoky Mauve","hex":"#B398A8"}]',null],
+      ['rbn-velvet','Velvet Ribbon','','Ribbons',65,'available',100,'Plush velvet ribbon imparting rich tactile warmth to high-end bespoke bouquets.','#831843',28,15,'meters','ribbon','[{"name":"Royal Plum","hex":"#4A154B"},{"name":"Deep Wine","hex":"#831843"},{"name":"Vintage Moss","hex":"#556B2F"},{"name":"Rose Quartz","hex":"#C08081"}]',null],
+      ['wrp-black-film','Black Minimalist Wrap','','Wrapping Materials',80,'available',100,'Dramatic matte black film providing high-contrast editorial backdrops for vibrant blooms.','#1C1917',32,10,'sheets','wrapping','[{"name":"Midnight Noir","hex":"#1C1917"}]',null],
+      ['wrp-floral-mesh','Floral Mesh Wrapping','','Wrapping Materials',65,'available',100,'Open-weave decorative floral mesh providing multidimensional texture and modern glamour.','#E8D3A2',25,15,'sheets','wrapping','[{"name":"Golden Champagne","hex":"#E8D3A2"},{"name":"Silver Frost","hex":"#E5E7EB"},{"name":"Rose Gold","hex":"#E0A899"},{"name":"Noir Mesh","hex":"#262626"}]',null],
+      ['wrp-frosted','Frosted Translucent Wrapping','','Wrapping Materials',85,'available',100,'Translucent semi-opaque frosted film diffusing floral colors with ethereal softness.','#E2E8F0',35,15,'sheets','wrapping','[{"name":"Opal White","hex":"#F3F4F6"},{"name":"Muted Rose","hex":"#F7D6E0"},{"name":"Frosted Charcoal","hex":"#4B5563"}]',null],
+      ['wrp-korean-matte','Korean Matte Wrapping Paper','','Wrapping Materials',75,'available',100,'Premium dual-sided waterproof matte floral wrap with silky petal finish.','#FCD6E9',30,15,'sheets','wrapping','[{"name":"Blush Pink","hex":"#FCD6E9"},{"name":"Pearl Cream","hex":"#FBF8F1"},{"name":"Warm Sand","hex":"#E6DAC8"},{"name":"Midnight Noir","hex":"#2D2228"},{"name":"Sage Mist","hex":"#9CAF88"}]',null],
+      ['wrp-kraft','Kraft Paper','','Wrapping Materials',50,'available',100,'Eco-friendly natural fibrous kraft wrapping for rustic artisanal presentations.','#C2A382',20,15,'sheets','wrapping','[{"name":"Natural Brown","hex":"#C2A382"},{"name":"Vintage Oatmeal","hex":"#D9C9B4"},{"name":"Dark Coffee","hex":"#5C4033"}]',null],
+      ['wrp-non-woven','Non-Woven Floral Wrapping','','Wrapping Materials',60,'available',100,'Supple, soft-touch fabric-like non-woven floral wrapping that folds into sculptured pleats.','#D8A4B8',24,15,'sheets','wrapping','[{"name":"Dusty Blush","hex":"#D8A4B8"},{"name":"Forest Moss","hex":"#4A5844"},{"name":"Warm Mocha","hex":"#7E6351"}]',null],
+    ];
+    for (const [id, name, botanical_name, category, price, availability, stock_count, description, color, unit_cost, low_stock_threshold, unit_of_measure, item_type, style, supplier_id] of items) {
+      upd.run(name, botanical_name, category, price, availability, stock_count, description, color, unit_cost, low_stock_threshold, unit_of_measure, item_type, style, supplier_id, t, id);
+    }
+    db.prepare(`INSERT OR IGNORE INTO shop_settings (key,value_json,updated_at) VALUES ('inventory_data_sync_v1',?,?)`)
+      .run(JSON.stringify({ synced: true, items: items.length, at: t }), t);
+  })();
+
   // Products created before created_at existed: use the earliest recorded evidence — the catalog import time
   // for imported items, the first stock movement, or the last update. New products get the real time on insert.
   (function backfillCreatedAt() {
