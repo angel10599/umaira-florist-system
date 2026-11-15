@@ -1143,922 +1143,151 @@ const PHASE2_MATERIALS = [
 // 2 bouquets per flower type across all 16 flower types
 // Each with structured ingredients, formula, sample prices, occasion tags, and empty image
 const PHASE2_BOUQUETS = [
-  // ---------------------------------------------------- 1. ROSES
   {
-    id: 'bq-blushing-romance',
-    name: 'Blushing Romance',
+    id: 'bq-blue-moon-elegance',
+    name: 'Blue Moon Elegance',
     primaryFlower: 'Roses',
     category: 'Ready-Made Bouquets',
-    price: 1950,
-    occasion: "Valentine's Day",
-    occasions: ["Valentine's Day"],
-    description: 'A dreamy romance arrangement featuring soft blush pink roses paired with delicate lisianthus, cloud-like baby\'s breath, and silver dollar eucalyptus.',
-    formula: '10× Pink Rose, 4× Lisianthus, 2× Baby\'s Breath, 3× Eucalyptus, Korean Matte Wrap, Satin Ribbon',
-    image: '',
-    availability: 'sold_out',
+    price: 2800,
+    occasion: "Birthday, Anniversary, Valentine's Day, Mother's Day, Graduation, Congratulations, Sympathy, Thank You",
+    occasions: ["Birthday", "Anniversary", "Valentine's Day", "Mother's Day", "Graduation", "Congratulations", "Sympathy", "Thank You"],
+    description: "An elegant blend of powder blue and ivory roses with delicate white fillers, wrapped in soft blue with a peach ribbon accent.",
+    formula: "5\u00d7 White Roses, 5\u00d7 Powder Blue Roses, 3\u00d7 Baby's Breath, 2\u00d7 Eucalyptus, 2\u00d7 Silver Dollar Foliage, Light Blue Korean Matte Wrap, Frosted Translucent Wrap, White Lace Ribbon, Peach Satin Ribbon.",
+    image: '/assets/uploads/5f599379142888fe881f.jpg',
+    availability: 'available',
     specs: {
-      primaryFlower: 'Roses',
-      flowerTypes: ['Roses', 'Lisianthus', 'Baby\'s Breath', 'Eucalyptus'],
-      mainFlowers: [
-        { id: 'fl-pink-rose', name: 'Pink Rose', quantity: 10, type: 'Roses' },
-        { id: 'fl-lisianthus', name: 'Lisianthus', quantity: 4, type: 'Lisianthus' },
-        { id: 'fil-babys-breath', name: 'Baby\'s Breath', quantity: 2, type: 'Baby\'s Breath' },
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 3, type: 'Eucalyptus' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-satin', name: 'Satin Ribbon', quantity: 1 }
-      ],
-      occasions: ["Valentine's Day"],
-      }
+      occasions: ["Birthday", "Anniversary", "Valentine's Day", "Mother's Day", "Graduation", "Congratulations", "Sympathy", "Thank You"],
+      stockCount: 100,
+      unitOfMeasure: 'bouquets'
+    }
   },
   {
-    id: 'bq-crimson-devotion',
-    name: 'Crimson Devotion',
-    primaryFlower: 'Roses',
-    category: 'Ready-Made Bouquets',
-    price: 2500,
-    occasion: "Valentine's Day, Anniversary",
-    occasions: ["Valentine's Day","Anniversary"],
-    description: 'An intense statement of classic devotion pairing velvety deep red roses with porcelain white roses, airy baby\'s breath, and deep green Italian ruscus.',
-    formula: '12× Red Rose, 6× White Rose, 2× Baby\'s Breath, 4× Ruscus, Korean Matte Wrap, Satin Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Roses',
-      flowerTypes: ['Roses', 'Baby\'s Breath', 'Ruscus'],
-      mainFlowers: [
-        { id: 'fl-red-rose', name: 'Red Rose', quantity: 12, type: 'Roses' },
-        { id: 'fl-white-rose', name: 'White Rose', quantity: 6, type: 'Roses' },
-        { id: 'fil-babys-breath', name: 'Baby\'s Breath', quantity: 2, type: 'Baby\'s Breath' },
-        { id: 'fol-ruscus', name: 'Ruscus', quantity: 4, type: 'Ruscus' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-satin', name: 'Satin Ribbon', quantity: 1 }
-      ],
-      occasions: ["Valentine's Day","Anniversary"],
-      }
-  },
-
-  // ---------------------------------------------------- 2. TULIPS
-  {
-    id: 'bq-springtime-whisper',
-    name: 'Springtime Whisper',
-    primaryFlower: 'Tulips',
-    category: 'Ready-Made Bouquets',
-    price: 2300,
-    occasion: "",
-    occasions: [],
-    description: 'Fresh Dutch tulips nestled among cheerful daisies and soft lisianthus with aromatic eucalyptus, bringing the gentle lightness of spring.',
-    formula: '8× Pink Tulip, 5× Daisy, 4× Lisianthus, 3× Eucalyptus, Korean Matte Wrap, French Chiffon Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Tulips',
-      flowerTypes: ['Tulips', 'Daisies', 'Lisianthus', 'Eucalyptus'],
-      mainFlowers: [
-        { id: 'fl-pink-tulip', name: 'Pink Tulip', quantity: 8, type: 'Tulips' },
-        { id: 'fl-daisy', name: 'Daisy', quantity: 5, type: 'Daisies' },
-        { id: 'fl-lisianthus', name: 'Lisianthus', quantity: 4, type: 'Lisianthus' },
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 3, type: 'Eucalyptus' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-chiffon', name: 'French Chiffon Ribbon', quantity: 1 }
-      ],
-      occasions: [],
-      }
-  },
-  {
-    id: 'bq-tulip-serenade',
-    name: 'Tulip Serenade',
-    primaryFlower: 'Tulips',
-    category: 'Ready-Made Bouquets',
-    price: 3450,
-    occasion: "Valentine's Day, Anniversary",
-    occasions: ["Valentine's Day","Anniversary"],
-    description: 'A graceful harmony of pristine white and blushing pink tulips accented with delicate baby\'s breath for timeless romantic celebrations.',
-    formula: '10× Pink Tulip, 10× White Tulip, 3× Baby\'s Breath, Korean Matte Wrap, Satin Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Tulips',
-      flowerTypes: ['Tulips', 'Baby\'s Breath'],
-      mainFlowers: [
-        { id: 'fl-pink-tulip', name: 'Pink Tulip', quantity: 10, type: 'Tulips' },
-        { id: 'fl-white-tulip', name: 'White Tulip', quantity: 10, type: 'Tulips' },
-        { id: 'fil-babys-breath', name: 'Baby\'s Breath', quantity: 3, type: 'Baby\'s Breath' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-satin', name: 'Satin Ribbon', quantity: 1 }
-      ],
-      occasions: ["Valentine's Day","Anniversary"],
-      }
-  },
-
-  // ---------------------------------------------------- 3. CARNATIONS
-  {
-    id: 'bq-sweet-affection',
-    name: 'Sweet Affection',
-    primaryFlower: 'Carnations',
-    category: 'Ready-Made Bouquets',
-    price: 1350,
-    occasion: "",
-    occasions: [],
-    description: 'Ruffled pastel carnations complemented by blushing roses and wisps of baby\'s breath, embodying tender and heartfelt everyday affection.',
-    formula: '8× Pink Carnation, 4× Pink Rose, 2× Baby\'s Breath, 3× Ruscus, Natural Kraft Paper, Beige Jute Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Carnations',
-      flowerTypes: ['Carnations', 'Roses', 'Baby\'s Breath', 'Ruscus'],
-      mainFlowers: [
-        { id: 'fl-pink-carnation', name: 'Pink Carnation', quantity: 8, type: 'Carnations' },
-        { id: 'fl-pink-rose', name: 'Pink Rose', quantity: 4, type: 'Roses' },
-        { id: 'fil-babys-breath', name: 'Baby\'s Breath', quantity: 2, type: 'Baby\'s Breath' },
-        { id: 'fol-ruscus', name: 'Ruscus', quantity: 3, type: 'Ruscus' }
-      ],
-      materials: [
-        { id: 'wrp-kraft', name: 'Natural Kraft Paper', quantity: 1 },
-        { id: 'rbn-beige-jute', name: 'Beige Jute Ribbon', quantity: 1 }
-      ],
-      occasions: [],
-      }
-  },
-  {
-    id: 'bq-carnation-charm',
-    name: 'Carnation Charm',
-    primaryFlower: 'Carnations',
-    category: 'Ready-Made Bouquets',
-    price: 1300,
-    occasion: "",
-    occasions: [],
-    description: 'A charming blend of two-tone carnations framed by fragrant silver eucalyptus stems, perfect for simple moments of gratitude.',
-    formula: '8× Pink Carnation, 6× White Carnation, 4× Eucalyptus, Korean Matte Wrap, Satin Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Carnations',
-      flowerTypes: ['Carnations', 'Eucalyptus'],
-      mainFlowers: [
-        { id: 'fl-pink-carnation', name: 'Pink Carnation', quantity: 8, type: 'Carnations' },
-        { id: 'fl-white-carnation', name: 'White Carnation', quantity: 6, type: 'Carnations' },
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 4, type: 'Eucalyptus' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-satin', name: 'Satin Ribbon', quantity: 1 }
-      ],
-      occasions: [],
-      }
-  },
-
-  // ---------------------------------------------------- 4. GERBERAS
-  {
-    id: 'bq-sunshine-smiles',
-    name: 'Sunshine Smiles',
-    primaryFlower: 'Gerberas',
-    category: 'Ready-Made Bouquets',
-    price: 1550,
-    occasion: "Birthday, Graduation",
-    occasions: ["Birthday","Graduation"],
-    description: 'Vibrant gerbera daisies and cheerful sunflowers bursting with radiant energy to brighten birthdays and celebrate proud milestones.',
-    formula: '6× Gerbera Daisy, 3× Sunflower, 6× Daisy, 3× Eucalyptus, Natural Kraft Paper, Beige Jute Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Gerberas',
-      flowerTypes: ['Gerberas', 'Sunflowers', 'Daisies', 'Eucalyptus'],
-      mainFlowers: [
-        { id: 'fl-gerbera-daisy', name: 'Gerbera Daisy', quantity: 6, type: 'Gerberas' },
-        { id: 'fl-sunflower', name: 'Sunflower', quantity: 3, type: 'Sunflowers' },
-        { id: 'fl-daisy', name: 'Daisy', quantity: 6, type: 'Daisies' },
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 3, type: 'Eucalyptus' }
-      ],
-      materials: [
-        { id: 'wrp-kraft', name: 'Natural Kraft Paper', quantity: 1 },
-        { id: 'rbn-beige-jute', name: 'Beige Jute Ribbon', quantity: 1 }
-      ],
-      occasions: ["Birthday","Graduation"],
-      }
-  },
-  {
-    id: 'bq-pastel-happiness',
-    name: 'Pastel Happiness',
-    primaryFlower: 'Gerberas',
-    category: 'Ready-Made Bouquets',
-    price: 1650,
-    occasion: "Birthday",
-    occasions: ["Birthday"],
-    description: 'A delightfully joyful composition of pastel gerberas, ruffled carnations, and lisianthus wrapped in modern Korean matte blush paper.',
-    formula: '6× Gerbera Daisy, 6× Pink Carnation, 4× Lisianthus, 2× Baby\'s Breath, Korean Matte Wrap, Satin Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Gerberas',
-      flowerTypes: ['Gerberas', 'Carnations', 'Lisianthus', 'Baby\'s Breath'],
-      mainFlowers: [
-        { id: 'fl-gerbera-daisy', name: 'Gerbera Daisy', quantity: 6, type: 'Gerberas' },
-        { id: 'fl-pink-carnation', name: 'Pink Carnation', quantity: 6, type: 'Carnations' },
-        { id: 'fl-lisianthus', name: 'Lisianthus', quantity: 4, type: 'Lisianthus' },
-        { id: 'fil-babys-breath', name: 'Baby\'s Breath', quantity: 2, type: 'Baby\'s Breath' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-satin', name: 'Satin Ribbon', quantity: 1 }
-      ],
-      occasions: ["Birthday"],
-      }
-  },
-
-  // ---------------------------------------------------- 5. SUNFLOWERS
-  {
-    id: 'bq-golden-hour',
-    name: 'Golden Hour',
-    primaryFlower: 'Sunflowers',
-    category: 'Ready-Made Bouquets',
-    price: 1700,
-    occasion: "Birthday, Graduation",
-    occasions: ["Birthday","Graduation"],
-    description: 'Warm, golden-hued highland sunflowers paired with rich bronze chrysanthemums and fiery gerberas capturing the warmth of sunset.',
-    formula: '5× Sunflower, 6× Chrysanthemum, 4× Gerbera Daisy, 3× Ruscus, Natural Kraft Paper, Grosgrain Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Sunflowers',
-      flowerTypes: ['Sunflowers', 'Chrysanthemums', 'Gerberas', 'Ruscus'],
-      mainFlowers: [
-        { id: 'fl-sunflower', name: 'Sunflower', quantity: 5, type: 'Sunflowers' },
-        { id: 'fl-chrysanthemum', name: 'Chrysanthemum', quantity: 6, type: 'Chrysanthemums' },
-        { id: 'fl-gerbera-daisy', name: 'Gerbera Daisy', quantity: 4, type: 'Gerberas' },
-        { id: 'fol-ruscus', name: 'Ruscus', quantity: 3, type: 'Ruscus' }
-      ],
-      materials: [
-        { id: 'wrp-kraft', name: 'Natural Kraft Paper', quantity: 1 },
-        { id: 'rbn-grosgrain', name: 'Grosgrain Ribbon', quantity: 1 }
-      ],
-      occasions: ["Birthday","Graduation"],
-      }
-  },
-  {
-    id: 'bq-sunshine-embrace',
-    name: 'Sunshine Embrace',
-    primaryFlower: 'Sunflowers',
-    category: 'Ready-Made Bouquets',
-    price: 1600,
-    occasion: "Graduation",
-    occasions: ["Graduation"],
-    description: 'Sun-drenched sunflowers surrounded by meadow daisies, airy baby\'s breath, and eucalyptus for enthusiastic graduation cheer.',
-    formula: '5× Sunflower, 6× Daisy, 3× Baby\'s Breath, 4× Eucalyptus, Korean Matte Wrap, Beige Jute Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Sunflowers',
-      flowerTypes: ['Sunflowers', 'Daisies', 'Baby\'s Breath', 'Eucalyptus'],
-      mainFlowers: [
-        { id: 'fl-sunflower', name: 'Sunflower', quantity: 5, type: 'Sunflowers' },
-        { id: 'fl-daisy', name: 'Daisy', quantity: 6, type: 'Daisies' },
-        { id: 'fil-babys-breath', name: 'Baby\'s Breath', quantity: 3, type: 'Baby\'s Breath' },
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 4, type: 'Eucalyptus' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-beige-jute', name: 'Beige Jute Ribbon', quantity: 1 }
-      ],
-      occasions: ["Graduation"],
-      }
-  },
-
-  // ---------------------------------------------------- 6. LILIES
-  {
-    id: 'bq-lily-elegance',
-    name: 'Lily Elegance',
-    primaryFlower: 'Lilies',
-    category: 'Ready-Made Bouquets',
-    price: 2150,
-    occasion: "Sympathy",
-    occasions: ["Sympathy"],
-    description: 'Regal stargazer lilies accompanied by pristine white roses and purple lisianthus in frosted translucent wrap for solemn or formal occasions.',
-    formula: '4× Stargazer Lily, 6× White Rose, 4× Lisianthus, 4× Eucalyptus, Luxury Frosted Film, Satin Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Lilies',
-      flowerTypes: ['Lilies', 'Roses', 'Lisianthus', 'Eucalyptus'],
-      mainFlowers: [
-        { id: 'fl-stargazer-lily', name: 'Stargazer Lily', quantity: 4, type: 'Lilies' },
-        { id: 'fl-white-rose', name: 'White Rose', quantity: 6, type: 'Roses' },
-        { id: 'fl-lisianthus', name: 'Lisianthus', quantity: 4, type: 'Lisianthus' },
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 4, type: 'Eucalyptus' }
-      ],
-      materials: [
-        { id: 'wrp-frosted', name: 'Luxury Frosted Film', quantity: 1 },
-        { id: 'rbn-satin', name: 'Satin Ribbon', quantity: 1 }
-      ],
-      occasions: ["Sympathy"],
-      }
-  },
-  {
-    id: 'bq-pure-serenity',
-    name: 'Pure Serenity',
-    primaryFlower: 'Lilies',
-    category: 'Ready-Made Bouquets',
-    price: 2300,
-    occasion: "Sympathy",
-    occasions: ["Sympathy"],
-    description: 'An exquisite all-white arrangement of oriental lilies, snowy roses, and Italian ruscus radiating peace, honor, and purity.',
-    formula: '5× White Lily, 8× White Rose, 3× Baby\'s Breath, 4× Ruscus, Luxury Frosted Film, French Chiffon Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Lilies',
-      flowerTypes: ['Lilies', 'Roses', 'Baby\'s Breath', 'Ruscus'],
-      mainFlowers: [
-        { id: 'fl-white-lily', name: 'White Lily', quantity: 5, type: 'Lilies' },
-        { id: 'fl-white-rose', name: 'White Rose', quantity: 8, type: 'Roses' },
-        { id: 'fil-babys-breath', name: 'Baby\'s Breath', quantity: 3, type: 'Baby\'s Breath' },
-        { id: 'fol-ruscus', name: 'Ruscus', quantity: 4, type: 'Ruscus' }
-      ],
-      materials: [
-        { id: 'wrp-frosted', name: 'Luxury Frosted Film', quantity: 1 },
-        { id: 'rbn-chiffon', name: 'French Chiffon Ribbon', quantity: 1 }
-      ],
-      occasions: ["Sympathy"],
-      }
-  },
-
-  // ---------------------------------------------------- 7. ORCHIDS
-  {
-    id: 'bq-orchid-grace',
-    name: 'Orchid Grace',
-    primaryFlower: 'Orchids',
-    category: 'Ready-Made Bouquets',
-    price: 1900,
-    occasion: "Anniversary, Sympathy",
-    occasions: ["Anniversary","Sympathy"],
-    description: 'Opulent phalaenopsis orchid stems arching gracefully over sky-blue hydrangeas and violet lisianthus for elevated luxury gifting.',
-    formula: '3× Phalaenopsis Orchid, 2× Hydrangea, 4× Lisianthus, 3× Ruscus, Luxury Frosted Film, Velvet Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Orchids',
-      flowerTypes: ['Orchids', 'Hydrangeas', 'Lisianthus', 'Ruscus'],
-      mainFlowers: [
-        { id: 'fl-phalaenopsis-orchid', name: 'Phalaenopsis Orchid', quantity: 3, type: 'Orchids' },
-        { id: 'fl-hydrangea', name: 'Hydrangea', quantity: 2, type: 'Hydrangeas' },
-        { id: 'fl-lisianthus', name: 'Lisianthus', quantity: 4, type: 'Lisianthus' },
-        { id: 'fol-ruscus', name: 'Ruscus', quantity: 3, type: 'Ruscus' }
-      ],
-      materials: [
-        { id: 'wrp-frosted', name: 'Luxury Frosted Film', quantity: 1 },
-        { id: 'rbn-velvet', name: 'Velvet Ribbon', quantity: 1 }
-      ],
-      occasions: ["Anniversary","Sympathy"],
-      }
-  },
-  {
-    id: 'bq-enchanted-orchid',
-    name: 'Enchanted Orchid',
-    primaryFlower: 'Orchids',
-    category: 'Ready-Made Bouquets',
-    price: 2100,
-    occasion: "Anniversary",
-    occasions: ["Anniversary"],
-    description: 'Breathtaking exotic orchids layered with long-stem blush roses and eucalyptus, designed for signature executive and milestone gifting.',
-    formula: '4× Phalaenopsis Orchid, 8× Pink Rose, 4× Eucalyptus, Korean Matte Wrap, Velvet Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Orchids',
-      flowerTypes: ['Orchids', 'Roses', 'Eucalyptus'],
-      mainFlowers: [
-        { id: 'fl-phalaenopsis-orchid', name: 'Phalaenopsis Orchid', quantity: 4, type: 'Orchids' },
-        { id: 'fl-pink-rose', name: 'Pink Rose', quantity: 8, type: 'Roses' },
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 4, type: 'Eucalyptus' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-velvet', name: 'Velvet Ribbon', quantity: 1 }
-      ],
-      occasions: ["Anniversary"],
-      }
-  },
-
-  // ---------------------------------------------------- 8. PEONIES
-  {
-    id: 'bq-peony-dreams',
-    name: 'Peony Dreams',
-    primaryFlower: 'Peonies',
-    category: 'Ready-Made Bouquets',
-    price: 2950,
-    occasion: "Anniversary",
-    occasions: ["Anniversary"],
-    description: 'Lush Dutch peonies paired with garden roses and cloud-soft hydrangeas, creating an unforgettable haute-couture floral masterpiece.',
-    formula: '6× Pink Peony, 6× White Rose, 2× Hydrangea, 2× Baby\'s Breath, Korean Matte Wrap, Velvet Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Peonies',
-      flowerTypes: ['Peonies', 'Roses', 'Hydrangeas', 'Baby\'s Breath'],
-      mainFlowers: [
-        { id: 'fl-pink-peony', name: 'Pink Peony', quantity: 6, type: 'Peonies' },
-        { id: 'fl-white-rose', name: 'White Rose', quantity: 6, type: 'Roses' },
-        { id: 'fl-hydrangea', name: 'Hydrangea', quantity: 2, type: 'Hydrangeas' },
-        { id: 'fil-babys-breath', name: 'Baby\'s Breath', quantity: 2, type: 'Baby\'s Breath' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-velvet', name: 'Velvet Ribbon', quantity: 1 }
-      ],
-      occasions: ["Anniversary"],
-      }
-  },
-  {
-    id: 'bq-blush-peony-garden',
-    name: 'Blush Peony Garden',
-    primaryFlower: 'Peonies',
-    category: 'Ready-Made Bouquets',
-    price: 2700,
-    occasion: "Anniversary",
-    occasions: ["Anniversary"],
-    description: 'Voluminous pink peonies and delicate lisianthus in a romantic garden arrangement finished with sheer flowing chiffon.',
-    formula: '6× Pink Peony, 6× Lisianthus, 4× Eucalyptus, Korean Matte Wrap, French Chiffon Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Peonies',
-      flowerTypes: ['Peonies', 'Lisianthus', 'Eucalyptus'],
-      mainFlowers: [
-        { id: 'fl-pink-peony', name: 'Pink Peony', quantity: 6, type: 'Peonies' },
-        { id: 'fl-lisianthus', name: 'Lisianthus', quantity: 6, type: 'Lisianthus' },
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 4, type: 'Eucalyptus' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-chiffon', name: 'French Chiffon Ribbon', quantity: 1 }
-      ],
-      occasions: ["Anniversary"],
-      }
-  },
-
-  // ---------------------------------------------------- 9. HYDRANGEAS
-  {
-    id: 'bq-cloud-nine',
-    name: 'Cloud Nine',
-    primaryFlower: 'Hydrangeas',
-    category: 'Ready-Made Bouquets',
-    price: 2500,
-    occasion: "",
-    occasions: [],
-    description: 'Sumptuous hydrangea globes resting on a bed of pastel peonies and lisianthus, evoking the dreamy serenity of cloud nine.',
-    formula: '3× Hydrangea, 4× Pink Peony, 4× Lisianthus, 3× Eucalyptus, Luxury Frosted Film, Satin Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Hydrangeas',
-      flowerTypes: ['Hydrangeas', 'Peonies', 'Lisianthus', 'Eucalyptus'],
-      mainFlowers: [
-        { id: 'fl-hydrangea', name: 'Hydrangea', quantity: 3, type: 'Hydrangeas' },
-        { id: 'fl-pink-peony', name: 'Pink Peony', quantity: 4, type: 'Peonies' },
-        { id: 'fl-lisianthus', name: 'Lisianthus', quantity: 4, type: 'Lisianthus' },
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 3, type: 'Eucalyptus' }
-      ],
-      materials: [
-        { id: 'wrp-frosted', name: 'Luxury Frosted Film', quantity: 1 },
-        { id: 'rbn-satin', name: 'Satin Ribbon', quantity: 1 }
-      ],
-      occasions: [],
-      }
-  },
-  {
-    id: 'bq-hydrangea-haven',
-    name: 'Hydrangea Haven',
-    primaryFlower: 'Hydrangeas',
-    category: 'Ready-Made Bouquets',
-    price: 1800,
-    occasion: "",
-    occasions: [],
-    description: 'Cool azure hydrangeas framed with pristine white roses and starlight baby\'s breath, offering an oasis of calm elegance.',
-    formula: '3× Hydrangea, 8× White Rose, 3× Baby\'s Breath, Korean Matte Wrap, French Chiffon Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Hydrangeas',
-      flowerTypes: ['Hydrangeas', 'Roses', 'Baby\'s Breath'],
-      mainFlowers: [
-        { id: 'fl-hydrangea', name: 'Hydrangea', quantity: 3, type: 'Hydrangeas' },
-        { id: 'fl-white-rose', name: 'White Rose', quantity: 8, type: 'Roses' },
-        { id: 'fil-babys-breath', name: 'Baby\'s Breath', quantity: 3, type: 'Baby\'s Breath' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-chiffon', name: 'French Chiffon Ribbon', quantity: 1 }
-      ],
-      occasions: [],
-      }
-  },
-
-  // ---------------------------------------------------- 10. DAISIES
-  {
-    id: 'bq-daisy-delight',
-    name: 'Daisy Delight',
-    primaryFlower: 'Daisies',
-    category: 'Ready-Made Bouquets',
-    price: 1250,
-    occasion: "Birthday",
-    occasions: ["Birthday"],
-    description: 'An unpretentious, cheerful gathering of sunny daisies and sweet pink carnations wrapped in rustic brown paper.',
-    formula: '10× Daisy, 6× Pink Carnation, 2× Baby\'s Breath, Natural Kraft Paper, Beige Jute Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Daisies',
-      flowerTypes: ['Daisies', 'Carnations', 'Baby\'s Breath'],
-      mainFlowers: [
-        { id: 'fl-daisy', name: 'Daisy', quantity: 10, type: 'Daisies' },
-        { id: 'fl-pink-carnation', name: 'Pink Carnation', quantity: 6, type: 'Carnations' },
-        { id: 'fil-babys-breath', name: 'Baby\'s Breath', quantity: 2, type: 'Baby\'s Breath' }
-      ],
-      materials: [
-        { id: 'wrp-kraft', name: 'Natural Kraft Paper', quantity: 1 },
-        { id: 'rbn-beige-jute', name: 'Beige Jute Ribbon', quantity: 1 }
-      ],
-      occasions: ["Birthday"],
-      }
-  },
-  {
-    id: 'bq-meadow-wishes',
-    name: 'Meadow Wishes',
-    primaryFlower: 'Daisies',
-    category: 'Ready-Made Bouquets',
-    price: 1450,
-    occasion: "Graduation",
-    occasions: ["Graduation"],
-    description: 'A wildflower meadow arrangement of open daisies, tall snapdragons, and carnations whispering heartfelt good wishes.',
-    formula: '8× Daisy, 4× Snapdragon, 4× White Carnation, 3× Ruscus, Natural Kraft Paper, Grosgrain Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Daisies',
-      flowerTypes: ['Daisies', 'Snapdragons', 'Carnations', 'Ruscus'],
-      mainFlowers: [
-        { id: 'fl-daisy', name: 'Daisy', quantity: 8, type: 'Daisies' },
-        { id: 'fl-snapdragon', name: 'Snapdragon', quantity: 4, type: 'Snapdragons' },
-        { id: 'fl-white-carnation', name: 'White Carnation', quantity: 4, type: 'Carnations' },
-        { id: 'fol-ruscus', name: 'Ruscus', quantity: 3, type: 'Ruscus' }
-      ],
-      materials: [
-        { id: 'wrp-kraft', name: 'Natural Kraft Paper', quantity: 1 },
-        { id: 'rbn-grosgrain', name: 'Grosgrain Ribbon', quantity: 1 }
-      ],
-      occasions: ["Graduation"],
-      }
-  },
-
-  // ---------------------------------------------------- 11. CHRYSANTHEMUMS
-  {
-    id: 'bq-golden-petals',
-    name: 'Golden Petals',
-    primaryFlower: 'Chrysanthemums',
-    category: 'Ready-Made Bouquets',
-    price: 1100,
-    occasion: "Birthday",
-    occasions: ["Birthday"],
-    description: 'Bright golden chrysanthemum blooms paired with vivid gerberas and eucalyptus, conveying warmth, loyalty, and optimism.',
-    formula: '8× Chrysanthemum, 4× Gerbera Daisy, 3× Eucalyptus, Natural Kraft Paper, Satin Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Chrysanthemums',
-      flowerTypes: ['Chrysanthemums', 'Gerberas', 'Eucalyptus'],
-      mainFlowers: [
-        { id: 'fl-chrysanthemum', name: 'Chrysanthemum', quantity: 8, type: 'Chrysanthemums' },
-        { id: 'fl-gerbera-daisy', name: 'Gerbera Daisy', quantity: 4, type: 'Gerberas' },
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 3, type: 'Eucalyptus' }
-      ],
-      materials: [
-        { id: 'wrp-kraft', name: 'Natural Kraft Paper', quantity: 1 },
-        { id: 'rbn-satin', name: 'Satin Ribbon', quantity: 1 }
-      ],
-      occasions: ["Birthday"],
-      }
-  },
-  {
-    id: 'bq-autumn-grace',
-    name: 'Autumn Grace',
-    primaryFlower: 'Chrysanthemums',
+    id: 'bq-blush-garden-elegance',
+    name: 'Blush Garden Elegance',
+    primaryFlower: 'Carnation',
     category: 'Ready-Made Bouquets',
     price: 1500,
-    occasion: "Birthday",
-    occasions: ["Birthday"],
-    description: 'Warm amber chrysanthemums blended with cheerful sunflowers and soft carnations in a rich autumnal palette.',
-    formula: '6× Chrysanthemum, 3× Sunflower, 6× Pink Carnation, 3× Eucalyptus, Korean Matte Wrap, Grosgrain Ribbon',
-    image: '',
-    availability: 'sold_out',
+    occasion: "Birthday, Anniversary, Valentine's Day, Mother's Day, Congratulations",
+    occasions: ["Birthday", "Anniversary", "Valentine's Day", "Mother's Day", "Congratulations"],
+    description: "A soft, romantic mix of pink and white blooms with elegant layered wrapping and a satin ribbon.",
+    formula: "5\u00d7 Pink Carnation, 3\u00d7 Pink Rose, 2\u00d7 White Rose, 3\u00d7 Pink Ranunculus, 4\u00d7 Chamomile Daisy, 2\u00d7 Baby's Breath, 2\u00d7 Queen Anne's Lace, White Non-Woven Floral Wrap, Dusty Pink Korean Matte Wrap, Blush Pink Grosgrain Ribbon.",
+    image: '/assets/uploads/f3fa10840d412803a2ad.jpg',
+    availability: 'available',
     specs: {
-      primaryFlower: 'Chrysanthemums',
-      flowerTypes: ['Chrysanthemums', 'Sunflowers', 'Carnations', 'Eucalyptus'],
-      mainFlowers: [
-        { id: 'fl-chrysanthemum', name: 'Chrysanthemum', quantity: 6, type: 'Chrysanthemums' },
-        { id: 'fl-sunflower', name: 'Sunflower', quantity: 3, type: 'Sunflowers' },
-        { id: 'fl-pink-carnation', name: 'Pink Carnation', quantity: 6, type: 'Carnations' },
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 3, type: 'Eucalyptus' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-grosgrain', name: 'Grosgrain Ribbon', quantity: 1 }
-      ],
-      occasions: ["Birthday"],
-      }
-  },
-
-  // ---------------------------------------------------- 12. LISIANTHUS
-  {
-    id: 'bq-soft-whispers',
-    name: 'Soft Whispers',
-    primaryFlower: 'Lisianthus',
-    category: 'Ready-Made Bouquets',
-    price: 1800,
-    occasion: "Sympathy",
-    occasions: ["Sympathy"],
-    description: 'Velvety purple and lavender lisianthus ruffled like garden roses, accented with mist-like baby\'s breath for gentle sentiments.',
-    formula: '10× Lisianthus, 3× Baby\'s Breath, 4× Eucalyptus, Korean Matte Wrap, French Chiffon Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Lisianthus',
-      flowerTypes: ['Lisianthus', 'Baby\'s Breath', 'Eucalyptus'],
-      mainFlowers: [
-        { id: 'fl-lisianthus', name: 'Lisianthus', quantity: 10, type: 'Lisianthus' },
-        { id: 'fil-babys-breath', name: 'Baby\'s Breath', quantity: 3, type: 'Baby\'s Breath' },
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 4, type: 'Eucalyptus' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-chiffon', name: 'French Chiffon Ribbon', quantity: 1 }
-      ],
-      occasions: ["Sympathy"],
-      }
+      occasions: ["Birthday", "Anniversary", "Valentine's Day", "Mother's Day", "Congratulations"],
+      stockCount: 100,
+      unitOfMeasure: 'bouquets'
+    }
   },
   {
-    id: 'bq-lisianthus-romance',
-    name: 'Lisianthus Romance',
-    primaryFlower: 'Lisianthus',
+    id: 'bq-blush-lily-romance',
+    name: 'Blush Lily Romance',
+    primaryFlower: 'Roses',
     category: 'Ready-Made Bouquets',
-    price: 2250,
-    occasion: "Valentine's Day, Anniversary",
-    occasions: ["Valentine's Day","Anniversary"],
-    description: 'A deeply romantic courtship bouquet uniting ruffled lisianthus, sweet blush roses, and fresh pink tulips.',
-    formula: '6× Lisianthus, 6× Pink Rose, 4× Pink Tulip, 3× Ruscus, Korean Matte Wrap, Satin Ribbon',
-    image: '',
-    availability: 'sold_out',
+    price: 3800,
+    occasion: "Birthday, Anniversary, Valentine's Day, Mother's Day, Graduation, Congratulations, Thank You",
+    occasions: ["Birthday", "Anniversary", "Valentine's Day", "Mother's Day", "Graduation", "Congratulations", "Thank You"],
+    description: "Elegant blush roses and pink lilies accented with delicate white fillers, wrapped in soft pink with a white ribbon.",
+    formula: "10\u00d7 Blush Pink Roses, 4\u00d7 Pink Stargazer Lilies, 3\u00d7 Baby's Breath, 2\u00d7 White Spray Roses, 3\u00d7 Eucalyptus, Pink Korean Matte Wrap, White Satin Ribbon.",
+    image: '/assets/uploads/931542dd79603eaf8bac.jpg',
+    availability: 'available',
     specs: {
-      primaryFlower: 'Lisianthus',
-      flowerTypes: ['Lisianthus', 'Roses', 'Tulips', 'Ruscus'],
-      mainFlowers: [
-        { id: 'fl-lisianthus', name: 'Lisianthus', quantity: 6, type: 'Lisianthus' },
-        { id: 'fl-pink-rose', name: 'Pink Rose', quantity: 6, type: 'Roses' },
-        { id: 'fl-pink-tulip', name: 'Pink Tulip', quantity: 4, type: 'Tulips' },
-        { id: 'fol-ruscus', name: 'Ruscus', quantity: 3, type: 'Ruscus' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-satin', name: 'Satin Ribbon', quantity: 1 }
-      ],
-      occasions: ["Valentine's Day","Anniversary"],
-      }
-  },
-
-  // ---------------------------------------------------- 13. SNAPDRAGONS
-  {
-    id: 'bq-garden-whimsy',
-    name: 'Garden Whimsy',
-    primaryFlower: 'Snapdragons',
-    category: 'Ready-Made Bouquets',
-    price: 1600,
-    occasion: "Birthday, Graduation",
-    occasions: ["Birthday","Graduation"],
-    description: 'Stately tall snapdragons intermingled with playful daisies and ruffled carnations for spirited and whimsical celebrations.',
-    formula: '6× Snapdragon, 6× Daisy, 4× White Carnation, 3× Eucalyptus, Natural Kraft Paper, Beige Jute Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Snapdragons',
-      flowerTypes: ['Snapdragons', 'Daisies', 'Carnations', 'Eucalyptus'],
-      mainFlowers: [
-        { id: 'fl-snapdragon', name: 'Snapdragon', quantity: 6, type: 'Snapdragons' },
-        { id: 'fl-daisy', name: 'Daisy', quantity: 6, type: 'Daisies' },
-        { id: 'fl-white-carnation', name: 'White Carnation', quantity: 4, type: 'Carnations' },
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 3, type: 'Eucalyptus' }
-      ],
-      materials: [
-        { id: 'wrp-kraft', name: 'Natural Kraft Paper', quantity: 1 },
-        { id: 'rbn-beige-jute', name: 'Beige Jute Ribbon', quantity: 1 }
-      ],
-      occasions: ["Birthday","Graduation"],
-      }
+      occasions: ["Birthday", "Anniversary", "Valentine's Day", "Mother's Day", "Graduation", "Congratulations", "Thank You"],
+      stockCount: 100,
+      unitOfMeasure: 'bouquets'
+    }
   },
   {
-    id: 'bq-snapdragon-symphony',
-    name: 'Snapdragon Symphony',
-    primaryFlower: 'Snapdragons',
+    id: 'bq-crimson-romance',
+    name: 'Crimson Romance',
+    primaryFlower: 'Roses',
     category: 'Ready-Made Bouquets',
-    price: 2050,
-    occasion: "",
-    occasions: [],
-    description: 'An architectural floral symphony of towering snapdragons, fragrant roses, and lisianthus wrapped in luxury porcelain paper.',
-    formula: '6× Snapdragon, 6× Pink Rose, 4× Lisianthus, 2× Baby\'s Breath, Korean Matte Wrap, Satin Ribbon',
-    image: '',
-    availability: 'sold_out',
+    price: 3200,
+    occasion: "Birthday, Anniversary, Valentine's Day, Mother's Day, Congratulations, Thank You",
+    occasions: ["Birthday", "Anniversary", "Valentine's Day", "Mother's Day", "Congratulations", "Thank You"],
+    description: "A bold mix of deep red and creamy white blooms, elegantly wrapped in black with a striking red satin ribbon.",
+    formula: "3\u00d7 Red Roses, 3\u00d7 Red Carnations, 3\u00d7 Red Dahlias, 2\u00d7 White Roses, 2\u00d7 White Gerbera Daisies, 2\u00d7 White Spray Flowers, 2\u00d7 Baby's Breath, 3\u00d7 Eucalyptus, Black Korean Matte Wrap, Frosted Translucent Wrap, Red Satin Ribbon",
+    image: '/assets/uploads/0e280342c95bc994f294.jpg',
+    availability: 'available',
     specs: {
-      primaryFlower: 'Snapdragons',
-      flowerTypes: ['Snapdragons', 'Roses', 'Lisianthus', 'Baby\'s Breath'],
-      mainFlowers: [
-        { id: 'fl-snapdragon', name: 'Snapdragon', quantity: 6, type: 'Snapdragons' },
-        { id: 'fl-pink-rose', name: 'Pink Rose', quantity: 6, type: 'Roses' },
-        { id: 'fl-lisianthus', name: 'Lisianthus', quantity: 4, type: 'Lisianthus' },
-        { id: 'fil-babys-breath', name: 'Baby\'s Breath', quantity: 2, type: 'Baby\'s Breath' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-satin', name: 'Satin Ribbon', quantity: 1 }
-      ],
-      occasions: [],
-      }
-  },
-
-  // ---------------------------------------------------- 14. BABY'S BREATH
-  {
-    id: 'bq-cloud-of-love',
-    name: 'Cloud of Love',
-    primaryFlower: 'Baby\'s Breath',
-    category: 'Ready-Made Bouquets',
-    price: 950,
-    occasion: "Sympathy",
-    occasions: ["Sympathy"],
-    description: 'An ethereal cloud of pure white gypsophila cradling pristine white roses, wrapped in minimalist blush-toned matte film.',
-    formula: '6× Baby\'s Breath, 4× White Rose, Korean Matte Wrap, French Chiffon Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Baby\'s Breath',
-      flowerTypes: ['Baby\'s Breath', 'Roses'],
-      mainFlowers: [
-        { id: 'fil-babys-breath', name: 'Baby\'s Breath', quantity: 6, type: 'Baby\'s Breath' },
-        { id: 'fl-white-rose', name: 'White Rose', quantity: 4, type: 'Roses' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-chiffon', name: 'French Chiffon Ribbon', quantity: 1 }
-      ],
-      occasions: ["Sympathy"],
-      }
+      occasions: ["Birthday", "Anniversary", "Valentine's Day", "Mother's Day", "Congratulations", "Thank You"],
+      stockCount: 100,
+      unitOfMeasure: 'bouquets'
+    }
   },
   {
-    id: 'bq-forever-in-bloom',
-    name: 'Forever in Bloom',
-    primaryFlower: 'Baby\'s Breath',
+    id: 'bq-lavender-whisper',
+    name: 'Lavender Whisper',
+    primaryFlower: 'Roses',
     category: 'Ready-Made Bouquets',
-    price: 2050,
-    occasion: "Valentine's Day",
-    occasions: ["Valentine's Day"],
-    description: 'Fluffy everlasting baby\'s breath embracing vivid red roses, pink tulips, and purple lisianthus for enduring love.',
-    formula: '5× Baby\'s Breath, 4× Red Rose, 4× Pink Tulip, 4× Lisianthus, Korean Matte Wrap, Satin Ribbon',
-    image: '',
-    availability: 'sold_out',
+    price: 2800,
+    occasion: "Birthday, Anniversary, Valentine's Day, Mother's Day, Congratulations, Thank You",
+    occasions: ["Birthday", "Anniversary", "Valentine's Day", "Mother's Day", "Congratulations", "Thank You"],
+    description: "A delicate blend of lavender, soft pink, and white blooms, finished with elegant pastel wrapping and a lavender satin ribbon.",
+    formula: "4\u00d7 Lavender Roses, 2\u00d7 White Roses, 2\u00d7 White Carnations, 2\u00d7 Pink Carnations, 2\u00d7 Purple Asters, 2\u00d7 White Lisianthus, 2\u00d7 Baby's Breath, 3\u00d7 Eucalyptus, White Korean Matte Wrap, Frosted Translucent Wrap, Lavender Satin Ribbon.",
+    image: '/assets/uploads/71ed8728613c96c2c9d3.jpg',
+    availability: 'available',
     specs: {
-      primaryFlower: 'Baby\'s Breath',
-      flowerTypes: ['Baby\'s Breath', 'Roses', 'Tulips', 'Lisianthus'],
-      mainFlowers: [
-        { id: 'fil-babys-breath', name: 'Baby\'s Breath', quantity: 5, type: 'Baby\'s Breath' },
-        { id: 'fl-red-rose', name: 'Red Rose', quantity: 4, type: 'Roses' },
-        { id: 'fl-pink-tulip', name: 'Pink Tulip', quantity: 4, type: 'Tulips' },
-        { id: 'fl-lisianthus', name: 'Lisianthus', quantity: 4, type: 'Lisianthus' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-satin', name: 'Satin Ribbon', quantity: 1 }
-      ],
-      occasions: ["Valentine's Day"],
-      }
-  },
-
-  // ---------------------------------------------------- 15. EUCALYPTUS (FOLIAGE)
-  {
-    id: 'bq-botanical-serenity',
-    name: 'Botanical Serenity',
-    primaryFlower: 'Eucalyptus',
-    category: 'Ready-Made Bouquets',
-    price: 1850,
-    occasion: "Sympathy",
-    occasions: ["Sympathy"],
-    description: 'Lush aromatic silver dollar eucalyptus combined with crisp white lilies, white roses, and ruscus in a calming botanical composition.',
-    formula: '6× Eucalyptus, 6× White Rose, 3× White Lily, 4× Ruscus, Luxury Frosted Film, Satin Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Eucalyptus',
-      flowerTypes: ['Eucalyptus', 'Roses', 'Lilies', 'Ruscus'],
-      mainFlowers: [
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 6, type: 'Eucalyptus' },
-        { id: 'fl-white-rose', name: 'White Rose', quantity: 6, type: 'Roses' },
-        { id: 'fl-white-lily', name: 'White Lily', quantity: 3, type: 'Lilies' },
-        { id: 'fol-ruscus', name: 'Ruscus', quantity: 4, type: 'Ruscus' }
-      ],
-      materials: [
-        { id: 'wrp-frosted', name: 'Luxury Frosted Film', quantity: 1 },
-        { id: 'rbn-satin', name: 'Satin Ribbon', quantity: 1 }
-      ],
-      occasions: ["Sympathy"],
-      }
+      occasions: ["Birthday", "Anniversary", "Valentine's Day", "Mother's Day", "Congratulations", "Thank You"],
+      stockCount: 100,
+      unitOfMeasure: 'bouquets'
+    }
   },
   {
-    id: 'bq-eucalyptus-garden',
-    name: 'Eucalyptus Garden',
-    primaryFlower: 'Eucalyptus',
+    id: 'bq-pink-aurora',
+    name: 'Pink Aurora',
+    primaryFlower: 'Roses',
     category: 'Ready-Made Bouquets',
-    price: 1650,
-    occasion: "Sympathy",
-    occasions: ["Sympathy"],
-    description: 'A refreshing rustic garden bouquet starring aromatic eucalyptus greenery intertwined with sweet lisianthus and sunny daisies.',
-    formula: '6× Eucalyptus, 6× Lisianthus, 8× Daisy, Natural Kraft Paper, Beige Jute Ribbon',
-    image: '',
-    availability: 'sold_out',
+    price: 3000,
+    occasion: "Birthday, Anniversary, Valentine's Day, Mother's Day, Graduation, Congratulations, Thank You",
+    occasions: ["Birthday", "Anniversary", "Valentine's Day", "Mother's Day", "Graduation", "Congratulations", "Thank You"],
+    description: "A dreamy blend of pink, lavender, and white blooms with elegant iridescent accents and a soft pink ribbon.",
+    formula: "3\u00d7 Pink Roses, 3\u00d7 Lavender Roses, 3\u00d7 White Roses, 2\u00d7 Pink Carnations, 2\u00d7 White Gerbera Daisies, 2\u00d7 Pink Cosmos, 2\u00d7 White Spray Flowers, 2\u00d7 Baby's Breath, 3\u00d7 Eucalyptus, Pink Korean Matte Wrap, Frosted Translucent Wrap, Iridescent Floral Mesh, Pink Satin Ribbon.",
+    image: '/assets/uploads/db0669a92e3f46c60f23.jpg',
+    availability: 'available',
     specs: {
-      primaryFlower: 'Eucalyptus',
-      flowerTypes: ['Eucalyptus', 'Lisianthus', 'Daisies'],
-      mainFlowers: [
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 6, type: 'Eucalyptus' },
-        { id: 'fl-lisianthus', name: 'Lisianthus', quantity: 6, type: 'Lisianthus' },
-        { id: 'fl-daisy', name: 'Daisy', quantity: 8, type: 'Daisies' }
-      ],
-      materials: [
-        { id: 'wrp-kraft', name: 'Natural Kraft Paper', quantity: 1 },
-        { id: 'rbn-beige-jute', name: 'Beige Jute Ribbon', quantity: 1 }
-      ],
-      occasions: ["Sympathy"],
-      }
-  },
-
-  // ---------------------------------------------------- 16. RUSCUS (FOLIAGE)
-  {
-    id: 'bq-woodland-charm',
-    name: 'Woodland Charm',
-    primaryFlower: 'Ruscus',
-    category: 'Ready-Made Bouquets',
-    price: 1200,
-    occasion: "",
-    occasions: [],
-    description: 'Glossy Italian ruscus sprigs accentuating vibrant chrysanthemums and pink carnations in an earthy woodland presentation.',
-    formula: '6× Ruscus, 6× Pink Carnation, 6× Chrysanthemum, Natural Kraft Paper, Beige Jute Ribbon',
-    image: '',
-    availability: 'sold_out',
-    specs: {
-      primaryFlower: 'Ruscus',
-      flowerTypes: ['Ruscus', 'Carnations', 'Chrysanthemums'],
-      mainFlowers: [
-        { id: 'fol-ruscus', name: 'Ruscus', quantity: 6, type: 'Ruscus' },
-        { id: 'fl-pink-carnation', name: 'Pink Carnation', quantity: 6, type: 'Carnations' },
-        { id: 'fl-chrysanthemum', name: 'Chrysanthemum', quantity: 6, type: 'Chrysanthemums' }
-      ],
-      materials: [
-        { id: 'wrp-kraft', name: 'Natural Kraft Paper', quantity: 1 },
-        { id: 'rbn-beige-jute', name: 'Beige Jute Ribbon', quantity: 1 }
-      ],
-      occasions: [],
-      }
+      occasions: ["Birthday", "Anniversary", "Valentine's Day", "Mother's Day", "Graduation", "Congratulations", "Thank You"],
+      stockCount: 100,
+      unitOfMeasure: 'bouquets'
+    }
   },
   {
-    id: 'bq-evergreen-elegance',
-    name: 'Evergreen Elegance',
-    primaryFlower: 'Ruscus',
+    id: 'bq-sunshine-elegance',
+    name: 'Sunshine Elegance',
+    primaryFlower: 'Dahlias',
     category: 'Ready-Made Bouquets',
-    price: 1750,
-    occasion: "Anniversary",
-    occasions: ["Anniversary"],
-    description: 'Sophisticated emerald ruscus and silver foliage elevating exotic orchids and classic white roses with timeless modern flair.',
-    formula: '6× Ruscus, 4× Eucalyptus, 2× Phalaenopsis Orchid, 6× White Rose, Korean Matte Wrap, Satin Ribbon',
-    image: '',
-    availability: 'sold_out',
+    price: 2800,
+    occasion: "Birthday, Graduation, Congratulations, Thank You",
+    occasions: ["Birthday", "Graduation", "Congratulations", "Thank You"],
+    description: "A cheerful blend of golden yellow and creamy white blooms, finished with elegant white wrapping and a soft yellow satin ribbon.",
+    formula: "5\u00d7 Yellow Dahlias, 3\u00d7 Cream Roses, 2\u00d7 White Roses, 2\u00d7 Yellow Gerbera Daisies, 2\u00d7 White Daisies, 2\u00d7 Yellow Spray Flowers, 2\u00d7 Baby's Breath, 2\u00d7 Eucalyptus, White Non-Woven Floral Wrap, Frosted Translucent Wrap, Pale Yellow Grosgrain Ribbon.",
+    image: '/assets/uploads/156546b44f9d7ba0c522.jpg',
+    availability: 'available',
     specs: {
-      primaryFlower: 'Ruscus',
-      flowerTypes: ['Ruscus', 'Eucalyptus', 'Orchids', 'Roses'],
-      mainFlowers: [
-        { id: 'fol-ruscus', name: 'Ruscus', quantity: 6, type: 'Ruscus' },
-        { id: 'fol-eucalyptus', name: 'Eucalyptus', quantity: 4, type: 'Eucalyptus' },
-        { id: 'fl-phalaenopsis-orchid', name: 'Phalaenopsis Orchid', quantity: 2, type: 'Orchids' },
-        { id: 'fl-white-rose', name: 'White Rose', quantity: 6, type: 'Roses' }
-      ],
-      materials: [
-        { id: 'wrp-korean-matte', name: 'Korean Matte Wrap', quantity: 1 },
-        { id: 'rbn-satin', name: 'Satin Ribbon', quantity: 1 }
-      ],
-      occasions: ["Anniversary"],
-      }
+      occasions: ["Birthday", "Graduation", "Congratulations", "Thank You"],
+      stockCount: 100,
+      unitOfMeasure: 'bouquets'
+    }
+  },
+  {
+    id: 'bq-the-grand-bloom-collection',
+    name: 'The Grand Bloom Collection',
+    primaryFlower: 'Mixed',
+    category: 'Ready-Made Bouquets',
+    price: 4500.5,
+    occasion: "Birthday, Anniversary, Valentine's Day, Mother's Day, Graduation, Congratulations, Thank You",
+    occasions: ["Birthday", "Anniversary", "Valentine's Day", "Mother's Day", "Graduation", "Congratulations", "Thank You"],
+    description: "A vibrant mix of colorful seasonal blooms, beautifully wrapped in white with a soft pink ribbon.",
+    formula: "2\u00d7 Sunflowers, 3\u00d7 Pink Roses, 3\u00d7 Cream Roses, 2\u00d7 Pink Gerbera Daisies, 2\u00d7 White Gerbera Daisies, 2\u00d7 White Lilies, 2\u00d7 Pink Tulips, 3\u00d7 Pink Carnations, 2\u00d7 Purple Roses, 2\u00d7 Spray Roses, 2\u00d7 Chamomile Daisies, 2\u00d7 Lisianthus, 2\u00d7 Baby's Breath, White Korean Matte Wrap, Frosted Translucent Wrap, Pink Satin Ribbon.",
+    image: '/assets/uploads/a68940b21278ba219d02.jpg',
+    availability: 'available',
+    specs: {
+      occasions: ["Birthday", "Anniversary", "Valentine's Day", "Mother's Day", "Graduation", "Congratulations", "Thank You"],
+      stockCount: 100,
+      unitOfMeasure: 'bouquets'
+    }
   }
-];
+];;
 
 module.exports = {
   PHASE2_CATEGORIES,

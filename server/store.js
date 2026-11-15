@@ -442,8 +442,38 @@ function open(customDbOrPath) {
   // Populate unit_cost for existing flowers that have NULL unit_cost so valuation is immediately functional
   db.prepare(`UPDATE flowers SET unit_cost = ROUND(price * 0.45, 2) WHERE unit_cost IS NULL AND price > 0`).run();
 
-  // Seed Phase 2 Catalog (32 Bouquets, 16 Flowers & Foliage, 15 Materials)
+  // Seed Phase 2 Catalog (8 Official Bouquets, 16 Flowers & Foliage, 15 Materials)
   seedPhase2Catalog(db, now);
+
+  // One-time migration: sync the live catalog to exactly the 8 official bouquets.
+  // Archives any bouquets not in the official list; upserts the official 8 with correct data.
+  (function syncCatalogV1() {
+    const done = db.prepare("SELECT value_json FROM shop_settings WHERE key='catalog_sync_v1'").get();
+    if (done) return;
+    const { PHASE2_BOUQUETS } = require('./phase2_catalog');
+    const keepIds = PHASE2_BOUQUETS.map(b => b.id);
+    const t = now();
+    // Archive all bouquets not in the official 8
+    if (keepIds.length > 0) {
+      db.prepare('UPDATE bouquets SET archived=1, updated_at=? WHERE id NOT IN (' +
+        keepIds.map(() => '?').join(',') + ')').run(t, ...keepIds);
+    }
+    // Upsert each official bouquet with the correct data
+    const ups = db.prepare(`INSERT INTO bouquets (id,name,category,occasion,price,description,image,formula,availability,specs_json,archived,updated_at,source)
+      VALUES (?,?,?,?,?,?,?,?,?,?,0,?,?)
+      ON CONFLICT(id) DO UPDATE SET
+        name=excluded.name, category=excluded.category, occasion=excluded.occasion,
+        price=excluded.price, description=excluded.description,
+        formula=excluded.formula, availability=excluded.availability,
+        specs_json=excluded.specs_json, archived=0, updated_at=excluded.updated_at`);
+    for (const b of PHASE2_BOUQUETS) {
+      ups.run(b.id, b.name, b.category, b.occasion, b.price, b.description || '',
+        b.image || '', b.formula || '', b.availability || 'available',
+        b.specs ? JSON.stringify(b.specs) : null, t, null);
+    }
+    db.prepare(`INSERT OR IGNORE INTO shop_settings (key,value_json,updated_at) VALUES ('catalog_sync_v1',?,?)`)
+      .run(JSON.stringify({ synced: true, bouquets: keepIds.length, at: t }), t);
+  })();
 
   // Products created before created_at existed: use the earliest recorded evidence — the catalog import time
   // for imported items, the first stock movement, or the last update. New products get the real time on insert.
