@@ -643,15 +643,6 @@
             </span>
           </button>
 
-          <!-- Page Decorations -->
-          <button type="button" onclick="window.adminApp.switchTab('decorations')" data-tab-nav="decorations" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-full border border-transparent hover:bg-white/10 text-[#D6C7CC] hover:text-white transition-all duration-150 text-left group btn-tactile font-medium">
-            <span class="flex items-center gap-3 min-w-0">
-              <svg class="w-[18px] h-[18px] text-[#D6C7CC] group-hover:text-white shrink-0 stroke-[1.8]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a9 9 0 0 1 9 9c0 4-2.5 7.4-6 8.7V21a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-1.3C5.5 18.4 3 15 3 11a9 9 0 0 1 9-9Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 21h6"/>
-              </svg>
-              <span class="text-xs font-medium truncate">Page Decorations</span>
-            </span>
-          </button>
         </nav>
       </div>
 
@@ -3463,77 +3454,6 @@
         </button>
       </div>
 
-    </div>
-  </div>
-
-  <!-- =====================================================================
-       PAGE DECORATIONS TAB
-       ===================================================================== -->
-  <div data-tab-content="decorations" class="space-y-6 max-w-5xl mx-auto">
-    <!-- Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-[#E5ECE6]/80">
-      <div>
-        <div class="flex items-center gap-2.5">
-          <h1 class="font-serif font-bold text-2xl sm:text-3xl text-[#344F3B] tracking-tight">Page Decorations</h1>
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#EBF1EC] text-[#344F3B] border border-[#C8D6CA]">
-            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2a9 9 0 0 1 9 9c0 4-2.5 7.4-6 8.7V21a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-1.3C5.5 18.4 3 15 3 11a9 9 0 0 1 9-9Z"/></svg>
-            Visual Editor
-          </span>
-        </div>
-        <p class="text-xs sm:text-sm text-[#6E6864] mt-1">Drag, resize, and rotate flower images anywhere on your customer-facing pages. New images added to the folder appear automatically.</p>
-      </div>
-    </div>
-
-    <!-- Intro card -->
-    <div class="bg-white rounded-3xl border border-[#E5ECE6] shadow-xs p-6 sm:p-8 space-y-6">
-      <div class="flex flex-col sm:flex-row gap-6 items-start">
-        <div class="w-14 h-14 rounded-2xl bg-[#EBF1EC] flex items-center justify-center shrink-0 text-2xl shadow-xs">🌸</div>
-        <div class="flex-1 space-y-2">
-          <h3 class="font-serif font-bold text-lg text-[#302C2A]">Atelier Floral Design Studio</h3>
-          <p class="text-sm text-[#6E6864]">The decoration studio lives on the customer-facing site. Open it in a new tab to drag and place flowers on any page. Changes are saved automatically for all visitors.</p>
-          <ul class="text-xs text-[#6E6864] space-y-1 mt-2 list-none">
-            <li class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-[#EBF1EC] flex items-center justify-center text-[#647D69] text-[10px] font-bold shrink-0">1</span> Open the studio — click the button below</li>
-            <li class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-[#EBF1EC] flex items-center justify-center text-[#647D69] text-[10px] font-bold shrink-0">2</span> Pick a page from the selector at the top</li>
-            <li class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-[#EBF1EC] flex items-center justify-center text-[#647D69] text-[10px] font-bold shrink-0">3</span> Click any image in the library to place it, then drag / resize / rotate</li>
-            <li class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-[#EBF1EC] flex items-center justify-center text-[#647D69] text-[10px] font-bold shrink-0">4</span> Click <strong>Save Changes</strong> — the decorations persist for every customer</li>
-          </ul>
-        </div>
-      </div>
-      <div class="flex flex-wrap gap-3">
-        <a href="/" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#647D69] hover:bg-[#526B57] text-white text-xs font-bold transition shadow-xs btn-tactile">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 3h6v6M14 10l6.1-6.1M9 21H3v-6M10 14l-6.1 6.1"/></svg>
-          Open Decoration Studio
-        </a>
-        <span class="inline-flex items-center gap-1.5 text-xs text-[#6E6864] px-3 py-2 bg-[#FAF6F0] rounded-xl border border-[#E5ECE6]">
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Shortcut: <kbd class="font-mono font-bold">Alt + F</kbd> on any page
-        </span>
-      </div>
-    </div>
-
-    <!-- Image library preview -->
-    <div class="bg-white rounded-3xl border border-[#E5ECE6] shadow-xs p-6 sm:p-8">
-      <div class="flex items-center justify-between mb-5">
-        <div>
-          <h3 class="font-serif font-bold text-base text-[#302C2A]">Decoration Image Library</h3>
-          <p class="text-xs text-[#6E6864] mt-0.5">All images in <code class="text-[#647D69] font-mono text-[11px] bg-[#EBF1EC] px-1.5 py-0.5 rounded">image/backgound/</code> — new images appear here automatically.</p>
-        </div>
-        <button type="button" onclick="window.adminApp.refreshDecorationLibrary()" class="px-3 py-1.5 rounded-xl bg-[#EBF1EC] hover:bg-[#647D69] text-[#526B57] hover:text-white text-xs font-bold transition flex items-center gap-1.5 btn-tactile">
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
-          Refresh
-        </button>
-      </div>
-      <div id="admin-decor-library-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-        <div class="col-span-full text-center py-8 text-[#6E6864] text-xs">Loading images…</div>
-      </div>
-    </div>
-
-    <!-- Per-page decoration summary -->
-    <div class="bg-white rounded-3xl border border-[#E5ECE6] shadow-xs p-6 sm:p-8">
-      <h3 class="font-serif font-bold text-base text-[#302C2A] mb-4">Saved Decorations per Page</h3>
-      <div id="admin-decor-page-summary" class="space-y-2">
-        <div class="text-center py-4 text-[#6E6864] text-xs">Loading…</div>
-      </div>
     </div>
   </div>
 
