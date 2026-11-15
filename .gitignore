@@ -13,7 +13,8 @@ config/firebase-service-account.json
 node_modules/
 
 # Database data and backups
-data/
+data/*
+!data/page-decorations.json
 backups/
 
 # Temporary files and browser testing

@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: umaira-florist
+    runtime: node
+    plan: starter          # upgrade to 'standard' or above for a persistent disk
+    buildCommand: npm install --omit=dev
+    startCommand: node server.js
+    healthCheckPath: /api/catalog
+
+    # Node 22 is required (uses node:sqlite, available since Node 22.5.0)
+    envVars:
+      - key: NODE_VERSION
+        value: 22.5.0
+      - key: PORT
+        value: 10000           # Render injects $PORT; this sets the fallback
+      - key: TRUST_PROXY
+        value: "1"             # Render routes through a load balancer
+      - key: PUBLIC_URL
+        sync: false            # Set to your Render URL or custom domain in the dashboard
+      - key: ADMIN_USERNAME
+        sync: false            # Set in dashboard
+      - key: ADMIN_PASSWORD
+        sync: false            # Set in dashboard — REQUIRED
+      - key: GOOGLE_CLIENT_ID
+        sync: false            # Optional: enables Google sign-in
+      - key: RESEND_API_KEY
+        sync: false            # Recommended: enables email (OTP + password reset)
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false            # Required: enables image uploads
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+
+    # IMPORTANT: SQLite and payment receipts are stored in ./data/ at runtime.
+    # On Render's free/starter plan the disk is ephemeral (wiped on restart).
+    # To preserve data between restarts, add a Render Disk:
+    #   - mountPath: /app/data
+    #     name: umaira-data
+    #     sizeGB: 1
+    # Then set env var UMAIRA_DATA_DIR=/app/data

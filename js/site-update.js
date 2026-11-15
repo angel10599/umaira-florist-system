@@ -4881,6 +4881,333 @@
       '</div>';
   }
 
+  /* =====================================================================
+     6.6 PRIVACY POLICY PAGE
+     ===================================================================== */
+  function renderPrivacyPolicyView() {
+    var _st = window.appState;
+    var _email = (_st && _st.getStoreEmail && _st.getStoreEmail()) || 'concierge@umairaflorist.com';
+    var _phone = (_st && _st.getStorePhone && _st.getStorePhone()) || '+63 917 892 4310';
+    var sec = function (num, title, body) {
+      return '<section class="space-y-3">' +
+        '<h2 class="font-serif text-xl sm:text-2xl font-bold text-stone-900 flex items-start gap-2">' +
+          '<span class="text-[#647D69] font-serif">' + num + '.</span>' +
+          '<span>' + title + '</span>' +
+        '</h2>' +
+        '<div class="text-stone-700 leading-relaxed space-y-3 pl-6">' + body + '</div>' +
+      '</section>';
+    };
+    var p = function (t) { return '<p>' + t + '</p>'; };
+    var ul = function (items) { return '<ul class="list-disc list-outside pl-5 space-y-1.5">' + items.map(function (i) { return '<li>' + i + '</li>'; }).join('') + '</ul>'; };
+
+    return '' +
+      '<div class="py-12 sm:py-16 lg:py-20 px-6 max-w-3xl mx-auto">' +
+
+        '<button type="button" onclick="window.appRouter.navigate(\'home\')" ' +
+          'class="inline-flex items-center gap-2 text-sm text-[#647D69] hover:text-[#526B57] font-semibold mb-10 group transition-colors">' +
+          '<svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">' +
+            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m7-7-7 7 7 7"/>' +
+          '</svg>' +
+          'Return to Store' +
+        '</button>' +
+
+        '<div class="text-center mb-12 sm:mb-16">' +
+          '<div class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-[#647D69] mb-4">' +
+            '<span class="w-6 h-px bg-[#647D69]/40"></span>' +
+            '<span>Umaira Florist Atelier</span>' +
+            '<span class="w-6 h-px bg-[#647D69]/40"></span>' +
+          '</div>' +
+          '<h1 class="font-serif text-4xl sm:text-5xl font-bold text-stone-900 leading-tight">Privacy Policy</h1>' +
+          '<p class="mt-4 text-stone-500 text-sm">Effective: November 2026 &nbsp;&middot;&nbsp; Philippines</p>' +
+          '<p class="mt-3 text-stone-600 text-sm max-w-xl mx-auto leading-relaxed">' +
+            'Umaira Florist Atelier is committed to protecting your personal information in accordance with Republic Act No. 10173, the Data Privacy Act of 2012, and its implementing rules.' +
+          '</p>' +
+        '</div>' +
+
+        '<div class="space-y-10 divide-y divide-stone-200">' +
+
+          sec('1', 'Information We Collect',
+            p('When you use our website, create an account, or place an order, we collect the following information:') +
+            ul([
+              '<strong>Account details:</strong> Full name, email address, Philippine mobile number, and password (hashed — never stored in plaintext).',
+              '<strong>Delivery addresses:</strong> Street address, barangay, city, and district provided during checkout.',
+              '<strong>Order details:</strong> Items ordered, quantities, fulfillment method (pickup or delivery), preferred date and time, gift messages, and special notes.',
+              '<strong>Payment information:</strong> Your chosen payment method. For GCash payments, we receive the screenshot or proof of payment that you upload.',
+              '<strong>Google account information:</strong> If you sign in using Google, we receive your name and email address from Google as permitted by their OAuth consent screen.',
+              '<strong>Technical data:</strong> Server-side session tokens used to keep you signed in. These are not shared with third parties.'
+            ])
+          ) +
+
+          '<div class="pt-10">' + sec('2', 'How We Use Your Information',
+            p('We use the information we collect solely to operate and improve our online flower shop. Specifically, we use it to:') +
+            ul([
+              'Process and fulfill your orders (bouquet preparation, delivery coordination, or store pickup).',
+              'Send order status notifications and updates within your account.',
+              'Verify GCash payment proofs submitted during checkout.',
+              'Provide access to your order history and account settings.',
+              'Send password-reset links when requested (only if email is configured).',
+              'Respond to your questions or concerns.',
+              'Maintain the security of our website and prevent fraud.'
+            ]) +
+            p('We do not use your information for automated profiling, targeted advertising, or any purpose unrelated to fulfilling your order.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('3', 'Order and Payment Information',
+            p('Orders and payment records are stored in our secure database. All GCash payment proof images you upload are transferred to and stored on Cloudinary, a secure cloud media service, solely for payment verification by our team. Payment records are retained as part of your order history.') +
+            p('Payment verification is performed manually by an authorized member of our team. We do not store your GCash account credentials, card numbers, or online banking details.') +
+            p('Bank Transfer (BDO) was a previously accepted payment method. Historical records of such orders are retained for order history purposes only. This payment method is no longer available for new orders.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('4', 'Uploaded Files and Images',
+            p('Payment proof images (screenshots or photos of GCash transactions) are uploaded directly to Cloudinary, our cloud image hosting provider. These files are:') +
+            ul([
+              'Accessible only to authorized Umaira Florist team members.',
+              'Used exclusively to verify that payment has been made.',
+              'Not shared publicly or used for any other purpose.'
+            ]) +
+            p('Product photos displayed on the website are managed by our admin team and are not related to customer-uploaded files.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('5', 'Data Storage and Security',
+            p('Your personal information is stored on our secure server. We implement reasonable administrative, technical, and physical safeguards to protect your information from unauthorized access, disclosure, alteration, and destruction. These include:') +
+            ul([
+              'Password hashing (plain-text passwords are never stored).',
+              'Server-side session tokens that expire after inactivity.',
+              'Rate limiting on sign-in and order placement to prevent abuse.',
+              'HTTPS encryption in transit (required when hosted on a production server).'
+            ]) +
+            p('While we take these precautions, no data transmission over the internet is completely secure. We encourage you to protect your account by using a strong, unique password.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('6', 'Third-Party Services',
+            p('We work with the following third-party services to operate our website. Each is governed by its own privacy policy:') +
+            ul([
+              '<strong>Google (OAuth sign-in):</strong> Used if you choose to sign in with your Google account. We receive only your name and email. <em>google.com/privacy</em>',
+              '<strong>Cloudinary:</strong> Cloud image storage for payment proof uploads. <em>cloudinary.com/privacy</em>',
+              '<strong>Firebase / Google Firestore:</strong> Used for backend data synchronization. <em>firebase.google.com/support/privacy</em>',
+              '<strong>Email provider:</strong> Used only to deliver password-reset links when you request one, if email is configured by the shop administrator.'
+            ]) +
+            p('We do not sell, rent, or trade your personal information to any third party for marketing purposes.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('7', 'Cookies and Similar Technologies',
+            p('Our website uses browser session storage and local storage to maintain your sign-in session, remember items in your cart, and preserve your preferences between pages. We do not use third-party tracking cookies or advertising cookies.') +
+            p('You may clear your browser\'s local storage at any time through your browser settings, which will sign you out of your account.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('8', 'Your Rights Under RA 10173',
+            p('As a data subject under the Philippine Data Privacy Act, you have the following rights:') +
+            ul([
+              '<strong>Right to be informed</strong> — to know how your personal data is being processed.',
+              '<strong>Right to access</strong> — to obtain a copy of your personal data we hold.',
+              '<strong>Right to rectification</strong> — to correct inaccurate or incomplete personal data.',
+              '<strong>Right to erasure</strong> — to request deletion of your personal data, subject to legal and operational requirements.',
+              '<strong>Right to data portability</strong> — to receive your data in a structured, commonly used format.',
+              '<strong>Right to object</strong> — to object to the processing of your personal data in certain circumstances.'
+            ]) +
+            p('To exercise any of these rights, please contact us using the details in Section 9.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('9', 'Contact Us',
+            p('If you have questions about this Privacy Policy or wish to exercise your data privacy rights, please contact us:') +
+            '<div class="bg-[#EBF1EC]/40 border border-[#647D69]/20 rounded-2xl p-5 mt-3 space-y-1.5 text-sm">' +
+              '<p><strong>Umaira Florist Atelier</strong></p>' +
+              '<p>Email: <a href="mailto:' + _email + '" class="store-email-val text-[#647D69] font-medium hover:underline">' + _email + '</a></p>' +
+              '<p>Phone: <a href="tel:' + _phone.replace(/[^+\d]/g, '') + '" class="store-phone-val text-[#647D69] font-medium hover:underline">' + _phone + '</a></p>' +
+              '<p class="text-stone-500 italic">[BUSINESS ADDRESS &#8212; to be confirmed by shop owner]</p>' +
+            '</div>'
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('10', 'Policy Updates',
+            p('We may update this Privacy Policy from time to time to reflect changes in our practices or applicable law. The updated policy will be posted on this page with a revised effective date. We encourage you to review this page periodically. Your continued use of our website after any changes constitutes acceptance of the updated policy.')
+          ) + '</div>' +
+
+        '</div>' +
+
+        '<div class="mt-16 pt-8 border-t border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-4">' +
+          '<button type="button" onclick="window.appRouter.navigate(\'home\')" ' +
+            'class="inline-flex items-center gap-2 py-3 px-6 rounded-2xl bg-[#647D69] hover:bg-[#526B57] text-white font-bold text-sm transition shadow-md shadow-[#647D69]/20">' +
+            '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">' +
+              '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m7-7-7 7 7 7"/>' +
+            '</svg>' +
+            'Return to Store' +
+          '</button>' +
+          '<button type="button" onclick="window.appRouter.navigate(\'terms\')" ' +
+            'class="inline-flex items-center gap-2 py-3 px-6 rounded-2xl bg-white border border-stone-300 hover:bg-[#FFF9F5] text-stone-800 font-bold text-sm transition">' +
+            'View Terms of Service' +
+            '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">' +
+              '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7 7 7-7 7"/>' +
+            '</svg>' +
+          '</button>' +
+        '</div>' +
+
+      '</div>';
+  }
+
+  /* =====================================================================
+     6.7 TERMS OF SERVICE PAGE
+     ===================================================================== */
+  function renderTermsOfServiceView() {
+    var _st = window.appState;
+    var _email = (_st && _st.getStoreEmail && _st.getStoreEmail()) || 'concierge@umairaflorist.com';
+    var _phone = (_st && _st.getStorePhone && _st.getStorePhone()) || '+63 917 892 4310';
+    var sec = function (num, title, body) {
+      return '<section class="space-y-3">' +
+        '<h2 class="font-serif text-xl sm:text-2xl font-bold text-stone-900 flex items-start gap-2">' +
+          '<span class="text-[#647D69] font-serif">' + num + '.</span>' +
+          '<span>' + title + '</span>' +
+        '</h2>' +
+        '<div class="text-stone-700 leading-relaxed space-y-3 pl-6">' + body + '</div>' +
+      '</section>';
+    };
+    var p = function (t) { return '<p>' + t + '</p>'; };
+    var ul = function (items) { return '<ul class="list-disc list-outside pl-5 space-y-1.5">' + items.map(function (i) { return '<li>' + i + '</li>'; }).join('') + '</ul>'; };
+    var note = function (t) {
+      return '<div class="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm text-amber-800">' + t + '</div>';
+    };
+
+    return '' +
+      '<div class="py-12 sm:py-16 lg:py-20 px-6 max-w-3xl mx-auto">' +
+
+        '<button type="button" onclick="window.appRouter.navigate(\'home\')" ' +
+          'class="inline-flex items-center gap-2 text-sm text-[#647D69] hover:text-[#526B57] font-semibold mb-10 group transition-colors">' +
+          '<svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">' +
+            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m7-7-7 7 7 7"/>' +
+          '</svg>' +
+          'Return to Store' +
+        '</button>' +
+
+        '<div class="text-center mb-12 sm:mb-16">' +
+          '<div class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-[#647D69] mb-4">' +
+            '<span class="w-6 h-px bg-[#647D69]/40"></span>' +
+            '<span>Umaira Florist Atelier</span>' +
+            '<span class="w-6 h-px bg-[#647D69]/40"></span>' +
+          '</div>' +
+          '<h1 class="font-serif text-4xl sm:text-5xl font-bold text-stone-900 leading-tight">Terms of Service</h1>' +
+          '<p class="mt-4 text-stone-500 text-sm">Effective: November 2026 &nbsp;&middot;&nbsp; Philippines</p>' +
+          '<p class="mt-3 text-stone-600 text-sm max-w-xl mx-auto leading-relaxed">' +
+            'Please read these terms carefully before using the Umaira Florist Atelier website or placing an order. By accessing our website or completing a purchase, you agree to be bound by these terms.' +
+          '</p>' +
+        '</div>' +
+
+        '<div class="space-y-10 divide-y divide-stone-200">' +
+
+          sec('1', 'General Use of Our Website',
+            p('Umaira Florist Atelier (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) operates an online flower shop serving customers in the Philippines. By accessing this website, you agree to use it only for lawful purposes and in a manner that does not infringe the rights of others.') +
+            p('We reserve the right to modify or discontinue any part of the website at any time without prior notice.')
+          ) +
+
+          '<div class="pt-10">' + sec('2', 'Account Registration and Security',
+            p('You may browse our collections as a guest. Creating an account allows you to track orders, manage your profile, and access your purchase history. When registering, you must provide accurate information including your full name, a valid email address, and a Philippine mobile number.') +
+            p('You are responsible for maintaining the confidentiality of your account credentials. If you sign in using Google, your account is additionally governed by Google’s Terms of Service. You must not share your account with others.') +
+            p('We reserve the right to suspend or terminate accounts found to be misused, providing false information, or engaging in prohibited activities.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('3', 'Product Descriptions, Availability, and Pricing',
+            p('All products are described to the best of our ability. Product photos are representative; actual flowers may vary slightly in shape, shade, and size depending on seasonal availability.') +
+            p('All prices are in Philippine Pesos (₱) and are inclusive of applicable charges as displayed at checkout. Prices are subject to change without prior notice, but changes will never apply to orders already placed and confirmed.') +
+            p('Product availability is subject to stock. We reserve the right to adjust availability at any time. If an item in your order becomes unavailable after placement, we will contact you to discuss alternatives.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('4', 'Ready-Made and Customized Bouquet Orders',
+            p('Our shop offers two types of floral products:') +
+            ul([
+              '<strong>Ready-Made Bouquets:</strong> Pre-designed arrangements available for immediate order from our Collections page.',
+              '<strong>Custom Bouquets:</strong> Arrangements built stem by stem using our Bouquet Studio, allowing you to select specific flowers, colors, and sizes.'
+            ]) +
+            p('Custom bouquet prices are calculated based on your selections. You will see the final price before confirming your order. Because custom bouquets are prepared specifically for you, additional lead time may be required.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('5', 'Order Placement, Confirmation, and Cancellation',
+            p('An order is considered placed once you complete checkout and receive an order number. Your order enters &ldquo;Confirmed&rdquo; status only after payment is verified (for GCash orders) or upon our acknowledgment (for cash orders).') +
+            p('Order modifications are only possible before preparation has begun. To request a change or cancellation, please contact us immediately using the details provided in Section 12.') +
+            p('Orders that are delivered or made ready for pickup are considered fulfilled. Once an order has been prepared or is out for delivery, cancellation may not be possible.') +
+            note('If you do not confirm delivery or report a concern within <strong>48 hours</strong> of a delivery attempt, or within <strong>24 hours</strong> of a pickup notification, the order will be automatically marked as confirmed.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('6', 'Payment Methods and Verification',
+            p('We currently accept the following payment methods:') +
+            ul([
+              '<strong>GCash (Online Payment):</strong> Payment is required in advance. After completing your order, you will be shown the GCash account details to pay to. You must upload a clear screenshot or photo of your confirmed GCash transaction as proof of payment. Orders will not be confirmed or prepared until payment is verified by our team.',
+              '<strong>Cash on Pickup:</strong> Payment is collected in cash at our shop at the time of pickup.',
+              '<strong>Cash on Delivery:</strong> Payment is collected in cash upon delivery.'
+            ]) +
+            p('Payment proofs are reviewed by our team. We reserve the right to reject proofs that are unclear, edited, or do not match the required amount. You will be notified if your proof is rejected and given the opportunity to resubmit.') +
+            p('Bank Transfer (BDO) is no longer available for new orders.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('7', 'Pickup and Delivery Policies',
+            p('We offer two fulfillment options:') +
+            ul([
+              '<strong>Store Pickup:</strong> Free of charge. A minimum preparation time applies (typically 2 hours for same-day pickups, subject to change). You will be notified when your order is ready.',
+              '<strong>Delivery:</strong> Available within our service area. A delivery fee applies, as shown at checkout. Free delivery is available for qualifying order amounts, as displayed at the time of purchase. Delivery is conducted during scheduled time slots (morning and afternoon).'
+            ]) +
+            p('Delivery addresses must be within our service area. We are not responsible for failed deliveries caused by incorrect addresses, unavailability of the recipient, or inaccessible locations. In the event of a failed delivery attempt, we will contact you to arrange a resolution.') +
+            note('Delivery availability, fees, and operating hours are subject to change. The most current information will always be shown during checkout.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('8', 'Refunds, Returns, and Order Concerns',
+            p('Because flowers are perishable products, we do not accept returns. All sales are considered final once an order has been prepared and fulfilled.') +
+            p('If you have a concern about the quality of your order — such as flowers that arrived wilted, damaged, or significantly different from what was ordered — please contact us within <strong>[TIMEFRAME — to be confirmed by shop owner]</strong> of receiving the order and provide clear photos. We will assess each concern on a case-by-case basis.') +
+            p('Any replacement or resolution offered is at the discretion of Umaira Florist Atelier and is not guaranteed.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('9', 'Product Substitutions',
+            p('Due to the natural and seasonal nature of flowers, specific stems, foliage, or decorative elements included in a bouquet may occasionally be unavailable. In such cases, we reserve the right to substitute with comparable flowers or materials of equal or greater value and similar aesthetic quality.') +
+            p('We will make every effort to maintain the overall style, color palette, and size of the arrangement. If a substitution significantly changes the composition of your order, we will notify you in advance whenever time permits.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('10', 'Prohibited Activities',
+            p('When using our website, you agree not to:') +
+            ul([
+              'Submit false, fraudulent, or misleading information during checkout or account registration.',
+              'Upload manipulated or fake payment proofs.',
+              'Attempt to circumvent or interfere with website security features.',
+              'Use automated tools, bots, or scripts to access, scrape, or submit data to our website.',
+              'Impersonate another person or use another person’s account without authorization.',
+              'Engage in any activity that disrupts the normal operation of our website or its users.'
+            ]) +
+            p('Violation of these terms may result in immediate account suspension and, where applicable, referral to appropriate legal authorities.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('11', 'Limitation of Liability',
+            p('Umaira Florist Atelier shall not be held liable for any indirect, incidental, or consequential damages arising from your use of our website or the fulfillment of orders. Our maximum liability for any claim arising from an order shall not exceed the amount paid for that specific order.') +
+            p('We are not responsible for damages resulting from events beyond our reasonable control, including natural disasters, supply chain disruptions, delivery partner failures, or other force majeure events.')
+          ) + '</div>' +
+
+          '<div class="pt-10">' + sec('12', 'Changes to These Terms and Contact Information',
+            p('We reserve the right to update these Terms of Service at any time. Changes will take effect immediately upon posting to this page with a revised effective date. Your continued use of the website after changes are posted constitutes acceptance of the updated terms.') +
+            p('For questions about these terms, to request order changes, or to raise any concerns, please contact us:') +
+            '<div class="bg-[#EBF1EC]/40 border border-[#647D69]/20 rounded-2xl p-5 mt-3 space-y-1.5 text-sm">' +
+              '<p><strong>Umaira Florist Atelier</strong></p>' +
+              '<p>Email: <a href="mailto:' + _email + '" class="store-email-val text-[#647D69] font-medium hover:underline">' + _email + '</a></p>' +
+              '<p>Phone: <a href="tel:' + _phone.replace(/[^+\d]/g, '') + '" class="store-phone-val text-[#647D69] font-medium hover:underline">' + _phone + '</a></p>' +
+              '<p class="text-stone-500 italic">[BUSINESS ADDRESS &#8212; to be confirmed by shop owner]</p>' +
+            '</div>'
+          ) + '</div>' +
+
+        '</div>' +
+
+        '<div class="mt-16 pt-8 border-t border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-4">' +
+          '<button type="button" onclick="window.appRouter.navigate(\'home\')" ' +
+            'class="inline-flex items-center gap-2 py-3 px-6 rounded-2xl bg-[#647D69] hover:bg-[#526B57] text-white font-bold text-sm transition shadow-md shadow-[#647D69]/20">' +
+            '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">' +
+              '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m7-7-7 7 7 7"/>' +
+            '</svg>' +
+            'Return to Store' +
+          '</button>' +
+          '<button type="button" onclick="window.appRouter.navigate(\'privacy\')" ' +
+            'class="inline-flex items-center gap-2 py-3 px-6 rounded-2xl bg-white border border-stone-300 hover:bg-[#FFF9F5] text-stone-800 font-bold text-sm transition">' +
+            'View Privacy Policy' +
+            '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">' +
+              '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7 7 7-7 7"/>' +
+            '</svg>' +
+          '</button>' +
+        '</div>' +
+
+      '</div>';
+  }
+
   var activeTypewriterObserver = null;
 
   function getTypewriterSegments(el) {
@@ -5034,6 +5361,12 @@
   proto.renderAboutView = function () {
     return wrapCustomerViewWithDecor('about', renderAboutView.apply(this, arguments));
   };
+  proto.renderPrivacyPolicyView = function () {
+    return wrapCustomerViewWithDecor('privacy', renderPrivacyPolicyView.apply(this, arguments));
+  };
+  proto.renderTermsOfServiceView = function () {
+    return wrapCustomerViewWithDecor('terms', renderTermsOfServiceView.apply(this, arguments));
+  };
 
   // Wrap all other standard customer view renderers with 50% visibility botanical framing
   ['renderBuilderView', 'renderCartView', 'renderCheckoutView', 'renderConfirmationView',
@@ -5076,6 +5409,14 @@
       destroyCareGuide3D();
       main.innerHTML = this.renderAboutView();
       initAboutPage();
+    } else if (view === 'privacy') {
+      destroyCareGuide3D();
+      main.innerHTML = this.renderPrivacyPolicyView();
+      main.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else if (view === 'terms') {
+      destroyCareGuide3D();
+      main.innerHTML = this.renderTermsOfServiceView();
+      main.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
       destroyCareGuide3D();
       origRenderView.call(this, view);

@@ -1,0 +1,125 @@
+{
+  "home": [
+    {
+      "id": "flr_1794707036402_85",
+      "src": "/image/backgound/image-removebg-preview%20(1).png",
+      "x": 100,
+      "y": 77,
+      "width": 240,
+      "rotation": 0,
+      "zIndex": 11,
+      "opacity": 0.65
+    },
+    {
+      "id": "flr_1794707201519_616",
+      "src": "/image/backgound/image-removebg-preview%20(14).png",
+      "x": 5,
+      "y": 100,
+      "width": 240,
+      "rotation": 0,
+      "zIndex": 12,
+      "opacity": 0.65
+    },
+    {
+      "id": "flr_1794707907185_966",
+      "src": "/image/backgound/image-removebg-preview%20(7).png",
+      "x": 86,
+      "y": 35,
+      "width": 233,
+      "rotation": 347,
+      "zIndex": 13,
+      "opacity": 0.65
+    }
+  ],
+  "collections": [
+    {
+      "id": "flr_1794708638993_132",
+      "src": "/image/backgound/download.png",
+      "x": 6,
+      "y": 16,
+      "width": 281,
+      "rotation": 35,
+      "zIndex": 11,
+      "opacity": 0.65
+    },
+    {
+      "id": "flr_1794708735939_532",
+      "src": "/image/backgound/image-removebg-preview%20(6).png",
+      "x": 81,
+      "y": 88,
+      "width": 370,
+      "rotation": 0,
+      "zIndex": 12,
+      "opacity": 0.65
+    }
+  ],
+  "builder": [
+    {
+      "id": "flr_1794706638047_5",
+      "src": "/image/backgound/image-removebg-preview%20(13).png",
+      "x": 92,
+      "y": 92,
+      "width": 240,
+      "rotation": 0,
+      "zIndex": 12,
+      "opacity": 0.65
+    },
+    {
+      "id": "flr_1794706707625_320",
+      "src": "/image/backgound/image-removebg-preview%20(9).png",
+      "x": 4,
+      "y": 48,
+      "width": 240,
+      "rotation": 0,
+      "zIndex": 13,
+      "opacity": 0.65
+    },
+    {
+      "id": "flr_1794706734505_926",
+      "src": "/image/backgound/image-removebg-preview%20(5).png",
+      "x": 65,
+      "y": 0,
+      "width": 240,
+      "rotation": 0,
+      "zIndex": 14,
+      "opacity": 0.65
+    }
+  ],
+  "cart": [],
+  "checkout": [],
+  "tracking": [],
+  "confirmation": [],
+  "auth": [],
+  "care": [
+    {
+      "id": "flr_1794708143592_217",
+      "src": "/image/backgound/image-removebg-preview.png",
+      "x": 0,
+      "y": 76,
+      "width": 363,
+      "rotation": 0,
+      "zIndex": 11,
+      "opacity": 0.65
+    },
+    {
+      "id": "flr_1794708180603_816",
+      "src": "/image/backgound/image-removebg-preview%20(8).png",
+      "x": 89,
+      "y": 0,
+      "width": 360,
+      "rotation": 0,
+      "zIndex": 12,
+      "opacity": 0.65
+    },
+    {
+      "id": "flr_1794708516681_663",
+      "src": "/image/backgound/image-removebg-preview%20(11).png",
+      "x": 92,
+      "y": 60,
+      "width": 240,
+      "rotation": 302,
+      "zIndex": 13,
+      "opacity": 0.65
+    }
+  ]
+}
