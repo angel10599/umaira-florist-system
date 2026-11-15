@@ -1,0 +1,59 @@
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Firebase credentials
+serviceAccountKey.json
+*serviceAccount*.json
+config/firebase-service-account.json
+
+# Dependencies
+node_modules/
+
+# Database data and backups
+data/
+backups/
+
+# Temporary files and browser testing
+scratch/
+tmp/
+tmp-*/
+tmp-chrome-*/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE and editor temporary files
+.vscode/
+.idea/
+
+# AI coding tools and local configurations
+.agent/
+.agents/
+.impeccable/
+
+# Python temporary files
+__pycache__/
+*.py[cod]
+
+# Customer-uploaded files - do not upload to GitHub
+assets/uploads/*
+!assets/uploads/.gitkeep
+
+# Firebase credentials and private keys
+serviceAccountKey.json
+*serviceAccount*.json
+.env
+.env.*
+!.env.example
+
+# Customer information
+image/reciept.jpg

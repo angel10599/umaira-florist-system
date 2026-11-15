@@ -1,0 +1,24 @@
+{
+  "name": "umaira-florist",
+  "version": "2.0.0",
+  "description": "Umaira Florist online shop: guest storefront, customer accounts and orders, and admin management.",
+  "private": true,
+  "main": "server.js",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/api.test.js",
+    "test:e2e": "node tests/e2e.test.js",
+    "orders": "node view-orders.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  },
+  "dependencies": {
+    "cloudinary": "^2.11.0",
+    "dotenv": "^18.0.10",
+    "firebase-admin": "^14.5.1"
+  }
+}

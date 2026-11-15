@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Umaira Florist | 10 Animated Homepage Background Concepts</title>
+
+  <!-- Google Fonts: Cormorant Garamond & Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Garamond', 'Georgia', 'serif'],
+            sans: ['"Manrope"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          colors: {
+            brand: {
+              primary: '#C7356D',
+              primaryHover: '#A82456',
+              secondary: '#FCD6E9',
+              gold: '#B88746',
+              dark: '#2D2228',
+              velvet: '#22181E',
+              muted: '#765C66',
+              border: '#F1D9E0',
+              borderHover: '#E4B5C7',
+              bg: '#FFF9FA',
+              white: '#FFFFFF'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Custom scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #FFF9FA; }
+    ::-webkit-scrollbar-thumb { background: #F1D9E0; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #C7356D; }
+
+    /* Glassmorphism primitives */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(241, 217, 224, 0.7);
+    }
+    .glass-dark {
+      background: rgba(45, 34, 40, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* Keyframe animations for CSS-based concepts */
+    @keyframes meshFloat1 {
+      0%, 100% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(40px, -50px) scale(1.12); }
+      66% { transform: translate(-30px, 30px) scale(0.92); }
+    }
+    @keyframes meshFloat2 {
+      0%, 100% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(-50px, 40px) scale(1.15); }
+      66% { transform: translate(35px, -35px) scale(0.95); }
+    }
+    @keyframes meshFloat3 {
+      0%, 100% { transform: translate(0px, 0px) scale(1); }
+      50% { transform: translate(45px, 35px) scale(1.08); }
+    }
+    @keyframes causticSweep {
+      0% { transform: rotate(-25deg) translateY(-20%) scale(1); opacity: 0.35; }
+      50% { transform: rotate(-22deg) translateY(10%) scale(1.08); opacity: 0.6; }
+      100% { transform: rotate(-25deg) translateY(-20%) scale(1); opacity: 0.35; }
+    }
+
+    .reduced-motion * {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  </style>
+</head>
+<body class="bg-[#FFF9FA] text-[#2D2228] font-sans antialiased min-h-screen flex flex-col selection:bg-[#FCD6E9] selection:text-[#C7356D]">
+
+  <!-- Top Sticky Navigation & Control Bar -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-[#F1D9E0]/80 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+      <!-- Brand & Title -->
+      <div class="flex items-center gap-3">
+        <a href="/" class="flex items-center gap-2 group">
+          <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-[#C7356D] to-[#EE94BD] flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+          </div>
+          <div>
+            <span class="font-serif font-bold text-lg text-[#2D2228] tracking-wide block leading-tight">Umaira Florist</span>
+            <span class="text-[10px] tracking-widest uppercase font-semibold text-[#765C66]">Interactive Background Lab</span>
+          </div>
+        </a>
+        <span class="hidden md:inline-block w-px h-6 bg-[#F1D9E0]"></span>
+        <span class="hidden md:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#FCD6E9]/60 text-[#C7356D] border border-[#F1D9E0]">
+          10 Animated Concepts Ready
+        </span>
+      </div>
+
+      <!-- Controls Toolbar -->
+      <div class="flex flex-wrap items-center gap-2.5 text-xs font-medium">
+        <!-- View Toggle (Single Active vs Grid Overview) -->
+        <div class="bg-[#F1D9E0]/40 p-1 rounded-xl flex items-center gap-1 border border-[#F1D9E0]">
+          <button id="btn-view-stage" onclick="setGalleryView('stage')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-[#2D2228] shadow-xs transition">
+            Focus Stage
+          </button>
+          <button id="btn-view-grid" onclick="setGalleryView('grid')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-[#765C66] hover:text-[#2D2228] transition">
+            Compare Grid (10)
+          </button>
+        </div>
+
+        <!-- Toggle Real Homepage Content Overlay -->
+        <label class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-[#F1D9E0] cursor-pointer hover:border-[#C7356D] transition shadow-2xs select-none">
+          <input type="checkbox" id="toggle-content-overlay" onchange="toggleContentOverlay(this.checked)" checked class="rounded text-[#C7356D] focus:ring-[#C7356D]">
+          <span class="text-[#2D2228] font-semibold text-xs">Simulate Storefront Overlay</span>
+        </label>
+
+        <!-- Speed Selector -->
+        <div class="flex items-center gap-1.5 bg-white border border-[#F1D9E0] px-3 py-1.5 rounded-xl shadow-2xs">
+          <span class="text-[#765C66] text-[11px]">Speed:</span>
+          <select id="speed-select" onchange="setAnimationSpeed(this.value)" class="bg-transparent text-xs font-bold text-[#C7356D] focus:outline-none cursor-pointer">
+            <option value="0.5">0.5x (Gentle)</option>
+            <option value="1.0" selected>1.0x (Normal)</option>
+            <option value="1.5">1.5x (Lively)</option>
+            <option value="2.0">2.0x (Fast)</option>
+          </select>
+        </div>
+
+        <!-- Intensity / Opacity -->
+        <div class="flex items-center gap-1.5 bg-white border border-[#F1D9E0] px-3 py-1.5 rounded-xl shadow-2xs">
+          <span class="text-[#765C66] text-[11px]">Opacity:</span>
+          <input type="range" id="opacity-slider" min="0.2" max="1.0" step="0.05" value="0.75" oninput="setAnimationOpacity(this.value)" class="w-16 accent-[#C7356D] cursor-pointer">
+          <span id="opacity-label" class="font-mono text-[10px] text-[#765C66] w-7 text-right">75%</span>
+        </div>
+
+        <!-- Accessibility: Reduced Motion -->
+        <button id="btn-reduced-motion" onclick="toggleReducedMotion()" class="px-2.5 py-1.5 rounded-xl border border-[#F1D9E0] bg-white text-[#765C66] hover:text-[#C7356D] hover:border-[#C7356D] transition flex items-center gap-1.5 text-xs font-semibold" title="Test reduced-motion accessibility preference">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>Motion: On</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Concept Pills Carousel -->
+    <div id="concept-pills-bar" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 overflow-x-auto border-t border-[#F1D9E0]/50 flex items-center gap-2 no-scrollbar">
+      <!-- Populated dynamically via JS -->
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       VIEWPORT 1: STAGE VIEW (Active Selected Concept in Full Screen Canvas)
+       ========================================================================= -->
+  <main id="stage-view" class="flex-1 relative overflow-hidden flex flex-col">
+    <!-- Active Animation Container (Absolute Fill) -->
+    <div id="animation-container" class="absolute inset-0 z-0 overflow-hidden pointer-events-none transition-opacity duration-700">
+      <!-- Active Canvas / DOM layers dynamically inserted here -->
+    </div>
+
+    <!-- Storefront UI Simulation Overlay (Toggleable) -->
+    <div id="storefront-overlay" class="relative z-10 flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-between pointer-events-auto transition-opacity duration-300">
+      <!-- Simulated Nav -->
+      <div class="glass-panel rounded-2xl px-6 py-3.5 flex items-center justify-between shadow-sm">
+        <div class="flex items-center gap-8">
+          <div class="font-serif font-bold text-xl text-[#2D2228] tracking-wide">Umaira Florist</div>
+          <div class="hidden md:flex items-center gap-6 text-xs font-semibold text-[#765C66]">
+            <span class="text-[#C7356D] border-b-2 border-[#C7356D] pb-0.5">Home</span>
+            <span class="hover:text-[#2D2228] cursor-pointer">Bouquet Studio</span>
+            <span class="hover:text-[#2D2228] cursor-pointer">Ready-Made</span>
+            <span class="hover:text-[#2D2228] cursor-pointer">Custom Builder</span>
+            <span class="hover:text-[#2D2228] cursor-pointer">About Us</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="px-4 py-2 rounded-xl bg-[#C7356D] text-white text-xs font-bold shadow-xs hover:bg-[#A82456] transition">
+            Build a Bouquet
+          </button>
+        </div>
+      </div>
+
+      <!-- Simulated Hero Section -->
+      <div class="my-auto py-12 max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/80 border border-[#F1D9E0] text-[#C7356D] text-xs font-semibold shadow-2xs mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#C7356D] animate-ping"></span>
+          Artisanal Fresh Blooms • Handcrafted in Iligan City
+        </div>
+        <h1 class="font-serif text-4xl sm:text-6xl font-bold text-[#2D2228] tracking-tight leading-[1.1] mb-5">
+          Crafted with Love,<br>
+          <span class="italic font-normal text-[#C7356D]">Rooted in Elegance.</span>
+        </h1>
+        <p class="text-sm sm:text-base text-[#765C66] font-normal leading-relaxed max-w-xl mb-8">
+          Experience boutique floral arrangements, customized stem by stem. From romantic anniversaries to intimate celebrations, every petal tells your story.
+        </p>
+        <div class="flex flex-wrap items-center gap-3">
+          <button class="px-6 py-3 rounded-xl bg-[#C7356D] hover:bg-[#A82456] text-white text-xs font-bold uppercase tracking-wider shadow-sm transition">
+            Explore Collection
+          </button>
+          <button class="px-6 py-3 rounded-xl bg-white/90 hover:bg-white text-[#2D2228] border border-[#F1D9E0] text-xs font-bold uppercase tracking-wider shadow-2xs transition">
+            Open Bouquet Builder
+          </button>
+        </div>
+      </div>
+
+      <!-- Simulated Card Showcase (Legibility Test) -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="glass-panel p-4 rounded-2xl shadow-2xs border border-[#F1D9E0]/80">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="text-xl">🌸</span>
+            <div>
+              <h4 class="font-serif font-bold text-sm text-[#2D2228]">Velvet Symphony</h4>
+              <p class="text-[11px] text-[#765C66]">Fresh Ecuadorian Roses & Baby's Breath</p>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-xs mt-3 pt-2 border-t border-[#F1D9E0]/60">
+            <span class="font-mono font-bold text-[#C7356D]">₱1,850.00</span>
+            <span class="px-2 py-0.5 rounded-md bg-[#FCD6E9]/60 text-[#C7356D] text-[10px] font-semibold">Best Seller</span>
+          </div>
+        </div>
+
+        <div class="glass-panel p-4 rounded-2xl shadow-2xs border border-[#F1D9E0]/80">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="text-xl">🌿</span>
+            <div>
+              <h4 class="font-serif font-bold text-sm text-[#2D2228]">Elysian Mist</h4>
+              <p class="text-[11px] text-[#765C66]">White Lilies, Hydrangea & Silver Eucalyptus</p>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-xs mt-3 pt-2 border-t border-[#F1D9E0]/60">
+            <span class="font-mono font-bold text-[#C7356D]">₱2,450.00</span>
+            <span class="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-semibold">In Season</span>
+          </div>
+        </div>
+
+        <div class="glass-panel p-4 rounded-2xl shadow-2xs border border-[#F1D9E0]/80">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="text-xl">✨</span>
+            <div>
+              <h4 class="font-serif font-bold text-sm text-[#2D2228]">Custom Studio</h4>
+              <p class="text-[11px] text-[#765C66]">Interactive 3D Ribbon & Paper Selector</p>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-xs mt-3 pt-2 border-t border-[#F1D9E0]/60">
+            <span class="font-semibold text-xs text-[#2D2228]">Personalized</span>
+            <span class="px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 text-[10px] font-semibold">Interactive</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Concept Specification Drawer (Bottom Right) -->
+    <div class="fixed bottom-5 right-5 z-40 max-w-sm w-full hidden md:block">
+      <div class="glass-panel rounded-2xl p-5 shadow-lg border border-[#F1D9E0] transition hover:shadow-xl">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span id="spec-badge-id" class="font-mono text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#C7356D] text-white">Concept 01</span>
+            <span id="spec-recommended-badge" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 border border-amber-300">⭐ Top 3 Recommended</span>
+          </div>
+          <button onclick="toggleSpecDrawer()" class="text-[#765C66] hover:text-[#2D2228] text-xs">
+            <svg id="spec-toggle-icon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+        </div>
+        <h3 id="spec-name" class="font-serif font-bold text-lg text-[#2D2228] leading-tight mb-1">Whispering Petals</h3>
+        <p id="spec-desc" class="text-xs text-[#765C66] leading-relaxed mb-3">
+          Delicate botanical rose and cherry blossom petals drifting with organic sinusoidal flutter.
+        </p>
+
+        <div id="spec-details" class="space-y-2 text-[11px] border-t border-[#F1D9E0]/70 pt-2.5">
+          <div class="flex items-start justify-between">
+            <span class="text-[#765C66]">Animation Behavior:</span>
+            <span id="spec-behavior" class="font-semibold text-[#2D2228] text-right max-w-[190px]">Pseudo-3D falling flutter with wind drift</span>
+          </div>
+          <div class="flex items-start justify-between">
+            <span class="text-[#765C66]">Implementation:</span>
+            <span id="spec-tech" class="font-mono text-[#C7356D] font-medium">HTML5 2D Canvas</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-[#765C66]">Performance:</span>
+            <span id="spec-perf" class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-semibold text-[10px]">60 FPS • &lt; 2% CPU</span>
+          </div>
+          <div class="flex items-center justify-between pt-1">
+            <span class="text-[#765C66]">Palette:</span>
+            <div id="spec-palette-chips" class="flex items-center gap-1.5">
+              <!-- Swatches -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       VIEWPORT 2: GRID VIEW (All 10 Concepts Rendered in Comparison Cards)
+       ========================================================================= -->
+  <section id="grid-view" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
+    <!-- Section Introduction -->
+    <div class="mb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FCD6E9]/60 text-[#C7356D] text-xs font-semibold mb-2">
+        Curated Design Exploration
+      </div>
+      <h2 class="font-serif font-bold text-3xl text-[#2D2228] tracking-tight">
+        10 Animated Background Explorations
+      </h2>
+      <p class="text-sm text-[#765C66] max-w-2xl mt-1">
+        Compare all 10 concepts live side-by-side. Click any concept card to expand it into the interactive Stage View with the simulated storefront overlay.
+      </p>
+    </div>
+
+    <!-- 10 Comparison Cards Grid -->
+    <div id="grid-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Populated dynamically via JS -->
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       EXECUTIVE RECOMMENDATION: TOP 3 PICKS
+       ========================================================================= -->
+  <section class="bg-white border-t border-[#F1D9E0] py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs font-bold uppercase tracking-wider">
+          Editorial Guidance
+        </span>
+        <span class="text-xs text-[#765C66]">Ponytail, Taste &amp; UI UX Pro Max</span>
+      </div>
+      <h2 class="font-serif font-bold text-2xl sm:text-3xl text-[#2D2228] tracking-tight mb-2">
+        Top 3 Recommended Backgrounds for Umaira Florist
+      </h2>
+      <p class="text-sm text-[#765C66] max-w-3xl mb-8">
+        Evaluated against brand harmony, customer legibility, mobile efficiency, and emotional resonance.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Pick 1 -->
+        <div class="p-6 rounded-2xl bg-gradient-to-b from-[#FFF9FA] to-white border-2 border-[#C7356D]/40 shadow-xs flex flex-col justify-between relative overflow-hidden group hover:border-[#C7356D] transition">
+          <div class="absolute top-3 right-3 text-2xl">🥇</div>
+          <div>
+            <span class="font-mono text-xs font-bold text-[#C7356D]">RANK 1 • #01</span>
+            <h3 class="font-serif font-bold text-xl text-[#2D2228] mt-1 mb-2">Whispering Petals</h3>
+            <p class="text-xs text-[#765C66] leading-relaxed mb-4">
+              Falling organic rose petals with soft wind sway and pseudo-3D tumbling. It immediately establishes Umaira as a high-end botanical artisan shop without being intrusive.
+            </p>
+            <ul class="text-[11px] text-[#765C66] space-y-1.5 mb-6">
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Direct emotional connection to fresh flowers</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Flawless contrast behind dark plum headlines</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Lightweight Canvas (uses cached petal shapes)</li>
+            </ul>
+          </div>
+          <button onclick="selectConcept(1); setGalleryView('stage');" class="w-full py-2.5 rounded-xl bg-[#C7356D] hover:bg-[#A82456] text-white text-xs font-bold transition shadow-xs">
+            Preview Concept 1
+          </button>
+        </div>
+
+        <!-- Pick 2 -->
+        <div class="p-6 rounded-2xl bg-gradient-to-b from-[#FFF9FA] to-white border-2 border-amber-300 shadow-xs flex flex-col justify-between relative overflow-hidden group hover:border-amber-400 transition">
+          <div class="absolute top-3 right-3 text-2xl">🥈</div>
+          <div>
+            <span class="font-mono text-xs font-bold text-amber-700">RANK 2 • #02</span>
+            <h3 class="font-serif font-bold text-xl text-[#2D2228] mt-1 mb-2">Aurora Pétale (Mesh)</h3>
+            <p class="text-xs text-[#765C66] leading-relaxed mb-4">
+              Slowly breathing organic mesh gradient blending warm ivory, blush pink, soft peach, and muted lilac. Ultra-modern luxury cosmetic and editorial floral feel.
+            </p>
+            <ul class="text-[11px] text-[#765C66] space-y-1.5 mb-6">
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> 100% GPU accelerated CSS radial blend</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Zero particle distraction for fast readers</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Subtly elevates brand perception to luxury tier</li>
+            </ul>
+          </div>
+          <button onclick="selectConcept(2); setGalleryView('stage');" class="w-full py-2.5 rounded-xl bg-white hover:bg-[#FCD6E9] text-[#2D2228] border border-[#F1D9E0] text-xs font-bold transition shadow-xs">
+            Preview Concept 2
+          </button>
+        </div>
+
+        <!-- Pick 3 -->
+        <div class="p-6 rounded-2xl bg-gradient-to-b from-[#FFF9FA] to-white border-2 border-purple-200 shadow-xs flex flex-col justify-between relative overflow-hidden group hover:border-purple-300 transition">
+          <div class="absolute top-3 right-3 text-2xl">🥉</div>
+          <div>
+            <span class="font-mono text-xs font-bold text-purple-700">RANK 3 • #04</span>
+            <h3 class="font-serif font-bold text-xl text-[#2D2228] mt-1 mb-2">Satin Bloom (Silk Waves)</h3>
+            <p class="text-xs text-[#765C66] leading-relaxed mb-4">
+              Harmonic wave ribbons simulating flowing satin ribbon and Korean floral wrapping paper swaying in gentle harmonic currents.
+            </p>
+            <ul class="text-[11px] text-[#765C66] space-y-1.5 mb-6">
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Direct metaphor for bouquet wrapping ribbons</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Hypnotic, calming rhythm (stress-free ordering)</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Clean linear structure keeps content anchored</li>
+            </ul>
+          </div>
+          <button onclick="selectConcept(4); setGalleryView('stage');" class="w-full py-2.5 rounded-xl bg-white hover:bg-[#FCD6E9] text-[#2D2228] border border-[#F1D9E0] text-xs font-bold transition shadow-xs">
+            Preview Concept 4
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#2D2228] text-white/70 py-6 border-t border-[#22181E] text-xs text-center">
+    <p>Umaira Florist Background Design Lab • Built with Vanilla JS &amp; Canvas • Zero external dependencies • Does not alter production customer homepage</p>
+  </footer>
+
+  <!-- =========================================================================
+       ANIMATION ENGINES SCRIPT
+       ========================================================================= -->
+  <script>
+    // Global parameters
+    let currentConceptId = 1;
+    let globalSpeed = 1.0;
+    let globalOpacity = 0.75;
+    let prefersReducedMotion = false;
+    let currentAnimFrame = null;
+    let activeCanvas = null;
+
+    // 10 Concept Definitions
+    const CONCEPTS = [
+      {
+        id: 1,
+        name: 'Whispering Petals',
+        tagline: 'Floating Botanical Rose Petals',
+        description: 'Delicate botanical petals gently drifting downward with organic sinusoidal sway and 3D fluttering rotation.',
+        behavior: 'Continuous downward drift, pseudo-3D z-axis tumbling, randomized horizontal air drift.',
+        colors: ['#FCD6E9', '#F7C2DC', '#C7356D', '#FFF0F5', '#FAF5F0'],
+        tech: 'HTML5 2D Canvas',
+        perf: '60 FPS • < 2% CPU',
+        recommended: true,
+        rank: 1
+      },
+      {
+        id: 2,
+        name: 'Aurora Pétale',
+        tagline: 'Animated Layered Mesh Gradients',
+        description: 'Four multi-stop organic gradient blobs smoothly morphing in slow 18-second breathing cycles.',
+        behavior: 'Slow, fluid expansion, counter-directional drift, seamless GPU radial blending.',
+        colors: ['#FFF9FA', '#FCD6E9', '#F7C2DC', '#FFF0F5', '#EFE9F4'],
+        tech: 'CSS GPU Compositing',
+        perf: '60 FPS • Hardware Accelerated',
+        recommended: true,
+        rank: 2
+      },
+      {
+        id: 3,
+        name: 'Luminous Dewdrops',
+        tagline: 'Moving Soft-Glow Ambient Orbs',
+        description: 'Large diffuse glowing spheres floating in ambient Lissajous orbits that gently respond to cursor proximity.',
+        behavior: 'Floating harmonic orbits with gentle spring inertia toward mouse position.',
+        colors: ['#FCD6E9', '#F987C5', '#FFF4E6', '#F3E8FF', '#FFFFFF'],
+        tech: 'Canvas Radial Bloom',
+        perf: '60 FPS • Low overhead',
+        recommended: false
+      },
+      {
+        id: 4,
+        name: 'Satin Bloom',
+        tagline: 'Flowing Silk Ribbon Waves',
+        description: 'Overlapping harmonic sine/cosine ribbons simulating elegant satin ribbon and Korean wrapping paper swaying gently.',
+        behavior: 'Continuous undulation of 4 phase-shifted harmonic curves with gradient fills.',
+        colors: ['#FFF9FA', '#FCD6E9', '#F1D9E0', '#B88746'],
+        tech: 'Canvas Trigonometric Waves',
+        perf: '60 FPS • Mathematical precision',
+        recommended: true,
+        rank: 3
+      },
+      {
+        id: 5,
+        name: 'Floral Stardust',
+        tagline: 'Floating Micro-Pollen Particles',
+        description: 'A delicate constellation of glowing pollen and golden botanical dust rising upward with subtle twinkling.',
+        behavior: 'Anti-gravity gentle ascent with harmonic drift and random luminance pulsing.',
+        colors: ['#B88746', '#FCD6E9', '#FFE6A7', '#FFFFFF'],
+        tech: 'Canvas Particle Engine',
+        perf: '60 FPS • Particle pooling',
+        recommended: false
+      },
+      {
+        id: 6,
+        name: 'Prismatic Glass Mesh',
+        tagline: 'Glassmorphic Refractive Blobs',
+        description: 'Layered fluid organic blobs with backdrop blur and subtle chromatic refraction along petal contours.',
+        behavior: 'Organic liquid droplets coalescing and parting in slow elliptical paths.',
+        colors: ['#FCD6E9', '#F3E8FF', '#FFF0F5', '#2D2228'],
+        tech: 'SVG Filter + CSS Backdrop',
+        perf: '60 FPS on modern GPUs',
+        recommended: false
+      },
+      {
+        id: 7,
+        name: 'Botanical Parallax Silhouette',
+        tagline: 'Multi-Layer Depth Planes',
+        description: 'Three distinct depth planes of delicate eucalyptus leaves and peony silhouettes responding to mouse and scroll movement.',
+        behavior: 'Depth-based parallax displacement with subtle continuous swaying.',
+        colors: ['#EAD7DC', '#D8B8C4', '#F4E3E8', '#2D2228'],
+        tech: 'SVG Path Layers + Canvas',
+        perf: '60 FPS • Cached paths',
+        recommended: false
+      },
+      {
+        id: 8,
+        name: 'Caustic Sunlight',
+        tagline: 'Morning Greenhouse Sunbeams',
+        description: 'Gentle diagonal shafts of morning sun filtering through a greenhouse glass roof with shimmering light caustics.',
+        behavior: 'Slow diagonal angular sweep with pulsing luminescence and refracted light ribbons.',
+        colors: ['#FFFDF5', '#FFF3D6', '#FCD6E9', '#FAF5F0'],
+        tech: 'Canvas Light Rays',
+        perf: '60 FPS • Additive blending',
+        recommended: false
+      },
+      {
+        id: 9,
+        name: 'Velvet Bokeh',
+        tagline: 'Soft Moving Lens Aperture Flares',
+        description: 'Dreamy out-of-focus circular and hexagonal bokeh highlights gliding across a soft blush and plum vignette.',
+        behavior: 'Multi-plane focal drift with soft pulse rates simulating an f/1.4 camera lens.',
+        colors: ['#FCD6E9', '#DE5F95', '#B88746', '#392D33'],
+        tech: 'Canvas Aperture Blur',
+        perf: '60 FPS • Fast radial drawing',
+        recommended: false
+      },
+      {
+        id: 10,
+        name: 'Chroma Bloom',
+        tagline: 'Scroll & Time-Reactive Atmosphere',
+        description: 'Living ambient background that smoothly shifts its lighting mood from morning blush to golden noon and romantic twilight.',
+        behavior: 'Interpolated multi-color matrix shifting continuously or tied to customer scroll.',
+        colors: ['#FFF9FA', '#FCE4EC', '#FFF8E1', '#2D2228'],
+        tech: 'Dynamic Canvas Palette Interpolation',
+        perf: '60 FPS • Zero GC alloc',
+        recommended: false
+      }
+    ];
+
+    // =========================================================================
+    // INITIALIZATION & UI CONTROLS
+    // =========================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      renderConceptPills();
+      renderGridCards();
+      selectConcept(1);
+    });
+
+    function renderConceptPills() {
+      const container = document.getElementById('concept-pills-bar');
+      if (!container) return;
+      container.innerHTML = CONCEPTS.map(c => `
+        <button onclick="selectConcept(${c.id})" id="pill-concept-${c.id}" class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition flex items-center gap-1.5 ${c.id === 1 ? 'bg-[#C7356D] text-white shadow-xs' : 'bg-white text-[#765C66] hover:bg-[#FCD6E9]/50 border border-[#F1D9E0]'}">
+          <span class="font-mono text-[10px] opacity-75">${String(c.id).padStart(2, '0')}</span>
+          <span>${c.name}</span>
+          ${c.recommended ? '<span class="text-[10px]">⭐</span>' : ''}
+        </button>
+      `).join('');
+    }
+
+    function renderGridCards() {
+      const container = document.getElementById('grid-cards-container');
+      if (!container) return;
+      container.innerHTML = CONCEPTS.map(c => `
+        <div class="bg-white rounded-2xl border border-[#F1D9E0] shadow-2xs overflow-hidden flex flex-col justify-between hover:shadow-md transition group">
+          <!-- Mini Preview Canvas / Animation Window -->
+          <div class="h-44 relative overflow-hidden bg-[#FFF9FA] border-b border-[#F1D9E0] cursor-pointer" onclick="selectConcept(${c.id}); setGalleryView('stage');">
+            <div id="grid-anim-preview-${c.id}" class="absolute inset-0"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent flex items-end p-3 text-white">
+              <span class="font-serif font-bold text-base drop-shadow-sm">${c.name}</span>
+            </div>
+            ${c.recommended ? `<span class="absolute top-2.5 right-2.5 text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 border border-amber-300 shadow-2xs">Top 3 Pick</span>` : ''}
+          </div>
+
+          <!-- Card Details -->
+          <div class="p-4 flex-1 flex flex-col justify-between">
+            <div>
+              <p class="text-xs text-[#765C66] line-clamp-2 mb-3">${c.description}</p>
+              <div class="flex items-center justify-between text-[11px] text-[#765C66] mb-2">
+                <span>Tech: <strong class="text-[#2D2228] font-mono">${c.tech}</strong></span>
+                <span class="text-emerald-700 font-semibold">${c.perf.split('•')[0]}</span>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-[#F1D9E0]/60 flex items-center justify-between">
+              <div class="flex items-center gap-1">
+                ${c.colors.map(hex => `<span class="w-3.5 h-3.5 rounded-full border border-black/10" style="background-color: ${hex}"></span>`).join('')}
+              </div>
+              <button onclick="selectConcept(${c.id}); setGalleryView('stage');" class="px-3 py-1 rounded-lg bg-[#FFF9FA] hover:bg-[#FCD6E9] text-[#C7356D] border border-[#F1D9E0] text-xs font-bold transition">
+                Inspect Stage →
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Mount mini preview canvases for grid cards
+      setTimeout(() => mountGridPreviews(), 100);
+    }
+
+    function selectConcept(id) {
+      currentConceptId = id;
+      const concept = CONCEPTS.find(c => c.id === id);
+      if (!concept) return;
+
+      // Update pills
+      CONCEPTS.forEach(c => {
+        const pill = document.getElementById(`pill-concept-${c.id}`);
+        if (pill) {
+          if (c.id === id) {
+            pill.className = 'px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition flex items-center gap-1.5 bg-[#C7356D] text-white shadow-xs';
+          } else {
+            pill.className = 'px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition flex items-center gap-1.5 bg-white text-[#765C66] hover:bg-[#FCD6E9]/50 border border-[#F1D9E0]';
+          }
+        }
+      });
+
+      // Update Spec Drawer
+      const idBadge = document.getElementById('spec-badge-id');
+      const recBadge = document.getElementById('spec-recommended-badge');
+      const nameEl = document.getElementById('spec-name');
+      const descEl = document.getElementById('spec-desc');
+      const behEl = document.getElementById('spec-behavior');
+      const techEl = document.getElementById('spec-tech');
+      const perfEl = document.getElementById('spec-perf');
+      const chipsEl = document.getElementById('spec-palette-chips');
+
+      if (idBadge) idBadge.innerText = `Concept ${String(concept.id).padStart(2, '0')}`;
+      if (recBadge) recBadge.classList.toggle('hidden', !concept.recommended);
+      if (nameEl) nameEl.innerText = concept.name;
+      if (descEl) descEl.innerText = concept.description;
+      if (behEl) behEl.innerText = concept.behavior;
+      if (techEl) techEl.innerText = concept.tech;
+      if (perfEl) perfEl.innerText = concept.perf;
+
+      if (chipsEl) {
+        chipsEl.innerHTML = concept.colors.map(hex => `
+          <span class="w-3.5 h-3.5 rounded-full border border-[#2D2228]/20 shadow-2xs" style="background-color: ${hex}" title="${hex}"></span>
+        `).join('');
+      }
+
+      // Stop previous animation
+      if (currentAnimFrame) {
+        cancelAnimationFrame(currentAnimFrame);
+        currentAnimFrame = null;
+      }
+
+      // Mount into Stage
+      mountStageAnimation(concept);
+    }
+
+    function setGalleryView(view) {
+      const stageEl = document.getElementById('stage-view');
+      const gridEl = document.getElementById('grid-view');
+      const btnStage = document.getElementById('btn-view-stage');
+      const btnGrid = document.getElementById('btn-view-grid');
+
+      if (view === 'stage') {
+        stageEl.classList.remove('hidden');
+        gridEl.classList.add('hidden');
+        btnStage.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-[#2D2228] shadow-xs transition';
+        btnGrid.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-[#765C66] hover:text-[#2D2228] transition';
+        selectConcept(currentConceptId);
+      } else {
+        stageEl.classList.add('hidden');
+        gridEl.classList.remove('hidden');
+        btnGrid.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-[#2D2228] shadow-xs transition';
+        btnStage.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-[#765C66] hover:text-[#2D2228] transition';
+      }
+    }
+
+    function toggleContentOverlay(visible) {
+      const el = document.getElementById('storefront-overlay');
+      if (el) el.style.opacity = visible ? '1' : '0.04';
+    }
+
+    function setAnimationSpeed(val) {
+      globalSpeed = parseFloat(val) || 1.0;
+    }
+
+    function setAnimationOpacity(val) {
+      globalOpacity = parseFloat(val) || 0.75;
+      const label = document.getElementById('opacity-label');
+      if (label) label.innerText = Math.round(globalOpacity * 100) + '%';
+      const container = document.getElementById('animation-container');
+      if (container) container.style.opacity = globalOpacity;
+    }
+
+    function toggleReducedMotion() {
+      prefersReducedMotion = !prefersReducedMotion;
+      const btn = document.getElementById('btn-reduced-motion');
+      document.body.classList.toggle('reduced-motion', prefersReducedMotion);
+      if (btn) {
+        if (prefersReducedMotion) {
+          btn.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>Motion: Reduced</span>`;
+        } else {
+          btn.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500"></span><span>Motion: On</span>`;
+        }
+      }
+      selectConcept(currentConceptId);
+    }
+
+    function toggleSpecDrawer() {
+      const details = document.getElementById('spec-details');
+      const icon = document.getElementById('spec-toggle-icon');
+      if (details) {
+        const isHidden = details.classList.contains('hidden');
+        details.classList.toggle('hidden', !isHidden);
+        if (icon) icon.style.transform = isHidden ? 'rotate(0deg)' : 'rotate(180deg)';
+      }
+    }
+
+    // =========================================================================
+    // ANIMATION ENGINES MOUNTING
+    // =========================================================================
+    function mountStageAnimation(concept) {
+      const container = document.getElementById('animation-container');
+      if (!container) return;
+      container.innerHTML = '';
+      container.style.opacity = globalOpacity;
+
+      if (concept.id === 2) {
+        // Concept 2: CSS Mesh Gradient
+        mountConcept2Mesh(container);
+      } else {
+        // Canvas-driven Concepts (1, 3, 4, 5, 6, 7, 8, 9, 10)
+        const canvas = document.createElement('canvas');
+        canvas.className = 'w-full h-full block';
+        container.appendChild(canvas);
+        activeCanvas = canvas;
+
+        const resize = () => {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        };
+        resize();
+        window.removeEventListener('resize', resize);
+        window.addEventListener('resize', resize);
+
+        switch (concept.id) {
+          case 1: runConcept1Petals(canvas); break;
+          case 3: runConcept3Orbs(canvas); break;
+          case 4: runConcept4Satin(canvas); break;
+          case 5: runConcept5Pollen(canvas); break;
+          case 6: runConcept6Prismatic(canvas); break;
+          case 7: runConcept7Parallax(canvas); break;
+          case 8: runConcept8Caustics(canvas); break;
+          case 9: runConcept9Bokeh(canvas); break;
+          case 10: runConcept10Chroma(canvas); break;
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // CONCEPT 1: WHISPERING PETALS (Physics-based Falling Sakura/Rose Petals)
+    // -------------------------------------------------------------------------
+    function runConcept1Petals(canvas) {
+      const ctx = canvas.getContext('2d');
+      const count = 42;
+      const petals = [];
+      const colors = ['#FCD6E9', '#F7C2DC', '#EE94BD', '#FFF0F5', '#DE5F95'];
+
+      for (let i = 0; i < count; i++) {
+        petals.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: 10 + Math.random() * 16,
+          speedY: 0.7 + Math.random() * 1.3,
+          speedX: (Math.random() - 0.5) * 0.8,
+          rotation: Math.random() * Math.PI * 2,
+          rotationSpeed: (Math.random() - 0.5) * 0.02,
+          flutter: Math.random() * Math.PI * 2,
+          flutterSpeed: 0.03 + Math.random() * 0.04,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 0.45 + Math.random() * 0.45
+        });
+      }
+
+      function drawPetal(p) {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation);
+        // 3D flutter scale
+        const scaleY = Math.cos(p.flutter);
+        ctx.scale(1, scaleY);
+
+        ctx.beginPath();
+        // Teardrop curved rose petal path
+        ctx.moveTo(0, -p.size);
+        ctx.bezierCurveTo(p.size * 0.8, -p.size * 0.6, p.size * 0.8, p.size * 0.6, 0, p.size);
+        ctx.bezierCurveTo(-p.size * 0.8, p.size * 0.6, -p.size * 0.8, -p.size * 0.6, 0, -p.size);
+        ctx.closePath();
+
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.shadowColor = 'rgba(216, 69, 124, 0.15)';
+        ctx.shadowBlur = 6;
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const speed = prefersReducedMotion ? 0.02 : globalSpeed;
+
+        for (const p of petals) {
+          p.y += p.speedY * speed;
+          p.x += Math.sin(p.flutter) * 0.9 * speed + p.speedX * speed;
+          p.rotation += p.rotationSpeed * speed;
+          p.flutter += p.flutterSpeed * speed;
+
+          if (p.y > canvas.height + p.size * 2) {
+            p.y = -p.size * 2;
+            p.x = Math.random() * canvas.width;
+          }
+          if (p.x < -p.size * 2) p.x = canvas.width + p.size * 2;
+          if (p.x > canvas.width + p.size * 2) p.x = -p.size * 2;
+
+          drawPetal(p);
+        }
+
+        currentAnimFrame = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // -------------------------------------------------------------------------
+    // CONCEPT 2: AURORA PETALE (Layered Mesh Gradients via CSS GPU)
+    // -------------------------------------------------------------------------
+    function mountConcept2Mesh(container) {
+      const meshWrapper = document.createElement('div');
+      meshWrapper.className = 'w-full h-full relative overflow-hidden bg-[#FFF9FA]';
+
+      meshWrapper.innerHTML = `
+        <div class="absolute w-[600px] h-[600px] rounded-full blur-[110px] -top-20 -left-20 bg-gradient-to-tr from-[#FCD6E9]/70 to-[#FFF0F5]/80 pointer-events-none" style="animation: meshFloat1 18s ease-in-out infinite;"></div>
+        <div class="absolute w-[700px] h-[700px] rounded-full blur-[130px] top-1/3 -right-32 bg-gradient-to-bl from-[#F7C2DC]/60 via-[#FCD6E9]/40 to-transparent pointer-events-none" style="animation: meshFloat2 24s ease-in-out infinite;"></div>
+        <div class="absolute w-[550px] h-[550px] rounded-full blur-[100px] -bottom-20 left-1/4 bg-gradient-to-t from-[#FCD6E9]/60 to-[#F987C5]/30 pointer-events-none" style="animation: meshFloat3 20s ease-in-out infinite;"></div>
+        <div class="absolute w-[400px] h-[400px] rounded-full blur-[90px] top-1/4 left-1/2 bg-gradient-to-r from-[#FFF5F8]/90 to-[#FAF0F4]/70 pointer-events-none" style="animation: meshFloat1 28s ease-in-out infinite reverse;"></div>
+      `;
+      container.appendChild(meshWrapper);
+    }
+
+    // -------------------------------------------------------------------------
+    // CONCEPT 3: LUMINOUS DEWDROPS (Moving Soft-Glow Ambient Orbs)
+    // -------------------------------------------------------------------------
+    function runConcept3Orbs(canvas) {
+      const ctx = canvas.getContext('2d');
+      const count = 7;
+      const orbs = [];
+      const colors = ['rgba(252, 214, 233, 0.65)', 'rgba(247, 194, 220, 0.55)', 'rgba(255, 240, 245, 0.75)', 'rgba(243, 232, 255, 0.5)'];
+
+      for (let i = 0; i < count; i++) {
+        orbs.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: 140 + Math.random() * 180,
+          angle: Math.random() * Math.PI * 2,
+          speed: 0.008 + Math.random() * 0.012,
+          orbitX: 80 + Math.random() * 140,
+          orbitY: 60 + Math.random() * 120,
+          originX: Math.random() * canvas.width,
+          originY: Math.random() * canvas.height,
+          color: colors[i % colors.length]
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const speed = prefersReducedMotion ? 0.05 : globalSpeed;
+
+        for (const orb of orbs) {
+          orb.angle += orb.speed * speed;
+          orb.x = orb.originX + Math.cos(orb.angle) * orb.orbitX;
+          orb.y = orb.originY + Math.sin(orb.angle * 0.8) * orb.orbitY;
+
+          const grad = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.radius);
+          grad.addColorStop(0, orb.color);
+          grad.addColorStop(1, 'rgba(255, 249, 250, 0)');
+
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(orb.x, orb.y, orb.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        currentAnimFrame = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // -------------------------------------------------------------------------
+    // CONCEPT 4: SATIN BLOOM (Flowing Silk Ribbons & Waves)
+    // -------------------------------------------------------------------------
+    function runConcept4Satin(canvas) {
+      const ctx = canvas.getContext('2d');
+      let t = 0;
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const speed = prefersReducedMotion ? 0.002 : 0.015 * globalSpeed;
+        t += speed;
+
+        const waveCount = 4;
+        const heights = [0.35, 0.48, 0.65, 0.82];
+        const colors = [
+          'rgba(252, 214, 233, 0.45)',
+          'rgba(247, 194, 220, 0.35)',
+          'rgba(241, 217, 224, 0.4)',
+          'rgba(255, 240, 245, 0.6)'
+        ];
+
+        for (let w = 0; w < waveCount; w++) {
+          ctx.beginPath();
+          ctx.moveTo(0, canvas.height);
+
+          const baseH = canvas.height * heights[w];
+          for (let x = 0; x <= canvas.width; x += 15) {
+            const freq1 = 0.002 + w * 0.0008;
+            const freq2 = 0.004 + w * 0.001;
+            const amp1 = 35 + w * 12;
+            const amp2 = 20 - w * 3;
+
+            const y = baseH + Math.sin(x * freq1 + t + w) * amp1 + Math.cos(x * freq2 - t * 0.8) * amp2;
+            ctx.lineTo(x, y);
+          }
+
+          ctx.lineTo(canvas.width, canvas.height);
+          ctx.closePath();
+
+          ctx.fillStyle = colors[w];
+          ctx.fill();
+
+          // Delicate silk satin edge highlight
+          ctx.lineWidth = 1.2;
+          ctx.strokeStyle = 'rgba(199, 53, 109, 0.2)';
+          ctx.stroke();
+        }
+
+        currentAnimFrame = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // -------------------------------------------------------------------------
+    // CONCEPT 5: FLORAL STARDUST (Floating Micro-Botanical Particles)
+    // -------------------------------------------------------------------------
+    function runConcept5Pollen(canvas) {
+      const ctx = canvas.getContext('2d');
+      const count = 75;
+      const spores = [];
+
+      for (let i = 0; i < count; i++) {
+        spores.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: 1.5 + Math.random() * 2.8,
+          speedY: - (0.4 + Math.random() * 0.8),
+          drift: (Math.random() - 0.5) * 0.6,
+          pulse: Math.random() * Math.PI * 2,
+          pulseSpeed: 0.04 + Math.random() * 0.04,
+          isGold: Math.random() > 0.6
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const speed = prefersReducedMotion ? 0.05 : globalSpeed;
+
+        for (const s of spores) {
+          s.y += s.speedY * speed;
+          s.x += s.drift * speed + Math.sin(s.pulse) * 0.4 * speed;
+          s.pulse += s.pulseSpeed * speed;
+
+          if (s.y < -10) {
+            s.y = canvas.height + 10;
+            s.x = Math.random() * canvas.width;
+          }
+          if (s.x < -10) s.x = canvas.width + 10;
+          if (s.x > canvas.width + 10) s.x = -10;
+
+          const alpha = 0.35 + Math.sin(s.pulse) * 0.35;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+
+          if (s.isGold) {
+            ctx.fillStyle = `rgba(184, 135, 70, ${alpha})`;
+            ctx.shadowColor = 'rgba(184, 135, 70, 0.4)';
+          } else {
+            ctx.fillStyle = `rgba(199, 53, 109, ${alpha})`;
+            ctx.shadowColor = 'rgba(252, 214, 233, 0.5)';
+          }
+          ctx.shadowBlur = 5;
+          ctx.fill();
+        }
+
+        currentAnimFrame = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // -------------------------------------------------------------------------
+    // CONCEPT 6: PRISMATIC GLASS MESH (Refractive Drops & Blobs)
+    // -------------------------------------------------------------------------
+    function runConcept6Prismatic(canvas) {
+      const ctx = canvas.getContext('2d');
+      const blobs = [];
+      const count = 6;
+
+      for (let i = 0; i < count; i++) {
+        blobs.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: 120 + Math.random() * 160,
+          dx: (Math.random() - 0.5) * 0.9,
+          dy: (Math.random() - 0.5) * 0.9,
+          points: 6,
+          phase: Math.random() * Math.PI * 2
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const speed = prefersReducedMotion ? 0.05 : globalSpeed;
+
+        for (const b of blobs) {
+          b.x += b.dx * speed;
+          b.y += b.dy * speed;
+          b.phase += 0.015 * speed;
+
+          if (b.x < -b.radius || b.x > canvas.width + b.radius) b.dx *= -1;
+          if (b.y < -b.radius || b.y > canvas.height + b.radius) b.dy *= -1;
+
+          ctx.save();
+          ctx.translate(b.x, b.y);
+
+          ctx.beginPath();
+          for (let i = 0; i <= b.points; i++) {
+            const angle = (i / b.points) * Math.PI * 2;
+            const distortion = Math.sin(angle * 3 + b.phase) * 22;
+            const r = b.radius + distortion;
+            const px = Math.cos(angle) * r;
+            const py = Math.sin(angle) * r;
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          }
+          ctx.closePath();
+
+          const grad = ctx.createRadialGradient(0, 0, 10, 0, 0, b.radius);
+          grad.addColorStop(0, 'rgba(252, 214, 233, 0.45)');
+          grad.addColorStop(0.7, 'rgba(247, 194, 220, 0.25)');
+          grad.addColorStop(1, 'rgba(255, 240, 245, 0)');
+
+          ctx.fillStyle = grad;
+          ctx.fill();
+          ctx.restore();
+        }
+
+        currentAnimFrame = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // -------------------------------------------------------------------------
+    // CONCEPT 7: BOTANICAL PARALLAX SILHOUETTE (Multi-Layer Depth Planes)
+    // -------------------------------------------------------------------------
+    function runConcept7Parallax(canvas) {
+      const ctx = canvas.getContext('2d');
+      let offset = 0;
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const speed = prefersReducedMotion ? 0.01 : 0.4 * globalSpeed;
+        offset += speed;
+
+        // Layer 1: Distant subtle foliage silhouettes (Deepest)
+        ctx.fillStyle = 'rgba(241, 217, 224, 0.45)';
+        for (let x = -50; x < canvas.width + 100; x += 180) {
+          const sway = Math.sin(offset * 0.02 + x) * 12;
+          ctx.beginPath();
+          ctx.arc(x + sway, canvas.height * 0.85, 90, 0, Math.PI, true);
+          ctx.fill();
+        }
+
+        // Layer 2: Midground eucalyptus sprigs
+        ctx.fillStyle = 'rgba(252, 214, 233, 0.55)';
+        for (let x = -80; x < canvas.width + 150; x += 240) {
+          const sway = Math.cos(offset * 0.03 + x) * 18;
+          ctx.beginPath();
+          ctx.ellipse(x + sway, canvas.height * 0.9, 130, 70, 0.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        currentAnimFrame = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // -------------------------------------------------------------------------
+    // CONCEPT 8: CAUSTIC SUNLIGHT (Morning Sunbeams)
+    // -------------------------------------------------------------------------
+    function runConcept8Caustics(canvas) {
+      const ctx = canvas.getContext('2d');
+      let t = 0;
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const speed = prefersReducedMotion ? 0.002 : 0.01 * globalSpeed;
+        t += speed;
+
+        const rayCount = 5;
+        for (let i = 0; i < rayCount; i++) {
+          const x = (i / rayCount) * canvas.width * 1.4 - canvas.width * 0.2;
+          const width = 120 + Math.sin(t + i) * 35;
+          const alpha = 0.12 + Math.sin(t * 1.5 + i * 2) * 0.06;
+
+          const grad = ctx.createLinearGradient(x, 0, x + 350, canvas.height);
+          grad.addColorStop(0, `rgba(255, 250, 240, ${alpha * 1.5})`);
+          grad.addColorStop(0.5, `rgba(252, 214, 233, ${alpha})`);
+          grad.addColorStop(1, 'rgba(255, 249, 250, 0)');
+
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x + width, 0);
+          ctx.lineTo(x + width + 400, canvas.height);
+          ctx.lineTo(x + 400, canvas.height);
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        currentAnimFrame = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // -------------------------------------------------------------------------
+    // CONCEPT 9: VELVET BOKEH (Aperture Highlights)
+    // -------------------------------------------------------------------------
+    function runConcept9Bokeh(canvas) {
+      const ctx = canvas.getContext('2d');
+      const count = 30;
+      const bokehs = [];
+
+      for (let i = 0; i < count; i++) {
+        bokehs.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: 20 + Math.random() * 55,
+          speedY: - (0.3 + Math.random() * 0.7),
+          speedX: (Math.random() - 0.5) * 0.4,
+          pulse: Math.random() * Math.PI * 2,
+          isRing: Math.random() > 0.4
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const speed = prefersReducedMotion ? 0.05 : globalSpeed;
+
+        for (const b of bokehs) {
+          b.y += b.speedY * speed;
+          b.x += b.speedX * speed;
+          b.pulse += 0.02 * speed;
+
+          if (b.y < -b.radius * 2) b.y = canvas.height + b.radius * 2;
+          if (b.x < -b.radius * 2) b.x = canvas.width + b.radius * 2;
+          if (b.x > canvas.width + b.radius * 2) b.x = -b.radius * 2;
+
+          const alpha = 0.18 + Math.sin(b.pulse) * 0.12;
+
+          ctx.beginPath();
+          ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+          if (b.isRing) {
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = `rgba(252, 214, 233, ${alpha * 1.5})`;
+            ctx.stroke();
+          } else {
+            ctx.fillStyle = `rgba(247, 194, 220, ${alpha})`;
+            ctx.fill();
+          }
+        }
+
+        currentAnimFrame = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // -------------------------------------------------------------------------
+    // CONCEPT 10: CHROMA BLOOM (Scroll & Time-Reactive Atmosphere)
+    // -------------------------------------------------------------------------
+    function runConcept10Chroma(canvas) {
+      const ctx = canvas.getContext('2d');
+      let angle = 0;
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const speed = prefersReducedMotion ? 0.002 : 0.008 * globalSpeed;
+        angle += speed;
+
+        const cx = canvas.width * 0.5 + Math.cos(angle) * 120;
+        const cy = canvas.height * 0.4 + Math.sin(angle * 0.7) * 90;
+        const maxR = Math.max(canvas.width, canvas.height) * 0.8;
+
+        const grad = ctx.createRadialGradient(cx, cy, 20, cx, cy, maxR);
+        grad.addColorStop(0, 'rgba(252, 214, 233, 0.6)');
+        grad.addColorStop(0.4, 'rgba(247, 194, 220, 0.35)');
+        grad.addColorStop(0.7, 'rgba(255, 240, 245, 0.45)');
+        grad.addColorStop(1, 'rgba(255, 249, 250, 0.9)');
+
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        currentAnimFrame = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // -------------------------------------------------------------------------
+    // MINI PREVIEWS FOR GRID CARDS
+    // -------------------------------------------------------------------------
+    function mountGridPreviews() {
+      CONCEPTS.forEach(c => {
+        const target = document.getElementById(`grid-anim-preview-${c.id}`);
+        if (!target) return;
+        target.innerHTML = '';
+
+        if (c.id === 2) {
+          // Mini mesh
+          const d = document.createElement('div');
+          d.className = 'w-full h-full relative overflow-hidden bg-[#FFF9FA]';
+          d.innerHTML = `
+            <div class="absolute w-36 h-36 rounded-full blur-xl -top-5 -left-5 bg-[#FCD6E9]/80 animate-pulse"></div>
+            <div class="absolute w-44 h-44 rounded-full blur-2xl top-10 right-0 bg-[#F7C2DC]/70"></div>
+          `;
+          target.appendChild(d);
+        } else {
+          const cvs = document.createElement('canvas');
+          cvs.width = 380;
+          cvs.height = 180;
+          cvs.className = 'w-full h-full block';
+          target.appendChild(cvs);
+
+          const ctx = cvs.getContext('2d');
+          // Draw a stylized preview signature for each concept
+          const grad = ctx.createLinearGradient(0, 0, 380, 180);
+          grad.addColorStop(0, '#FFF9FA');
+          grad.addColorStop(1, '#FCD6E9');
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, 0, 380, 180);
+
+          if (c.id === 1) {
+            // Petals stamp
+            for (let i = 0; i < 14; i++) {
+              ctx.save();
+              ctx.translate(30 + i * 25, 25 + (i % 4) * 35);
+              ctx.rotate(i * 0.5);
+              ctx.fillStyle = i % 2 === 0 ? '#C7356D' : '#F7C2DC';
+              ctx.globalAlpha = 0.6;
+              ctx.beginPath();
+              ctx.ellipse(0, 0, 12, 6, 0.4, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.restore();
+            }
+          } else if (c.id === 4) {
+            // Wave lines
+            ctx.strokeStyle = '#C7356D';
+            ctx.globalAlpha = 0.5;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, 90);
+            for (let x = 0; x < 380; x += 10) {
+              ctx.lineTo(x, 90 + Math.sin(x * 0.03) * 20);
+            }
+            ctx.stroke();
+          } else if (c.id === 5) {
+            // Spores
+            for (let i = 0; i < 28; i++) {
+              ctx.beginPath();
+              ctx.arc(Math.random() * 380, Math.random() * 180, 2 + Math.random() * 3, 0, Math.PI * 2);
+              ctx.fillStyle = i % 3 === 0 ? '#B88746' : '#C7356D';
+              ctx.globalAlpha = 0.5;
+              ctx.fill();
+            }
+          } else if (c.id === 8) {
+            // Rays
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.beginPath();
+            ctx.moveTo(40, 0); ctx.lineTo(120, 0); ctx.lineTo(240, 180); ctx.lineTo(160, 180); ctx.closePath();
+            ctx.fill();
+          } else if (c.id === 9) {
+            // Bokeh rings
+            for (let i = 0; i < 9; i++) {
+              ctx.beginPath();
+              ctx.arc(40 + i * 36, 40 + (i % 3) * 45, 16 + (i % 3) * 8, 0, Math.PI * 2);
+              ctx.strokeStyle = 'rgba(199, 53, 109, 0.4)';
+              ctx.lineWidth = 2;
+              ctx.stroke();
+            }
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>

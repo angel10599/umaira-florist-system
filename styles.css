@@ -1,0 +1,3241 @@
+/* ==========================================================================
+   UMAIRA FLORIST - Bespoke Floral Boutique Styles
+   Visual Identity: Unified Atelier Palette
+   - 60% Ivory White #FFF9F5 (Main surfaces, card backgrounds, navbar)
+   - 25% Light Pink #F9DFE8 (Hero backgrounds, soft highlights, delicate floral accents)
+   - 15% Sage Green #647D69 (Primary buttons, active states, accents, primary navigation highlights)
+   - Deep Sage Green #344F3B (Admin sidebar, primary headings, dark typography elements)
+   - Dusty Rose #B76E79 (Decorative accents, floral highlights, italic subtext, selected badges)
+   - Dark Charcoal #302C2A (Primary body text)
+   - Dark Sage Hover #526B57 (Hover states for sage-green buttons)
+   - Light Sage Tint #EBF1EC (Soft hover backgrounds, secondary buttons, active pills)
+   - Soft Neutral/Sage Border #E5ECE6 (hover/focus: #C8D6CA)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* ========================================================================
+     GLOBAL CUSTOMER TYPOGRAPHY DESIGN TOKENS
+     Headings & Subheadings: Cormorant Garamond
+     Normal Text: Manrope
+     ======================================================================== */
+  --font-heading: 'Cormorant Garamond', Garamond, Georgia, serif;
+  --font-serif: 'Cormorant Garamond', Garamond, Georgia, serif;
+  --font-display: 'Cormorant Garamond', Garamond, Georgia, serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Typography Scale Tokens (Fluid Responsive) */
+  --text-h1: clamp(2.25rem, 5vw, 3.75rem);   /* 36px – 60px */
+  --text-h2: clamp(1.75rem, 3.5vw, 2.5rem);  /* 28px – 40px */
+  --text-h3: clamp(1.35rem, 2.5vw, 1.85rem); /* 22px – 30px */
+  --text-h4: clamp(1.15rem, 1.8vw, 1.45rem); /* 18px – 23px */
+  --text-h5: clamp(1.05rem, 1.4vw, 1.25rem); /* 17px – 20px */
+  --text-h6: clamp(0.95rem, 1.2vw, 1.1rem);  /* 15px – 18px */
+
+  --line-height-heading: 1.15;
+  --line-height-subheading: 1.25;
+  --line-height-body: 1.6;
+
+  /* Brand Tokens: Unified Atelier Palette */
+  --color-primary: #647D69;
+  --color-primary-hover: #526B57;
+  --color-primary-dark: #344F3B;
+  --color-secondary: #F9DFE8;
+  --color-secondary-hover: #F2CEDB;
+  --color-accent: #B76E79;
+  --color-deep-sage: #344F3B;
+  --color-gold: #B88746;
+  --color-dark-charcoal: #302C2A;
+  --color-dark-plum: #302C2A;
+  --plum-900: #302C2A;
+  --blush-400: #F9DFE8;
+  --color-velvet-plum: #344F3B;
+  --color-muted-mauve: #6E6864;
+  --color-border-whisper: #E5ECE6;
+  --color-border-hover: #C8D6CA;
+  --color-bg-blush: #FFF9F5;
+  --color-footer-text: #FFF9F5;
+
+  /* Legacy mappings mapped to new cohesive tokens */
+  --color-burgundy: #647D69;
+  --color-burgundy-hover: #526B57;
+  --color-blush: #F9DFE8;
+  --color-cream: #FFF9F5;
+  --color-stone: #302C2A;
+  --color-pink-primary: #647D69;
+  --color-pink-soft: #F9DFE8;
+  --color-pink-deep: #526B57;
+  --color-pink-dark: #302C2A;
+  --color-warm-ivory: #FFF9F5;
+  --color-soft-blush: #F9DFE8;
+  --color-deep-burgundy: #344F3B;
+  --color-muted-rose: #B76E79;
+  --color-warm-taupe: #6E6864;
+  --color-light-border: #E5ECE6;
+}
+
+/* Reusable Clean & Premium Atelier Tokens */
+:root {
+  --nav-bg-glass: rgba(255, 249, 245, 0.92);
+  --nav-dropdown-glass: rgba(255, 249, 245, 0.97);
+  --nav-border-glass: rgba(229, 236, 230, 0.85);
+  --nav-shadow-glass: 0 10px 30px -4px rgba(52, 79, 59, 0.08), 0 4px 10px -2px rgba(48, 44, 42, 0.03), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+  --nav-shadow-scrolled: 0 14px 36px -4px rgba(52, 79, 59, 0.12), 0 6px 14px -2px rgba(48, 44, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+}
+
+/* ==========================================================================
+   LAYERED GLOW GRADIENTS (Visual Highlights for Hero & Promos)
+   ========================================================================== */
+.layered-glow {
+  background:
+    radial-gradient(
+      circle at 25% 30%,
+      rgba(255, 255, 255, 0.7),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 75%,
+      rgba(255, 255, 255, 0.5),
+      transparent 30%
+    ),
+    #F2AFC8;
+}
+
+.layered-glow-soft {
+  background:
+    radial-gradient(
+      circle at 20% 25%,
+      rgba(255, 255, 255, 0.65),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 85% 70%,
+      rgba(255, 255, 255, 0.5),
+      transparent 30%
+    ),
+    #F4B7CD;
+}
+
+/* ==========================================================================
+   ANNOUNCEMENT BAR MARQUEE (Seamless Smooth Continuous Motion)
+   ========================================================================== */
+.announcement-bar {
+  overflow: hidden;
+  white-space: nowrap;
+  contain: paint;
+}
+
+.announcement-marquee {
+  display: flex;
+  width: max-content;
+  animation: announcementMarquee 26s linear infinite;
+  will-change: transform;
+}
+
+.announcement-marquee:hover {
+  animation-play-state: paused;
+}
+
+.announcement-track {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+@keyframes announcementMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .announcement-marquee {
+    animation: none !important;
+    transform: none !important;
+    width: 100%;
+    justify-content: center;
+  }
+  .announcement-marquee .announcement-track:nth-child(n+2) {
+    display: none !important;
+  }
+  .announcement-marquee .announcement-track span:nth-child(n+2) {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   FLOATING GLASSMORPHISM NAVBAR (Contemporary Atelier Design)
+   ========================================================================== */
+.floating-navbar-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  padding: 10px 16px;
+  background: transparent;
+  pointer-events: none;
+  transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (min-width: 640px) {
+  .floating-navbar-wrapper {
+    padding: 12px 24px;
+  }
+}
+@media (min-width: 1024px) {
+  .floating-navbar-wrapper {
+    padding: 14px 32px;
+  }
+}
+
+.floating-navbar-wrapper.is-scrolled {
+  background: rgba(255, 249, 245, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px -2px rgba(48, 44, 42, 0.05);
+}
+
+.floating-navbar {
+  pointer-events: auto;
+  max-width: 1260px;
+  margin: 0 auto;
+  min-height: 64px;
+  height: 64px;
+  background: var(--nav-bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--nav-border-glass);
+  border-radius: 9999px;
+  box-shadow: var(--nav-shadow-glass);
+  transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 640px) {
+  .floating-navbar {
+    min-height: 70px;
+    height: 70px;
+  }
+}
+
+.floating-navbar:hover {
+  border-color: rgba(200, 214, 202, 0.95);
+  box-shadow: 0 12px 34px -4px rgba(100, 125, 105, 0.16), 0 4px 12px -2px rgba(48, 44, 42, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+}
+
+.floating-navbar.is-scrolled {
+  background: rgba(255, 249, 245, 0.98);
+  border-color: rgba(200, 214, 202, 0.95);
+  box-shadow: var(--nav-shadow-scrolled);
+}
+
+/* Active Navigation State with Soft Sage / Blush Pill Background */
+.nav-link-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #302C2A;
+  border-radius: 9999px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-link-pill:hover {
+  color: #647D69;
+  background-color: #EBF1EC;
+}
+
+.nav-link-pill.is-active {
+  color: #344F3B !important;
+  background-color: #EBF1EC !important;
+  font-weight: 700 !important;
+  box-shadow: 0 1px 3px rgba(100, 125, 105, 0.22);
+}
+
+/* Mobile Nav Drawer Links */
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #302C2A;
+  border-radius: 16px;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.mobile-nav-link:hover {
+  color: #647D69;
+  background-color: #EBF1EC;
+}
+
+.mobile-nav-link.is-active {
+  color: #344F3B !important;
+  background-color: #EBF1EC !important;
+  font-weight: 700 !important;
+}
+
+.nav-link-clean {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #302C2A;
+  border-radius: 9999px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.nav-link-clean:hover {
+  color: #647D69;
+  background-color: #EBF1EC;
+}
+
+.nav-link-clean.is-active {
+  color: #344F3B !important;
+  background-color: #EBF1EC !important;
+  font-weight: 700 !important;
+  box-shadow: 0 1px 3px rgba(100, 125, 105, 0.22);
+}
+
+@keyframes navLineIn {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 26px;
+    opacity: 1;
+  }
+}
+
+.nav-glass-dropdown {
+  background: var(--nav-dropdown-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--nav-border-glass);
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(48, 44, 42, 0.08), 0 2px 8px rgba(48, 44, 42, 0.03);
+}
+.atelier-card {
+  background-color: #ffffff;
+  border: 1px solid #E5ECE6;
+  border-radius: 1.25rem;
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.atelier-card:hover {
+  transform: translate3d(0, -3px, 0);
+  border-color: #C8D6CA;
+  box-shadow: 0 14px 32px rgba(100, 125, 105, 0.12), 0 2px 6px rgba(48, 44, 42, 0.04);
+}
+.atelier-card .overflow-hidden img {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.atelier-card:hover .overflow-hidden img {
+  transform: scale(1.025);
+}
+
+.btn-atelier-primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  border-radius: 0.875rem;
+  box-shadow: 0 4px 14px -2px rgba(100, 125, 105, 0.35);
+  transition: background-color 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+}
+.btn-atelier-primary:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow: 0 6px 18px -2px rgba(100, 125, 105, 0.45);
+  transform: translate3d(0, -1px, 0);
+}
+.btn-atelier-primary:active {
+  transform: scale(0.97);
+}
+
+.btn-atelier-secondary {
+  background-color: #ffffff;
+  color: var(--color-primary-dark);
+  border: 1px solid var(--color-border-whisper);
+  border-radius: 0.875rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.btn-atelier-secondary:hover {
+  background-color: #EBF1EC;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
+   GLOBAL CUSTOMER TYPOGRAPHY STANDARDIZATION (Cormorant Garamond + Manrope)
+   ========================================================================== */
+
+/* 1. Base / Default Font throughout customer interface: Manrope */
+html, body {
+  font-family: var(--font-body);
+  color: #302C2A;
+  background-color: #FFF9F5;
+  line-height: var(--line-height-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: #F9DFE8;
+  color: #344F3B;
+}
+
+/* 2. Category 1: Headings (H1–H3) — Cormorant Garamond (Deep Sage) */
+h1, .h1, .heading-1 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  line-height: var(--line-height-heading);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--color-primary-dark);
+}
+
+h2, .h2, .heading-2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  line-height: var(--line-height-heading);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-primary-dark);
+}
+
+h3, .h3, .heading-3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  line-height: var(--line-height-subheading);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--color-primary-dark);
+}
+
+/* 3. Category 2: Subheadings (H4–H6) — Cormorant Garamond */
+h4, .h4, .heading-4 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h4);
+  line-height: var(--line-height-subheading);
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+h5, .h5, .heading-5 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h5);
+  line-height: var(--line-height-subheading);
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+h6, .h6, .heading-6 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h6);
+  line-height: var(--line-height-subheading);
+  font-weight: 500;
+  color: var(--color-primary-dark);
+}
+
+/* Headings font utility classes */
+.font-serif,
+.font-heading,
+.heading-serif {
+  font-family: var(--font-heading) !important;
+}
+
+/* Italic styling selectively for highlighted phrases in headings (Dusty Rose Accent) */
+h1 em, h1 i, h1 .italic,
+h2 em, h2 i, h2 .italic,
+h3 em, h3 i, h3 .italic,
+h4 em, h4 i, h4 .italic,
+.heading-italic,
+.font-serif-italic {
+  font-family: var(--font-heading);
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+/* Product names, card titles, and section subheadings */
+.product-card-title,
+.bouquet-card-title,
+.flower-card-title,
+.cart-item-title,
+.card-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+/* 4. Category 3: Normal Text — Manrope (Default for all UI components) */
+p,
+span:not(.font-serif):not(.font-heading),
+a:not(.font-serif):not(.font-heading),
+label,
+small,
+strong:not(.font-serif):not(.font-heading),
+b:not(.font-serif):not(.font-heading),
+li,
+td,
+th {
+  font-family: var(--font-body);
+}
+
+.font-sans,
+.font-body {
+  font-family: var(--font-body) !important;
+}
+
+/* Buttons, inputs, form controls, navigation links, prices, badges, notifications, modals, dropdowns */
+button,
+input,
+textarea,
+select,
+option,
+optgroup,
+label,
+.nav-link,
+.dropdown-item,
+.price,
+.price-tag,
+[data-price],
+.payment-pill,
+.badge,
+.toast,
+.notif-item,
+#toast-container,
+.floating-navbar,
+.footer-atelier {
+  font-family: var(--font-body) !important;
+}
+
+/* Custom Theme Gradients */
+.bg-theme-gradient {
+  background: linear-gradient(135deg, #647D69 0%, #344F3B 100%);
+}
+
+.bg-theme-gradient-reverse {
+  background: linear-gradient(135deg, #344F3B 0%, #647D69 100%);
+}
+
+.bg-theme-subtle {
+  background: linear-gradient(135deg, rgba(249, 223, 232, 0.45) 0%, rgba(100, 125, 105, 0.12) 100%);
+}
+
+.text-theme-gradient {
+  background: linear-gradient(135deg, #344F3B 0%, #647D69 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-theme {
+  border-color: #E5ECE6;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FFF9F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4DFD6;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #647D69;
+}
+
+/* Floral Ambient Shadows */
+.shadow-floral {
+  box-shadow: 0 10px 30px -5px rgba(52, 79, 59, 0.08), 0 4px 12px -2px rgba(249, 223, 232, 0.2);
+}
+
+.shadow-floral-lg {
+  box-shadow: 0 20px 40px -10px rgba(52, 79, 59, 0.12), 0 8px 16px -4px rgba(249, 223, 232, 0.25);
+}
+
+.shadow-theme-glow {
+  box-shadow: 0 8px 25px rgba(100, 125, 105, 0.25);
+}
+
+.shadow-soft {
+  box-shadow: 0 4px 20px -2px rgba(48, 44, 42, 0.05), 0 2px 6px -1px rgba(100, 125, 105, 0.04);
+}
+
+.shadow-xs {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-2xs {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+}
+
+/* ==========================================================================
+   HOMEPAGE HERO — FLOWER GARDEN BACKGROUND (taniman.jpg) & BLUSH OVERLAY
+   ========================================================================== */
+.hero-garden {
+  position: relative;
+  width: 100%;
+  min-height: clamp(500px, 72vh, 680px);
+  display: flex;
+  align-items: center;
+  background-image: url('/image/taniman.jpg?v=20261103-v2');
+  background-size: cover;
+  background-position: right center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .hero-garden {
+    background-position: right center;
+    min-height: clamp(560px, 75vh, 720px);
+  }
+}
+
+/* Subtle Light Pink Gradient Overlay (#F9DFE8 Soft Highlight):
+   - Soft light-pink overlay primarily on the left side where the text is located
+   - Gradually fades toward the right side
+   - Keeps the flowers clearly visible without making background too dark or blurry
+   - Transitions seamlessly into floating navbar with no harsh boundary
+*/
+body[data-view="home"] #home-hero {
+  margin-top: -84px;
+  padding-top: 84px;
+}
+@media (min-width: 640px) {
+  body[data-view="home"] #home-hero {
+    margin-top: -94px;
+    padding-top: 94px;
+  }
+}
+@media (min-width: 1024px) {
+  body[data-view="home"] #home-hero {
+    margin-top: -98px;
+    padding-top: 98px;
+  }
+}
+
+.hero-garden-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    /* Horizontal readability gradient: Soft Light Pink #F9DFE8 into gentle transparency */
+    linear-gradient(90deg,
+      rgba(249, 223, 232, 0.95) 0%,
+      rgba(249, 223, 232, 0.90) 32%,
+      rgba(249, 223, 232, 0.70) 48%,
+      rgba(249, 223, 232, 0.30) 65%,
+      rgba(249, 223, 232, 0.05) 82%,
+      rgba(249, 223, 232, 0) 100%
+    );
+  z-index: 1;
+}
+
+@media (max-width: 1023px) {
+  .hero-garden {
+    background-position: 70% bottom;
+  }
+  .hero-garden-overlay {
+    background:
+      linear-gradient(180deg,
+        rgba(249, 223, 232, 0.88) 0%,
+        rgba(249, 223, 232, 0.85) 50%,
+        rgba(249, 223, 232, 0.65) 75%,
+        rgba(255, 249, 245, 0.88) 100%
+      );
+  }
+}
+
+/* Admin Image Upload Preview (Contain, Original Aspect Ratio, No Cropping) */
+#product-image-preview,
+#flower-image-preview,
+#bouquet-image-preview {
+  max-width: 100% !important;
+  max-height: 290px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block;
+  margin: 0 auto;
+}
+
+#product-image-preview-container,
+#flower-image-preview-container,
+#bouquet-image-preview-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Hero Background (Soft, warm botanical ivory #FAF6F0 with gentle blush accents) */
+.hero-floral-bg {
+  background: radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.95) 0%, transparent 45%),
+              radial-gradient(circle at 82% 75%, rgba(100, 125, 105, 0.10) 0%, transparent 55%),
+              radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.8) 0%, transparent 60%),
+              linear-gradient(180deg, rgba(249, 223, 232, 0.40) 0%, rgba(250, 246, 240, 0.20) 70%, #FAF6F0 100%);
+}
+
+/* Hero Figure (Woman holding handcrafted bouquet - seamless, cardless) */
+.su-hero-figure-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .su-hero-figure-wrap {
+    max-width: 940px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .su-hero-figure-wrap {
+    max-width: 1080px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .su-hero-figure-wrap {
+    max-width: 1200px;
+  }
+}
+
+.su-hero-halo {
+  position: absolute;
+  inset: -14% -10% -10% -10%;
+  background: radial-gradient(ellipse 65% 55% at 65% 48%, rgba(255, 255, 255, 0.75) 0%, rgba(249, 223, 232, 0.35) 42%, rgba(255, 249, 245, 0) 72%);
+  pointer-events: none;
+  filter: blur(34px);
+  z-index: 0;
+}
+
+.su-hero-figure {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: suHeroImgIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards, suHeroFloat 7.5s ease-in-out 1.4s infinite alternate;
+  will-change: transform, opacity;
+}
+
+.su-hero-img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: clamp(380px, 60vw, 780px);
+  object-fit: contain;
+  aspect-ratio: 666 / 375;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  filter: drop-shadow(0 20px 44px rgba(199, 53, 109, 0.12)) drop-shadow(0 6px 16px rgba(45, 34, 40, 0.05));
+}
+
+@keyframes suHeroImgIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes suHeroFloat {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .su-hero-figure {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .su-hero-word,
+  .su-hero-fade {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   EDITORIAL ABOUT PAGE — STORYTELLING, TYPEWRITER & PORTRAITS
+   ========================================================================== */
+
+body[data-view="about"] {
+  background-image: radial-gradient(circle at 10% 8%, rgba(255, 255, 255, 0.9) 0%, transparent 45%),
+                    radial-gradient(circle at 90% 32%, rgba(249, 223, 232, 0.35) 0%, transparent 50%),
+                    radial-gradient(circle at 20% 70%, rgba(255, 255, 255, 0.8) 0%, transparent 40%),
+                    linear-gradient(180deg, #FFF9F5 0%, #FFFFFF 50%, #FFF9F5 100%);
+  background-attachment: fixed;
+}
+
+/* Typewriter zero-layout-shift heading */
+.su-typewriter {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.typewriter-ghost {
+  visibility: hidden !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  display: block;
+}
+
+.typewriter-visible {
+  position: absolute;
+  inset: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  color: #647D69;
+  font-weight: 300;
+  animation: typeBlink 0.75s step-end infinite;
+  opacity: 1;
+  transition: opacity 0.35s ease;
+  vertical-align: baseline;
+}
+
+.typewriter-cursor-done {
+  opacity: 0 !important;
+}
+
+@keyframes typeBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.about-editorial-p {
+  font-size: clamp(0.95rem, 1.08vw, 1.06rem);
+  line-height: 1.85;
+  color: #4A4643;
+}
+
+.about-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #B76E79;
+}
+
+.about-divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5rem 0;
+}
+
+.about-divider::before {
+  content: '';
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #E5ECE6 25%, #E5ECE6 75%, transparent);
+}
+
+.about-divider-glyph {
+  position: relative;
+  z-index: 1;
+  background: #FFF9F5;
+  padding: 0 1.25rem;
+  color: #B76E79;
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+
+.about-image-frame {
+  position: relative;
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: 0 24px 48px -18px rgba(48, 44, 42, 0.10);
+  border: 1px solid rgba(229, 236, 230, 0.85);
+  background: #FFF9F5;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.6s ease;
+}
+
+.about-image-frame:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 32px 56px -16px rgba(100, 125, 105, 0.18);
+}
+
+.about-owner-portrait {
+  aspect-ratio: 4 / 5;
+  border-radius: 1.75rem;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, #FFF9F5 0%, #F9DFE8 50%, #F4CCD6 100%);
+  border: 1px solid rgba(229, 236, 230, 0.9);
+  box-shadow: 0 16px 36px -12px rgba(52, 79, 59, 0.08);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.about-owner-portrait:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 44px -12px rgba(100, 125, 105, 0.20);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .su-typewriter .typewriter-cursor {
+    display: none !important;
+  }
+  .about-owner-portrait,
+  .about-image-frame {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   FEATURED FLOWERS - slow, seamless left-to-right loop
+   ========================================================================== */
+
+@keyframes marqueeRight {
+  from { transform: translate3d(-50%, 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeInScale 0.25s ease-out forwards;
+}
+
+.flower-marquee {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #E5ECE6;
+  border-radius: 1.5rem;
+  padding: 1.75rem 0 1.5rem;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
+}
+
+.flower-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeRight 56s linear infinite;
+  will-change: transform;
+}
+
+.flower-marquee-group {
+  display: flex;
+  flex-shrink: 0;
+  gap: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.flower-marquee-item {
+  flex: 0 0 auto;
+  width: 15rem;
+  margin: 0;
+  text-align: center;
+}
+
+.flower-marquee-photo {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: #FFF9F5;
+  border: 1px solid #E5ECE6;
+}
+
+.flower-marquee-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+.flower-marquee-compact { padding: 1.1rem 0 0.9rem; }
+.flower-marquee-compact .flower-marquee-item { width: 9.5rem; }
+.flower-marquee-compact .flower-marquee-photo { aspect-ratio: 1 / 1; }
+.flower-marquee-compact .flower-marquee-item figcaption span:first-child { font-size: 0.85rem; }
+
+.flower-marquee-item figcaption {
+  padding-top: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .flower-marquee-item { width: 11.5rem; }
+}
+
+/* Toast Container */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 380px;
+}
+
+.toast {
+  transform: translateX(100%);
+  transition: transform 0.25s ease-out;
+}
+
+.toast.show {
+  transform: translateX(0);
+}
+
+/* Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-receipt, #printable-receipt * {
+    visibility: visible;
+  }
+  #printable-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   HOME PAGE - continuous decorative motion
+   ========================================================================== */
+
+.home-decor-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 30;
+}
+
+.decor-item { pointer-events: none; user-select: none; }
+
+.decor-sway {
+  transform-origin: 50% 100%;
+  animation: leafSway var(--d, 8s) ease-in-out infinite alternate;
+  animation-delay: var(--dl, 0s);
+  will-change: transform;
+}
+@keyframes leafSway {
+  from { transform: rotate(-5deg) translateX(-3px); }
+  to   { transform: rotate(5deg) translateX(3px); }
+}
+
+.decor-float {
+  animation: floatY var(--d, 9s) ease-in-out infinite alternate;
+  animation-delay: var(--dl, 0s);
+  will-change: transform;
+}
+@keyframes floatY {
+  from { transform: translate3d(0, -16px, 0) rotate(-4deg); }
+  to   { transform: translate3d(0, 16px, 0) rotate(4deg); }
+}
+
+.decor-float-x {
+  animation: floatX var(--d, 12s) ease-in-out infinite alternate;
+  animation-delay: var(--dl, 0s);
+  will-change: transform;
+}
+@keyframes floatX {
+  from { transform: translate3d(-22px, 4px, 0) rotate(-6deg); }
+  to   { transform: translate3d(22px, -8px, 0) rotate(6deg); }
+}
+
+.decor-spin { animation: slowSpin var(--d, 40s) linear infinite; will-change: transform; }
+@keyframes slowSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.decor-blob {
+  position: absolute;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(252, 214, 233, 0.55) 0%, rgba(252, 214, 233, 0) 70%);
+  filter: blur(30px);
+  animation: blobDrift var(--d, 18s) ease-in-out infinite alternate;
+  animation-delay: var(--dl, 0s);
+  will-change: transform;
+}
+@keyframes blobDrift {
+  from { transform: translate3d(-40px, -20px, 0) scale(1); }
+  to   { transform: translate3d(50px, 30px, 0) scale(1.15); }
+}
+
+.decor-medallion {
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 4px solid #ffffff;
+  box-shadow: 0 10px 24px rgba(52, 79, 59, 0.12);
+  background: #FFF9F5;
+}
+.decor-medallion img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+
+/* ==========================================================================
+   INTERACTIVE 3D EXPERIENCE & SCROLL PROGRESS
+   ========================================================================== */
+
+#scroll-progress {
+  position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 60;
+  transform: scaleX(0); transform-origin: 0 50%; pointer-events: none;
+  background: linear-gradient(90deg, #F9DFE8, #647D69 60%, #344F3B);
+}
+
+.ring-card {
+  perspective: 1000px;
+}
+.ring-card-float {
+  animation: ringFloat 7s ease-in-out infinite alternate; animation-delay: var(--dl, 0s);
+  transition: box-shadow 0.5s, scale 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.ring-card.is-front .ring-card-float { scale: 1.05; box-shadow: 0 14px 28px -8px rgba(48, 44, 42, 0.35); }
+@keyframes ringFloat { from { transform: translateY(-9px); } to { transform: translateY(9px); } }
+.ring-card-float img { display: block; width: 100%; height: 100%; object-fit: cover; user-select: none; }
+.ring-card-cap {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 1.6rem 0.9rem 0.8rem; text-align: left; color: #fff; font-size: 0.85rem;
+  background: linear-gradient(to top, rgba(48, 44, 42, 0.85), rgba(48, 44, 42, 0));
+}
+.ring-info { position: relative; flex: none; width: 100%; max-width: 40rem; height: 11rem; margin-top: 0.75rem; text-align: center; }
+.ring-info-item {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+  opacity: 0; translate: 0 14px; pointer-events: none;
+  transition: opacity 0.45s ease, translate 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.ring-info-item.is-active { opacity: 1; translate: 0 0; pointer-events: auto; }
+.ring-dots { flex: none; display: flex; gap: 0.5rem; padding-top: 0.6rem; }
+.ring-dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 9999px; background: #E5ECE6; cursor: pointer; transition: width 0.3s, background-color 0.3s; }
+.ring-dot.is-active { width: 26px; background: #647D69; }
+@media (max-width: 640px) {
+  .ring-stage { padding-top: 5.25rem; }
+  .ring-info { height: 12rem; }
+}
+
+/* --- Occasion cards --- */
+.occ-card {
+  display: block; width: 100%; height: 19rem; border-radius: 1.5rem; text-align: left; border: 0; padding: 0; cursor: pointer;
+  background: #FFF9F5; box-shadow: 0 18px 36px -16px rgba(48, 44, 42, 0.15);
+}
+.occ-card-img { position: absolute; inset: 0; border-radius: 1.5rem; overflow: hidden; }
+.occ-card-img img { width: 100%; height: 100%; object-fit: cover; transition: scale 0.9s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.occ-card:hover .occ-card-img img { scale: 1.08; }
+.occ-card-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(48, 44, 42, 0.85), rgba(48, 44, 42, 0.05) 65%); }
+.occ-card-text { position: absolute; left: 1.1rem; right: 1.1rem; bottom: 1.1rem; color: #fff; }
+
+/* --- Build-your-own parallax stack --- */
+.stack-photo {
+  position: absolute; overflow: hidden; border-radius: 1.25rem; border: 4px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 22px 40px rgba(48, 44, 42, 0.25); background: #344F3B;
+}
+.stack-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+
+.hero-bokeh { filter: blur(1.5px); opacity: 0.6; }
+
+/* ==========================================================================
+   BESPOKE BOUQUET STUDIO & VISUALIZER STYLES
+   ========================================================================== */
+.bouquet-bloom-token {
+  animation: bloomPopIn 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  will-change: transform;
+}
+@keyframes bloomPopIn {
+  from {
+    transform: scale(0.35) rotate(-12deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.bouquet-ribbon-accent {
+  animation: ribbonSway 4s ease-in-out infinite alternate;
+  transform-origin: 150px 216px;
+}
+@keyframes ribbonSway {
+  from { transform: rotate(-2deg); }
+  to { transform: rotate(2deg); }
+}
+
+.bouquet-foliage-layer {
+  animation: foliageBreathe 6s ease-in-out infinite alternate;
+  transform-origin: 150px 195px;
+}
+@keyframes foliageBreathe {
+  from { transform: scale(0.98); }
+  to { transform: scale(1.02); }
+}
+
+/* ==========================================================================
+   MINIMALIST LUXURY FLORAL ATELIER - STEP 3 FINISHING TOUCHES
+   ========================================================================== */
+.bg-warm-ivory { background-color: #FFF9F5; }
+.bg-soft-blush { background-color: #F9DFE8; }
+.bg-deep-burgundy { background-color: #647D69; }
+.text-deep-burgundy { color: #344F3B; }
+.text-warm-taupe { color: #6E6864; }
+.border-atelier { border-color: #E5ECE6; }
+
+.card-wrap-luxury {
+  background: #ffffff;
+  border: 1px solid #E5ECE6;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.card-wrap-luxury:hover {
+  border-color: #647D69;
+}
+.card-wrap-luxury.is-selected {
+  border-color: #647D69;
+  background-color: #EBF1EC;
+  box-shadow: 0 4px 14px -3px rgba(100, 125, 105, 0.2);
+}
+
+/* ==========================================================================
+   MINIMALIST LUXURY FLORAL ATELIER - COMPACT DARK GLASSMORPHIC FOOTER
+   ========================================================================== */
+.footer-atelier {
+  background: rgba(52, 79, 59, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(229, 236, 230, 0.15);
+  box-shadow: 0 -8px 24px rgba(48, 44, 42, 0.12);
+  color: #FFF9F5;
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+.footer-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #EBF1EC;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+}
+
+.footer-nav-link:hover {
+  color: #F9DFE8;
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   AUTHENTICATION PAGE LAYOUT & RESPONSIVE SPACING (No Navbar Overlap)
+   ========================================================================== */
+.auth-page-container {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: clamp(24px, 4vh, 48px);
+  padding-bottom: clamp(32px, 5vh, 56px);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
+  scroll-margin-top: 120px;
+}
+
+.auth-card-wrapper {
+  width: 100%;
+  max-width: 28rem;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  scroll-margin-top: 120px;
+}
+
+/* Social Media Icons */
+.social-stagger-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.25rem;
+}
+
+.social-stagger-btn {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  background-color: #344F3B;
+  border: 1px solid #43624B;
+  color: #FFF9F5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.social-stagger-btn.pos-1 { transform: translateY(-3px); }
+.social-stagger-btn.pos-2 { transform: translateY(3px); }
+.social-stagger-btn.pos-3 { transform: translateY(-4px); }
+.social-stagger-btn.pos-4 { transform: translateY(2px); }
+
+.social-stagger-btn:hover {
+  background-color: #647D69;
+  border-color: #F9DFE8;
+  color: #FFFFFF;
+  box-shadow: 0 8px 18px -2px rgba(100, 125, 105, 0.45);
+}
+
+.social-stagger-btn.pos-1:hover { transform: translateY(-6px) rotate(-4deg) scale(1.08); }
+.social-stagger-btn.pos-2:hover { transform: translateY(0px) rotate(4deg) scale(1.08); }
+.social-stagger-btn.pos-3:hover { transform: translateY(-7px) rotate(-3deg) scale(1.08); }
+.social-stagger-btn.pos-4:hover { transform: translateY(-1px) rotate(5deg) scale(1.08); }
+
+.social-stagger-btn:focus-visible {
+  outline: 2px solid #647D69;
+  outline-offset: 2px;
+}
+
+/* Refined payment pills */
+.payment-pill {
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  background-color: #344F3B;
+  border: 1px solid #43624B;
+  color: #FFF9F5;
+  font-size: 0.72rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.payment-pill:hover {
+  border-color: #647D69;
+  color: #FFFFFF;
+  background-color: #4A6B53;
+}
+
+/* Customer Auth Modal styling */
+#customer-auth-modal {
+  transition: opacity 0.25s ease-out;
+}
+#customer-auth-modal.hidden,
+#nav-cart-btn.hidden,
+#customer-notif-container.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   ORGANIC BOTANICAL MOTION ENGINE (Approach B)
+   ========================================================================== */
+
+/* GPU-composited scroll reveal.
+   Visible by default (no JS, reduced motion, or content the motion engine never processed stays visible).
+   js/fx.js adds .reveal-pending only to elements still below the fold that it is watching; when one scrolls into
+   view it gets .is-visible and fades / rises 18px into place (staggered per row). `will-change` is set only while an
+   element waits for its entrance, so the page does not keep dozens of permanent GPU layers. */
+[data-reveal] {
+  opacity: 1;
+  transform: none;
+  transition: opacity 380ms cubic-bezier(0.2, 0, 0.2, 1),
+              transform 380ms cubic-bezier(0.2, 0, 0.2, 1);
+}
+/* Entrance timing applies only while the element is entering, so cards keep their own hover transitions after. */
+.fx-ready [data-reveal].reveal-pending {
+  /* longhands, so the per-card stagger (inline transition-delay) still applies */
+  transition-property: opacity, transform !important;
+  transition-duration: 620ms, 720ms !important;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
+  will-change: opacity, transform;
+}
+.fx-ready [data-reveal].reveal-pending:not(.is-visible) {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+}
+[data-reveal].is-visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Generic Tactile Buttons */
+.btn-tactile,
+button[type="submit"] {
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.18s ease,
+              box-shadow 0.18s ease;
+}
+
+.btn-tactile:active,
+button[type="submit"]:active {
+  transform: scale(0.97);
+}
+
+/* Dynamic Cart Badge Bounce Animation */
+@keyframes badgeScaleBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+
+.badge-bump {
+  animation: badgeScaleBounce 0.24s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Order Tracking Active Halo Pulse */
+@keyframes haloPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(199, 53, 109, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(199, 53, 109, 0);
+  }
+}
+
+.tracking-current-step {
+  animation: haloPulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
+
+/* Custom Bouquet Builder Step Transition */
+@keyframes stepFadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(12px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.builder-step-animate {
+  animation: stepFadeIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Seamless Floral Backdrop & Radial Masks (Anti-Slop Feathering) */
+.floral-seamless-backdrop {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.16;
+  pointer-events: none;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.95) 20%,
+    rgba(0, 0, 0, 0.95) 80%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.95) 20%,
+    rgba(0, 0, 0, 0.95) 80%,
+    transparent 100%
+  );
+}
+
+.floral-radial-backdrop {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.14;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.95) 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.95) 30%, transparent 80%);
+}
+
+/* Filter Chip Micro-Interactions */
+.filter-chip-btn {
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.filter-chip-btn:hover {
+  transform: translate3d(0, -1px, 0);
+}
+
+/* Full Accessibility: Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .badge-bump,
+  .tracking-current-step,
+  .builder-step-animate,
+  .floating-navbar {
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   FLORIST GUIDE PAGE (Modern Editorial & Interactive Guide)
+   ========================================================================== */
+
+/* Sticky Section Navigator */
+.guide-nav-wrapper {
+  position: sticky;
+  top: 96px;
+  z-index: 40;
+}
+
+.guide-nav-pill {
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.guide-nav-pill.is-active {
+  background-color: #647D69 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(100, 125, 105, 0.25);
+}
+
+/* 3D Flower Preview Stage & Placeholder */
+.guide-3d-stage {
+  position: relative;
+  min-height: 420px;
+  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.98), rgba(249, 223, 232, 0.5));
+  border: 1px solid rgba(229, 236, 230, 0.95);
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: 0 20px 45px -10px rgba(48, 44, 42, 0.08);
+}
+
+.guide-3d-hotspot-btn {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.guide-3d-hotspot-btn.is-active {
+  background: #647D69 !important;
+  color: #FFFFFF !important;
+  border-color: #647D69 !important;
+}
+
+/* =====================================================================
+   FLOWER MEANINGS 3D COVERFLOW CAROUSEL (EDITORIAL LUXURY & IMMERSIVE DEPTH)
+   ===================================================================== */
+.flower-carousel-outer {
+  position: relative;
+  width: 100%;
+}
+
+.flower-carousel-outer::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(560px, 85vw);
+  height: 360px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, rgba(249, 223, 232, 0.42) 0%, rgba(235, 241, 236, 0.34) 48%, transparent 74%);
+  filter: blur(28px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.flower-coverflow-stage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 980px;
+  height: 380px;
+  margin: 0 auto;
+  perspective: 1250px;
+  perspective-origin: 50% 48%;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+  padding: 10px 0;
+}
+
+@media (min-width: 640px) {
+  .flower-coverflow-stage {
+    height: 440px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .flower-coverflow-stage {
+    height: 480px;
+  }
+}
+
+.flower-coverflow-stage:active,
+.flower-coverflow-stage.is-dragging {
+  cursor: grabbing;
+}
+
+/* 3D Coverflow Card Base */
+.flower-coverflow-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 310px;
+  margin-top: -155px;
+  margin-left: -110px;
+  border-radius: 1.75rem;
+  overflow: hidden;
+  background-color: #FFF9F5;
+  border: 1.5px solid rgba(255, 249, 245, 0.92);
+  cursor: pointer;
+  outline: none;
+  will-change: transform, opacity, filter, box-shadow;
+  transition: transform 0.62s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+              filter 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.4s ease,
+              box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  --card-rx: 0deg;
+  --card-ry: 0deg;
+}
+
+.flower-coverflow-card:focus-visible {
+  box-shadow: 0 0 0 3px #FAF6F0, 0 0 0 6px #647D69;
+}
+
+@media (min-width: 640px) {
+  .flower-coverflow-card {
+    width: 260px;
+    height: 370px;
+    margin-top: -185px;
+    margin-left: -130px;
+    border-radius: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .flower-coverflow-card {
+    width: 290px;
+    height: 410px;
+    margin-top: -205px;
+    margin-left: -145px;
+  }
+}
+
+.flower-coverflow-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.flower-card-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.04) 36%, transparent 62%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.flower-coverflow-card.pos-0 .flower-card-sheen {
+  opacity: 1;
+}
+
+.flower-carousel-slide-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 44px 16px 16px;
+  background: linear-gradient(to top, rgba(28, 25, 23, 0.78) 0%, rgba(28, 25, 23, 0.32) 55%, transparent 100%);
+  color: #FFF9F5;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0.92;
+  transform: translateY(0);
+  transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1), transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Center hero flower stays clean and unobstructed; title sits right below the stage */
+.flower-coverflow-card.pos-0 .flower-carousel-slide-name {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.flower-coverflow-card:not(.pos-0):hover .flower-carousel-slide-name,
+.flower-coverflow-card:not(.pos-0):focus-visible .flower-carousel-slide-name {
+  opacity: 1;
+}
+
+/* =========================================================================
+   3D COVERFLOW DEPTH SLOTS (Curved Spatial Arc & Editorial Depth)
+   ========================================================================= */
+
+/* Center (pos-0): Largest, Front-most, Interactive Micro-Tilt, Clean Studio Shadow */
+.flower-coverflow-card.pos-0 {
+  transform: translate3d(0, -4px, 28px) scale(1.01) rotateX(var(--card-rx, 0deg)) rotateY(var(--card-ry, 0deg));
+  opacity: 1;
+  filter: brightness(1.02) saturate(1.04);
+  border-color: rgba(100, 125, 105, 0.55);
+  box-shadow:
+    0 30px 58px -16px rgba(48, 44, 42, 0.24),
+    0 14px 30px -10px rgba(100, 125, 105, 0.22),
+    inset 0 0 0 1px rgba(255, 249, 245, 0.65);
+  z-index: 10;
+  cursor: grab;
+}
+.flower-coverflow-card.pos-0 img {
+  transform: scale(1.045);
+}
+
+/* Left Medium (pos--1): One arc step back on left */
+.flower-coverflow-card.pos--1 {
+  transform: translate3d(-108px, 6px, -65px) scale(0.84) rotateY(22deg);
+  opacity: 0.88;
+  filter: brightness(0.94);
+  border-color: rgba(229, 236, 230, 0.95);
+  box-shadow: -12px 18px 34px -8px rgba(48, 44, 42, 0.12);
+  z-index: 5;
+}
+@media (min-width: 640px) {
+  .flower-coverflow-card.pos--1 {
+    transform: translate3d(-176px, 8px, -85px) scale(0.85) rotateY(25deg);
+  }
+}
+@media (min-width: 1024px) {
+  .flower-coverflow-card.pos--1 {
+    transform: translate3d(-232px, 8px, -95px) scale(0.86) rotateY(27deg);
+  }
+}
+
+/* Right Medium (pos-1): One arc step back on right */
+.flower-coverflow-card.pos-1 {
+  transform: translate3d(108px, 6px, -65px) scale(0.84) rotateY(-22deg);
+  opacity: 0.88;
+  filter: brightness(0.94);
+  border-color: rgba(229, 236, 230, 0.95);
+  box-shadow: 12px 18px 34px -8px rgba(48, 44, 42, 0.12);
+  z-index: 5;
+}
+@media (min-width: 640px) {
+  .flower-coverflow-card.pos-1 {
+    transform: translate3d(176px, 8px, -85px) scale(0.85) rotateY(-25deg);
+  }
+}
+@media (min-width: 1024px) {
+  .flower-coverflow-card.pos-1 {
+    transform: translate3d(232px, 8px, -95px) scale(0.86) rotateY(-27deg);
+  }
+}
+
+/* Far-Left (pos--2): Furthest arc slot on left */
+.flower-coverflow-card.pos--2 {
+  transform: translate3d(-182px, 16px, -145px) scale(0.68) rotateY(34deg);
+  opacity: 0.56;
+  filter: brightness(0.88);
+  border-color: rgba(212, 223, 214, 0.85);
+  box-shadow: -8px 14px 24px -6px rgba(48, 44, 42, 0.09);
+  z-index: 2;
+}
+@media (min-width: 640px) {
+  .flower-coverflow-card.pos--2 {
+    transform: translate3d(-304px, 18px, -165px) scale(0.70) rotateY(38deg);
+  }
+}
+@media (min-width: 1024px) {
+  .flower-coverflow-card.pos--2 {
+    transform: translate3d(-394px, 18px, -185px) scale(0.71) rotateY(40deg);
+  }
+}
+
+/* Far-Right (pos-2): Furthest arc slot on right */
+.flower-coverflow-card.pos-2 {
+  transform: translate3d(182px, 16px, -145px) scale(0.68) rotateY(-34deg);
+  opacity: 0.56;
+  filter: brightness(0.88);
+  border-color: rgba(212, 223, 214, 0.85);
+  box-shadow: 8px 14px 24px -6px rgba(48, 44, 42, 0.09);
+  z-index: 2;
+}
+@media (min-width: 640px) {
+  .flower-coverflow-card.pos-2 {
+    transform: translate3d(304px, 18px, -165px) scale(0.70) rotateY(-38deg);
+  }
+}
+@media (min-width: 1024px) {
+  .flower-coverflow-card.pos-2 {
+    transform: translate3d(394px, 18px, -185px) scale(0.71) rotateY(-40deg);
+  }
+}
+
+/* Side Card Hover Preview */
+.flower-coverflow-card.pos--1:hover {
+  opacity: 0.98;
+  filter: brightness(1);
+  border-color: rgba(100, 125, 105, 0.72);
+  transform: translate3d(-224px, 0px, -68px) scale(0.88) rotateY(21deg);
+}
+.flower-coverflow-card.pos-1:hover {
+  opacity: 0.98;
+  filter: brightness(1);
+  border-color: rgba(100, 125, 105, 0.72);
+  transform: translate3d(224px, 0px, -68px) scale(0.88) rotateY(-21deg);
+}
+@media (max-width: 1023px) {
+  .flower-coverflow-card.pos--1:hover {
+    transform: translate3d(-168px, 0px, -64px) scale(0.87) rotateY(20deg);
+  }
+  .flower-coverflow-card.pos-1:hover {
+    transform: translate3d(168px, 0px, -64px) scale(0.87) rotateY(-20deg);
+  }
+}
+@media (max-width: 639px) {
+  .flower-coverflow-card.pos--1:hover {
+    transform: translate3d(-104px, 0px, -50px) scale(0.86) rotateY(18deg);
+  }
+  .flower-coverflow-card.pos-1:hover {
+    transform: translate3d(104px, 0px, -50px) scale(0.86) rotateY(-18deg);
+  }
+}
+.flower-coverflow-card.pos--2:hover,
+.flower-coverflow-card.pos-2:hover {
+  opacity: 0.85;
+  filter: brightness(0.98);
+  border-color: rgba(100, 125, 105, 0.65);
+}
+
+.flower-carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: #D4DFD6;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: width 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 0.3s ease,
+              box-shadow 0.3s ease,
+              transform 0.25s ease;
+}
+
+.flower-carousel-dot:hover {
+  background-color: #8FA895;
+  transform: scale(1.15);
+}
+
+.flower-carousel-dot.is-active {
+  width: 30px;
+  background-color: #647D69;
+  box-shadow: 0 2px 10px rgba(100, 125, 105, 0.34);
+}
+
+/* Cards not in the visible ±2 window are tucked out of sight */
+.flower-coverflow-card.pos-hidden {
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  transform: translate3d(0, 0, -300px) scale(0.5);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.carousel-nav-btn {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px rgba(48, 44, 42, 0.08), 0 1px 3px rgba(100, 125, 105, 0.08);
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.carousel-nav-btn:hover:not(:disabled) {
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 8px 20px rgba(100, 125, 105, 0.25);
+  border-color: #647D69;
+}
+
+.carousel-nav-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Care Journey Botanical Stem Timeline & Cards */
+.care-journey-timeline {
+  position: relative;
+  padding-left: 3.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+@media (min-width: 640px) {
+  .care-journey-timeline {
+    padding-left: 4.1rem;
+    gap: 1.35rem;
+  }
+}
+
+.care-stem-track {
+  position: absolute;
+  left: 1.05rem;
+  top: 2.25rem;
+  bottom: 2.25rem;
+  width: 2px;
+  border-radius: 9999px;
+  background: #E5ECE6;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+@media (min-width: 640px) {
+  .care-stem-track {
+    left: 1.3rem;
+  }
+}
+
+.care-stem-fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #8FA895 0%, #647D69 55%, #344F3B 100%);
+  transform-origin: top center;
+  transform: scaleY(0);
+  will-change: transform;
+  border-radius: 9999px;
+}
+
+.care-step-row {
+  position: relative;
+}
+
+.care-step-node {
+  position: absolute;
+  left: -3.15rem;
+  top: 1.45rem;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 9999px;
+  background: #FFF9F5;
+  border: 1.5px solid #CFDCD1;
+  color: #647D69;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  z-index: 2;
+  transition:
+    background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.35s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s ease;
+}
+
+@media (min-width: 640px) {
+  .care-step-node {
+    left: -4.1rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    font-size: 0.95rem;
+    top: 1.5rem;
+  }
+}
+
+.care-step-row.is-reached .care-step-node {
+  background: #647D69;
+  border-color: #647D69;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(100, 125, 105, 0.22), 0 0 0 5px rgba(235, 241, 236, 0.9);
+}
+
+.care-step-row.is-highlighted .care-step-node {
+  background: #344F3B;
+  border-color: #344F3B;
+  color: #FFFFFF;
+  transform: scale(1.08);
+  box-shadow: 0 6px 18px rgba(52, 79, 59, 0.25), 0 0 0 6px rgba(249, 223, 232, 0.65);
+}
+
+.guide-care-step {
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid #E5ECE6;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 2px 12px rgba(48, 44, 42, 0.03);
+  transition:
+    background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.guide-care-step:hover,
+.guide-care-step:focus-visible {
+  transform: translateY(-2px);
+  border-color: #8FA895;
+  box-shadow: 0 12px 28px rgba(52, 79, 59, 0.07);
+}
+
+.guide-care-step:focus-visible {
+  box-shadow: 0 0 0 3px rgba(100, 125, 105, 0.22), 0 12px 28px rgba(52, 79, 59, 0.07);
+}
+
+.care-step-row.is-reached .guide-care-step {
+  border-color: rgba(100, 125, 105, 0.32);
+  background: #FCFDFC;
+}
+
+.guide-care-step.is-highlighted,
+.care-step-row.is-highlighted .guide-care-step {
+  border-color: #647D69;
+  background: #F6FAF7;
+  box-shadow: 0 14px 32px rgba(52, 79, 59, 0.09), 0 0 0 1px rgba(100, 125, 105, 0.16);
+}
+
+.care-step-icon {
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.guide-care-step:hover .care-step-icon,
+.care-step-row.is-highlighted .care-step-icon {
+  background-color: #F9DFE8;
+  border-color: rgba(183, 110, 121, 0.3);
+}
+
+.guide-care-step:hover .care-step-icon[data-step="1"],
+.care-step-row.is-highlighted .care-step-icon[data-step="1"] {
+  transform: rotate(-12deg) scale(1.07);
+}
+
+.guide-care-step:hover .care-step-icon[data-step="2"],
+.care-step-row.is-highlighted .care-step-icon[data-step="2"] {
+  transform: translateY(-2px) scale(1.07);
+}
+
+.guide-care-step:hover .care-step-icon[data-step="3"],
+.care-step-row.is-highlighted .care-step-icon[data-step="3"] {
+  transform: rotate(90deg) scale(1.05);
+}
+
+.guide-care-step:hover .care-step-icon[data-step="4"],
+.care-step-row.is-highlighted .care-step-icon[data-step="4"] {
+  transform: rotate(24deg) scale(1.07);
+}
+
+.guide-care-step:hover .care-step-icon[data-step="5"],
+.care-step-row.is-highlighted .care-step-icon[data-step="5"] {
+  transform: rotate(-7deg) translateY(-1px) scale(1.07);
+}
+
+.care-florist-note {
+  border-left: 2px solid #D4DFD6;
+  padding-left: 0.75rem;
+  transition: border-color 0.35s ease;
+}
+
+.care-step-row.is-highlighted .care-florist-note,
+.guide-care-step:hover .care-florist-note {
+  border-left-color: #647D69;
+}
+
+/* Occasion Cards */
+.guide-occasion-card {
+  transition: all 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.guide-occasion-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px rgba(48, 44, 42, 0.08);
+  border-color: #647D69;
+}
+
+/* Gifting Cards */
+.guide-gifting-card {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.guide-gifting-card:hover {
+  transform: translateY(-3px);
+  border-color: #647D69;
+}
+
+/* Gentle Floating Animation */
+@keyframes guideFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(1deg); }
+}
+
+.guide-floating {
+  animation: guideFloat 5s ease-in-out infinite;
+}
+
+/* Smooth Info Transition Directly Below Carousel */
+.guide-info-fade {
+  animation: guideInfoFadeIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes guideInfoFadeIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-floating {
+    animation: none !important;
+  }
+  .flower-coverflow-card,
+  .flower-coverflow-card img,
+  .flower-card-sheen,
+  .flower-carousel-slide-name,
+  .flower-carousel-dot,
+  .carousel-nav-btn,
+  .guide-info-fade {
+    transition: none !important;
+    animation: none !important;
+  }
+  .flower-coverflow-card.pos-0 {
+    transform: translate3d(0, 0, 0) scale(1) !important;
+  }
+  .flower-coverflow-card.pos-0 img {
+    transform: none !important;
+  }
+  .guide-care-step:hover,
+  .guide-occasion-card:hover,
+  .guide-gifting-card:hover {
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   LIVING BOTANICAL ATELIER (OPTION 1) — AMBIENT BACKGROUND & MESH GRADIENTS
+   ========================================================================== */
+/* Scroll performance: the mesh gradients used to be a `background-attachment: fixed` body background, which makes
+   the browser repaint the whole viewport on every scroll frame. The same gradients now live on a fixed layer behind
+   the page, which the compositor moves for free — identical look, no repaint while scrolling. */
+body[data-view="home"] {
+  background-color: #FFF9F5;
+}
+body[data-view="home"]::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(ellipse 70% 45% at 15% 15%, rgba(249, 223, 232, 0.45) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 85% 55%, rgba(235, 241, 236, 0.50) 0%, transparent 65%),
+    radial-gradient(ellipse 65% 55% at 30% 85%, rgba(255, 238, 225, 0.40) 0%, transparent 70%);
+  background-size: 100% 100%;
+  transform: translateZ(0);
+}
+
+/* Atmospheric light caustics on homepage sections */
+body[data-view="home"] #home-occasions,
+body[data-view="home"] #home-why-choose-us,
+body[data-view="home"] #home-atelier {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+body[data-view="home"] #home-featured,
+body[data-view="home"] #home-how-to-order {
+  background: rgba(255, 249, 247, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Liquid Bloom Magnetic Buttons */
+.btn-liquid-bloom {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.btn-liquid-bloom::before {
+  content: '';
+  position: absolute;
+  top: var(--btn-y, 50%);
+  left: var(--btn-x, 50%);
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, #526B57 0%, #344F3B 100%);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.btn-liquid-bloom:hover::before {
+  width: 320%;
+  height: 320%;
+}
+
+/* Card Specular Diffuse Light Sheen on Tilt */
+.atelier-card,
+.guide-occasion-card {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+}
+
+.atelier-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle 260px at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.48) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 4;
+}
+
+.atelier-card.is-tilting::after {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-liquid-bloom::before {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+}
+
+
+/* ==========================================================================
+   UI CONSISTENCY (Phase 1): one Lucide stroke weight for interface icons
+   (navigation, account, tracking, product cards). Decorative illustrations
+   elsewhere keep their own drawing weights.
+   ========================================================================== */
+.floating-navbar svg[fill="none"][stroke="currentColor"],
+.floating-navbar svg[fill="none"][stroke="currentColor"] *,
+#track-result svg[fill="none"][stroke="currentColor"],
+#track-result svg[fill="none"][stroke="currentColor"] *,
+#acct-orders svg[fill="none"][stroke="currentColor"],
+#acct-orders svg[fill="none"][stroke="currentColor"] *,
+.atelier-card svg[fill="none"][stroke="currentColor"],
+.atelier-card svg[fill="none"][stroke="currentColor"] * {
+  stroke-width: 1.8;
+}
+
+/* ==========================================================================
+   FLOWER MEANING CAROUSEL (About Page – "Every Flower Has a Meaning")
+   ========================================================================== */
+.fmc-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.fmc-carousel-wrap {
+  position: relative;
+  margin: 0 -6px;
+  padding: 12px 0 20px;
+  overflow: hidden;
+}
+
+.fmc-track {
+  display: flex;
+  gap: 0;
+  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+  align-items: stretch;
+}
+
+.fmc-card {
+  flex: 0 0 var(--fmc-card-w, 300px);
+  width: var(--fmc-card-w, 300px);
+  margin: 0 calc(var(--fmc-gap, 10px) / 2);
+  background: #fff;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid #E5ECE6;
+  box-shadow: 0 2px 12px rgba(48,44,42,0.06);
+  transform: scale(0.88);
+  opacity: 0.5;
+  transition:
+    transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.fmc-card.is-adjacent {
+  transform: scale(0.91);
+  opacity: 0.65;
+}
+
+.fmc-card.is-active {
+  transform: scale(1);
+  opacity: 1;
+  box-shadow:
+    0 8px 32px rgba(100,125,105,0.18),
+    0 2px 8px rgba(48,44,42,0.1);
+  cursor: default;
+}
+
+.fmc-card:hover:not(.is-active) {
+  opacity: 0.82;
+  transform: scale(0.93);
+}
+
+.fmc-card-img-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: #FFF9F5;
+}
+
+.fmc-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fmc-card.is-active .fmc-card-img-wrap:hover .fmc-card-img {
+  transform: scale(1.04);
+}
+
+.fmc-card-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(48,44,42,0.28) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.fmc-card-body {
+  padding: 18px 20px 22px;
+}
+
+.fmc-card-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #647D69;
+  background: #EBF1EC;
+  border-radius: 999px;
+  padding: 3px 10px;
+  margin-bottom: 8px;
+}
+
+.fmc-card-name {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #302C2A;
+  margin: 0 0 8px;
+  line-height: 1.25;
+}
+
+.fmc-card-desc {
+  font-size: 0.8125rem;
+  color: #6E6864;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Navigation buttons */
+.fmc-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #E5ECE6;
+  box-shadow: 0 2px 10px rgba(48,44,42,0.12);
+  color: #302C2A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+
+.fmc-nav:hover {
+  background: #647D69;
+  color: #fff;
+  border-color: #647D69;
+  box-shadow: 0 4px 16px rgba(100,125,105,0.28);
+  transform: translateY(-50%) scale(1.06);
+}
+
+.fmc-nav:active {
+  transform: translateY(-50%) scale(0.96);
+}
+
+.fmc-nav-prev { left: 4px; }
+.fmc-nav-next { right: 4px; }
+
+@media (min-width: 640px) {
+  .fmc-nav-prev { left: 10px; }
+  .fmc-nav-next { right: 10px; }
+}
+
+/* Dots */
+.fmc-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding-top: 4px;
+  flex-wrap: wrap;
+}
+
+.fmc-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #D6C7CC;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s, transform 0.25s, width 0.25s;
+  flex-shrink: 0;
+}
+
+.fmc-dot.is-active {
+  background: #647D69;
+  width: 20px;
+  border-radius: 999px;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fmc-track,
+  .fmc-card,
+  .fmc-card-img,
+  .fmc-dot {
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   HOMEPAGE BOTANICAL DECORATIVE CANVAS
+   ========================================================================== */
+.homepage-canvas {
+  position: relative;
+  background-color: #FAF6F0;
+  width: 100%;
+  overflow-x: hidden;
+  color: #302C2A;
+}
+
+.homepage-decor-wrapper,
+.customer-decor-wrapper {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+  /* Must sit above the content layer (z-10) so decorations are visible through section backgrounds */
+  z-index: 11;
+}
+
+.homepage-decor-img,
+.customer-decor-img {
+  position: absolute;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 4px 8px rgba(48, 44, 42, 0.08));
+  transition: opacity 0.3s ease;
+  opacity: 0.65;
+}
+
+/* Corner Decorations — peek from page corners */
+.decor-corner-tl {
+  top: -45px;
+  left: -55px;
+  width: clamp(240px, 24vw, 380px);
+  opacity: 0.65;
+  transform: rotate(-8deg);
+}
+
+.decor-corner-tr {
+  top: -35px;
+  right: -50px;
+  width: clamp(230px, 23vw, 360px);
+  opacity: 0.65;
+  transform: rotate(10deg);
+}
+
+.decor-corner-bl {
+  bottom: -60px;
+  left: -45px;
+  width: clamp(230px, 22vw, 340px);
+  opacity: 0.65;
+  transform: rotate(-6deg);
+}
+
+.decor-corner-br {
+  bottom: -50px;
+  right: -50px;
+  width: clamp(250px, 25vw, 390px);
+  opacity: 0.65;
+  transform: rotate(8deg);
+}
+
+/* Side Flank Decorations — staggered along left/right edges */
+.decor-side-hero-left {
+  top: 13%;
+  left: -45px;
+  width: clamp(180px, 16vw, 260px);
+  opacity: 0.65;
+  transform: rotate(6deg);
+}
+
+.decor-side-atelier-right {
+  top: 25%;
+  right: -50px;
+  width: clamp(210px, 18vw, 320px);
+  opacity: 0.65;
+  transform: rotate(-8deg);
+}
+
+.decor-side-blooms-left {
+  top: 38%;
+  left: -50px;
+  width: clamp(200px, 17vw, 300px);
+  opacity: 0.65;
+  transform: rotate(12deg);
+}
+
+.decor-side-delivery-right {
+  top: 50%;
+  right: -55px;
+  width: clamp(210px, 18vw, 310px);
+  opacity: 0.65;
+  transform: rotate(-10deg);
+}
+
+.decor-side-occasion-left {
+  top: 63%;
+  left: -45px;
+  width: clamp(190px, 17vw, 290px);
+  opacity: 0.65;
+  transform: rotate(7deg);
+}
+
+.decor-side-studio-right {
+  top: 76%;
+  right: -50px;
+  width: clamp(220px, 19vw, 330px);
+  opacity: 0.65;
+  transform: rotate(-9deg);
+}
+
+.decor-side-works-left {
+  top: 88%;
+  left: -45px;
+  width: clamp(190px, 16vw, 280px);
+  opacity: 0.65;
+  transform: rotate(5deg);
+}
+
+/* Dedicated Flanks for Catalog, Cart, Checkout, Account, etc. */
+.decor-flank-mid-left {
+  top: 38%;
+  left: -50px;
+  width: clamp(180px, 16vw, 270px);
+  opacity: 0.65;
+  transform: rotate(6deg);
+}
+
+.decor-flank-mid-right {
+  top: 45%;
+  right: -50px;
+  width: clamp(200px, 18vw, 300px);
+  opacity: 0.65;
+  transform: rotate(-8deg);
+}
+
+/* Modal Dialog Corner Accents (at 50% visibility) */
+.decor-modal-tr {
+  position: absolute;
+  top: -24px;
+  right: -24px;
+  width: 120px;
+  opacity: 0.50;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  transform: rotate(12deg);
+  filter: drop-shadow(0 4px 14px rgba(48, 44, 42, 0.06));
+}
+
+.decor-modal-bl {
+  position: absolute;
+  bottom: -24px;
+  left: -24px;
+  width: 115px;
+  opacity: 0.50;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  transform: rotate(-10deg);
+  filter: drop-shadow(0 4px 14px rgba(48, 44, 42, 0.06));
+}
+
+/* Tablet adjustments */
+@media (max-width: 1024px) {
+  .decor-corner-tl { top: -30px; left: -40px; width: 240px; }
+  .decor-corner-tr { top: -25px; right: -35px; width: 230px; }
+  .decor-corner-bl { bottom: -40px; left: -35px; width: 220px; }
+  .decor-corner-br { bottom: -35px; right: -35px; width: 250px; }
+  .decor-side-hero-left { width: 170px; left: -35px; }
+  .decor-side-atelier-right { width: 200px; right: -40px; }
+  .decor-side-blooms-left { width: 190px; left: -40px; }
+  .decor-side-delivery-right { width: 200px; right: -45px; }
+  .decor-side-occasion-left { width: 180px; left: -35px; }
+  .decor-side-studio-right { width: 210px; right: -40px; }
+  .decor-side-works-left { width: 180px; left: -35px; }
+  .decor-flank-mid-left { width: 170px; left: -35px; }
+  .decor-flank-mid-right { width: 190px; right: -40px; }
+  .decor-modal-tr { width: 95px; top: -18px; right: -18px; }
+  .decor-modal-bl { width: 90px; bottom: -18px; left: -18px; }
+}
+
+/* Mobile adjustments (Clean, fast, unobstructed, 0 horizontal overflow) */
+@media (max-width: 768px) {
+  .decor-corner-tl { top: -20px; left: -25px; width: 150px; opacity: 0.50; }
+  .decor-corner-tr { top: -15px; right: -25px; width: 140px; opacity: 0.50; }
+  .decor-corner-bl { bottom: -20px; left: -20px; width: 145px; opacity: 0.50; }
+  .decor-corner-br { bottom: -20px; right: -25px; width: 155px; opacity: 0.50; }
+  .decor-modal-tr { width: 75px; top: -12px; right: -12px; }
+  .decor-modal-bl { width: 70px; bottom: -12px; left: -12px; }
+
+  /* Hide intermediate flank illustrations on smaller screens to prevent crowding */
+  .decor-side-hero-left,
+  .decor-side-atelier-right,
+  .decor-side-blooms-left,
+  .decor-side-delivery-right,
+  .decor-side-occasion-left,
+  .decor-side-studio-right,
+  .decor-side-works-left,
+  .decor-flank-mid-left,
+  .decor-flank-mid-right {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   HERO TYPOGRAPHY REVEAL & BOTANICAL ATELIER ANIMATIONS
+   ========================================================================== */
+
+.hero-eyebrow-anim {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.96);
+  animation: heroEyebrowEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.15s;
+}
+
+@keyframes heroEyebrowEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hero-word-reveal {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(5px);
+  animation: heroWordReveal 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: var(--reveal-delay, 0.25s);
+  will-change: transform, opacity, filter;
+}
+
+@keyframes heroWordReveal {
+  50% {
+    filter: blur(1px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.hero-desc-anim {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: heroSubtleEntrance 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.95s;
+  will-change: transform, opacity;
+}
+
+.hero-ctas-anim {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: heroSubtleEntrance 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards 1.15s;
+  will-change: transform, opacity;
+}
+
+@keyframes heroSubtleEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   BOTANICAL BUTTERFLY ILLUSTRATIONS & NATURAL FLIGHT DYNAMICS
+   ========================================================================== */
+
+.botanical-butterfly {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  z-index: 5;
+  width: clamp(36px, 3.8vw, 52px);
+  height: clamp(36px, 3.8vw, 52px);
+  opacity: 0.65;
+  filter: drop-shadow(0 6px 14px rgba(48, 44, 42, 0.12));
+  will-change: transform;
+  transition: opacity 0.4s ease;
+}
+
+.butterfly-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  perspective: 600px;
+}
+
+/* Wing Fluttering */
+.wing-left {
+  transform-origin: 32px 35px;
+  animation: wingFlutterLeft 3.6s ease-in-out infinite;
+}
+
+.wing-right {
+  transform-origin: 32px 35px;
+  animation: wingFlutterRight 3.6s ease-in-out infinite;
+}
+
+@keyframes wingFlutterLeft {
+  0%, 100% { transform: scaleX(1) rotate(0deg); }
+  22% { transform: scaleX(0.70) rotate(-5deg); }
+  45% { transform: scaleX(0.96) rotate(1deg); }
+  72% { transform: scaleX(0.66) rotate(-6deg); }
+}
+
+@keyframes wingFlutterRight {
+  0%, 100% { transform: scaleX(1) rotate(0deg); }
+  22% { transform: scaleX(0.70) rotate(5deg); }
+  45% { transform: scaleX(0.96) rotate(-1deg); }
+  72% { transform: scaleX(0.66) rotate(6deg); }
+}
+
+/* Natural Floating Drift Paths */
+.butterfly-drift-1 {
+  animation: butterflyDriftPath1 11s ease-in-out infinite alternate;
+}
+
+.butterfly-drift-2 {
+  animation: butterflyDriftPath2 13s ease-in-out infinite alternate;
+}
+
+@keyframes butterflyDriftPath1 {
+  0% { transform: translate(0, 0) rotate(8deg); }
+  35% { transform: translate(-14px, -18px) rotate(3deg); }
+  70% { transform: translate(12px, -34px) rotate(12deg); }
+  100% { transform: translate(-6px, -48px) rotate(6deg); }
+}
+
+@keyframes butterflyDriftPath2 {
+  0% { transform: translate(0, 0) rotate(-6deg); }
+  30% { transform: translate(16px, -16px) rotate(-1deg); }
+  65% { transform: translate(-10px, -32px) rotate(-10deg); }
+  100% { transform: translate(8px, -44px) rotate(-4deg); }
+}
+
+/* Butterfly Strategic Locations */
+.butterfly-pos-hero {
+  top: 15%;
+  right: clamp(16px, 8vw, 120px);
+}
+
+.butterfly-pos-mid-left {
+  top: 48%;
+  left: clamp(14px, 4vw, 55px);
+}
+
+.butterfly-pos-mid-right {
+  top: 52%;
+  right: clamp(14px, 4vw, 55px);
+}
+
+.butterfly-pos-catalog-tr {
+  top: 140px;
+  right: clamp(20px, 6vw, 90px);
+}
+
+.butterfly-pos-builder-tr {
+  top: 180px;
+  right: clamp(16px, 5vw, 80px);
+}
+
+.butterfly-pos-cart-tl {
+  top: 120px;
+  left: clamp(18px, 6vw, 90px);
+}
+
+.butterfly-pos-account-tr {
+  top: 110px;
+  right: clamp(20px, 6vw, 90px);
+}
+
+@media (max-width: 768px) {
+  .botanical-butterfly {
+    width: 30px;
+    height: 30px;
+    opacity: 0.55;
+  }
+}
+
+/* Reduced Motion Support (Accessibility standard) */
+@media (prefers-reduced-motion: reduce) {
+  .hero-eyebrow-anim,
+  .hero-word-reveal,
+  .hero-desc-anim,
+  .hero-ctas-anim,
+  .botanical-butterfly,
+  .wing-left,
+  .wing-right,
+  .butterfly-drift-1,
+  .butterfly-drift-2 {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   FLORIST GUIDE — BOTANICAL CARE VISUAL PANEL
+   ========================================================================== */
+
+.guide-care-visual {
+  border-radius: 2rem;
+  overflow: hidden;
+  background: #FFF9F5;
+  border: 1px solid #E5ECE6;
+  box-shadow: 0 6px 28px rgba(100, 125, 105, 0.09);
+}
+
+.guide-care-flora-frame {
+  position: relative;
+  height: 220px;
+  background: linear-gradient(135deg, #EBF1EC 0%, #F4EAF0 60%, #EBF1EC 100%);
+  overflow: hidden;
+}
+
+.guide-care-flora-main {
+  position: absolute;
+  bottom: -10px;
+  right: -20px;
+  width: 65%;
+  opacity: 0.70;
+  pointer-events: none;
+  user-select: none;
+  object-fit: contain;
+}
+
+.guide-care-flora-accent {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 50%;
+  opacity: 0.50;
+  pointer-events: none;
+  user-select: none;
+  object-fit: contain;
+  transform: rotate(-8deg) scaleX(-1);
+}
+
+@keyframes guideFloraSway {
+  0%, 100% { transform: rotate(-1.5deg) translateY(0); }
+  50%       { transform: rotate(1.5deg)  translateY(-7px); }
+}
+@keyframes guideFloraSwayAlt {
+  0%, 100% { transform: rotate(-8deg) scaleX(-1) translateY(-5px); }
+  50%       { transform: rotate(-5deg) scaleX(-1) translateY(2px); }
+}
+
+.guide-flora-sway     { animation: guideFloraSway    9s  ease-in-out infinite; }
+.guide-flora-sway-alt { animation: guideFloraSwayAlt 11s ease-in-out infinite; }
+
+.guide-care-visual-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.guide-care-visual-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #647D69;
+  margin-bottom: 0.35rem;
+}
+
+.guide-care-visual-heading {
+  font-size: 1.35rem;
+  color: #302C2A;
+  line-height: 1.25;
+  margin-bottom: 0.4rem;
+}
+
+.guide-care-visual-sub {
+  font-size: 0.72rem;
+  color: #6E6864;
+  line-height: 1.65;
+  margin-bottom: 0.9rem;
+}
+
+.guide-care-mini-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.guide-care-mini-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.6rem;
+  background: #EBF1EC;
+  border: 1px solid #E5ECE6;
+  transition: background 0.2s ease;
+}
+
+.guide-care-mini-item:hover { background: #D4DFD6; }
+
+.guide-care-mini-num {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 50%;
+  background: #647D69;
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(100, 125, 105, 0.25);
+}
+
+.guide-care-mini-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #302C2A;
+}
+
+/* ==========================================================================
+   FLORIST GUIDE — CARE STEP JOURNEY CONNECTORS
+   ========================================================================== */
+
+.care-step-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2px 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-flora-sway,
+  .guide-flora-sway-alt {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .guide-care-step,
+  .care-step-node,
+  .care-step-icon,
+  .care-florist-note {
+    transition: none !important;
+  }
+
+  .guide-care-step:hover .care-step-icon,
+  .care-step-row.is-highlighted .care-step-icon,
+  .care-step-row.is-highlighted .care-step-node {
+    transform: none !important;
+  }
+
+  .care-stem-fill {
+    transform: scaleY(1) !important;
+  }
+}
+
+/* ==========================================================================
+   ATELIER FLORAL DESIGN STUDIO (CANVAS & DIRECT MANIPULATION)
+   ========================================================================== */
+#atelier-design-studio-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(30, 27, 26, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  color: #302C2A;
+  font-family: var(--font-body, system-ui, sans-serif);
+}
+
+#atelier-design-studio-modal.hidden {
+  display: none !important;
+}
+
+.studio-artboard-stage {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background-color: #EFE9E1;
+  background-image: radial-gradient(#D5CBBF 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  position: relative;
+}
+
+.studio-artboard {
+  position: relative;
+  background: #FAF6F0;
+  width: 960px;
+  height: 640px;
+  min-width: 960px;
+  min-height: 640px;
+  box-shadow: 0 25px 60px -15px rgba(48, 44, 42, 0.2), 0 0 0 1px rgba(48, 44, 42, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.studio-artboard-wireframe {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.45;
+  z-index: 1;
+}
+
+.studio-flower-wrapper {
+  position: absolute;
+  cursor: move;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  transform-origin: center center;
+  z-index: 10;
+  transition: filter 0.2s ease;
+}
+
+.studio-flower-wrapper:hover {
+  filter: drop-shadow(0 4px 12px rgba(100, 125, 105, 0.25));
+}
+
+.studio-flower-wrapper.is-selected {
+  outline: 2px solid #647D69;
+  outline-offset: 4px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px #FFFFFF, 0 8px 24px rgba(100, 125, 105, 0.2);
+  z-index: 50 !important;
+}
+
+.studio-flower-wrapper.is-selected::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border: 1px dashed rgba(100, 125, 105, 0.5);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+/* 4 Corner Resize Handles */
+.studio-resize-handle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #FFFFFF;
+  border: 2px solid #647D69;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 60;
+  touch-action: none;
+}
+
+.studio-resize-handle:hover {
+  background: #647D69;
+  transform: scale(1.2);
+}
+
+.studio-handle-nw { top: -10px; left: -10px; cursor: nwse-resize; }
+.studio-handle-ne { top: -10px; right: -10px; cursor: nesw-resize; }
+.studio-handle-sw { bottom: -10px; left: -10px; cursor: nesw-resize; }
+.studio-handle-se { bottom: -10px; right: -10px; cursor: nwse-resize; }
+
+/* Rotation Stem & Knob */
+.studio-rotation-stem {
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  width: 2px;
+  height: 22px;
+  background: #647D69;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 55;
+}
+
+.studio-rotation-knob {
+  position: absolute;
+  top: -38px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  background: #B76E79;
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  cursor: grab;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  z-index: 65;
+  touch-action: none;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.studio-rotation-knob:hover {
+  transform: translateX(-50%) scale(1.25);
+  background: #964F5B;
+}
+
+.studio-rotation-knob:active {
+  cursor: grabbing;
+}
+
+/* Public Storefront Freeform Items */
+.freeform-decor-item {
+  position: absolute;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 4px 8px rgba(48, 44, 42, 0.08));
+  max-width: none !important;
+}
