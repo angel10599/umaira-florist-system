@@ -4772,10 +4772,20 @@ class AdminApp {
         }
       };
 
-      const endpoint = isNew ? '/api/admin/bouquets' : `/api/admin/bouquets/${id}`;
-      const res = await this.apiRequest(endpoint, isNew ? 'POST' : 'PUT', payload);
-      if (!res.ok) {
-        this.toast(res.error || 'Failed to save bouquet.', 'error');
+      if (this._pendingImageUpload) await this._pendingImageUpload;
+      payload.image = document.getElementById('product-field-image')?.value.trim() || '';
+
+      const btn = document.getElementById('product-modal-submit-btn');
+      if (btn) { btn.disabled = true; btn._savedText = btn.innerText; btn.innerText = 'Saving…'; }
+      let saveRes;
+      try {
+        const endpoint = isNew ? '/api/admin/bouquets' : `/api/admin/bouquets/${id}`;
+        saveRes = await this.apiRequest(endpoint, isNew ? 'POST' : 'PUT', payload);
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = btn._savedText || 'Save'; }
+      }
+      if (!saveRes.ok) {
+        this.toast(saveRes.data?.error || saveRes.error || 'Failed to save bouquet.', 'error');
         return;
       }
       this.toast(isNew ? `Bouquet "${name}" added to catalog.` : `Bouquet "${name}" saved successfully.`, 'success');
@@ -4820,10 +4830,20 @@ class AdminApp {
         image
       };
 
-      const endpoint = isNew ? '/api/admin/flowers' : `/api/admin/flowers/${id}`;
-      const res = await this.apiRequest(endpoint, isNew ? 'POST' : 'PUT', payload);
-      if (!res.ok) {
-        this.toast(res.error || 'Failed to save product.', 'error');
+      if (this._pendingImageUpload) await this._pendingImageUpload;
+      payload.image = document.getElementById('product-field-image')?.value.trim() || '';
+
+      const btn2 = document.getElementById('product-modal-submit-btn');
+      if (btn2) { btn2.disabled = true; btn2._savedText = btn2.innerText; btn2.innerText = 'Saving…'; }
+      let saveRes2;
+      try {
+        const endpoint = isNew ? '/api/admin/flowers' : `/api/admin/flowers/${id}`;
+        saveRes2 = await this.apiRequest(endpoint, isNew ? 'POST' : 'PUT', payload);
+      } finally {
+        if (btn2) { btn2.disabled = false; btn2.innerText = btn2._savedText || 'Save'; }
+      }
+      if (!saveRes2.ok) {
+        this.toast(saveRes2.data?.error || saveRes2.error || 'Failed to save product.', 'error');
         return;
       }
       this.toast(isNew ? `Product "${name}" created.` : `Product "${name}" updated successfully.`, 'success');
@@ -6047,17 +6067,29 @@ class AdminApp {
     };
 
     const runSave = async () => {
-      const endpoint = isNew ? '/api/admin/bouquets' : `/api/admin/bouquets/${id}`;
-      const res = await this.apiRequest(endpoint, isNew ? 'POST' : 'PUT', payload);
-      if (!res.ok) {
-        this.toast(res.error || 'Failed to save bouquet changes.', 'error');
-        return { ok: false, error: res.error };
+      // If a Cloudinary upload is in progress, wait for it to finish before saving
+      // so the hidden image field has the final https:// URL, not a data: URL.
+      if (this._pendingImageUpload) await this._pendingImageUpload;
+      // Re-read the image field after any pending upload resolves
+      payload.image = document.getElementById('bouquet-field-image')?.value.trim() || '';
+
+      const btn = document.querySelector('#admin-bouquet-form [type="submit"]');
+      if (btn) { btn.disabled = true; btn._savedText = btn.innerText; btn.innerText = 'Saving…'; }
+      try {
+        const endpoint = isNew ? '/api/admin/bouquets' : `/api/admin/bouquets/${id}`;
+        const res = await this.apiRequest(endpoint, isNew ? 'POST' : 'PUT', payload);
+        if (!res.ok) {
+          this.toast(res.data?.error || res.error || 'Failed to save bouquet changes.', 'error');
+          return { ok: false, error: res.data?.error || res.error };
+        }
+        this.toast(`Bouquet "${name}" saved successfully.`, 'success');
+        this.closeBouquetModal();
+        this.loadBouquets();
+        this.loadStats();
+        return { ok: true };
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = btn._savedText || 'Save Bouquet Changes'; }
       }
-      this.toast(`Bouquet "${name}" saved successfully.`, 'success');
-      this.closeBouquetModal();
-      this.loadBouquets();
-      this.loadStats();
-      return { ok: true };
     };
 
     if (prev && prev.price !== price) {
@@ -6331,6 +6363,14 @@ class AdminApp {
       return;
     }
 
+    // Block the Save button while Cloudinary upload is in progress so the first
+    // Save click cannot fire with a data: URL (which the server rejects).
+    let resolveUpload;
+    this._pendingImageUpload = new Promise(r => { resolveUpload = r; });
+    const formId = kind === 'bouquet' ? '#admin-bouquet-form' : '#admin-product-form';
+    const saveBtn = document.querySelector(`${formId} [type="submit"]`);
+    if (saveBtn) { saveBtn.disabled = true; saveBtn._savedText = saveBtn.innerText; saveBtn.innerText = 'Uploading image…'; }
+
     const reader = new FileReader();
     reader.onload = async (e) => {
       const dataUrl = e.target.result;
@@ -6342,9 +6382,12 @@ class AdminApp {
         this.syncImagePreview(kind, res.data.url);
         this.toast('Photograph uploaded successfully to atelier assets.', 'success');
       } else {
-        this.toast((res && res.error) || 'Failed to upload image.', 'error');
+        this.toast((res && res.data && res.data.error) || 'Failed to upload image.', 'error');
       }
       input.value = '';
+      this._pendingImageUpload = null;
+      resolveUpload();
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.innerText = saveBtn._savedText || 'Save'; }
     };
     reader.readAsDataURL(file);
   }
