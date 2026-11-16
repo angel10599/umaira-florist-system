@@ -1,7 +1,4 @@
 const path = require('path');
-const { initializeApp, getApps, cert } = require('firebase-admin/app');
-const { getFirestore } = require('firebase-admin/firestore');
-const { getAuth } = require('firebase-admin/auth');
 
 let firebaseDb = null;
 let firebaseAuth = null;
@@ -23,6 +20,9 @@ function loadServiceAccount() {
 }
 
 try {
+  const { initializeApp, getApps, cert } = require('firebase-admin/app');
+  const { getFirestore } = require('firebase-admin/firestore');
+  const { getAuth } = require('firebase-admin/auth');
   const serviceAccount = loadServiceAccount();
   if (!getApps().length) {
     initializeApp({ credential: cert(serviceAccount) });

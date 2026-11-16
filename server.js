@@ -19,7 +19,7 @@ const BASE_DIR = __dirname;
 const UPLOAD_DIR = process.env.UMAIRA_UPLOAD_DIR || path.join(BASE_DIR, 'assets', 'uploads');
 
 // Firestore sync listeners — fire-and-forget; failures are logged but never propagated.
-if (firestoreSync.enabled()) {
+if (typeof firestoreSync.enabled === 'function' && firestoreSync.enabled()) {
   eventHub.on('order:created', ({ order }) => {
     if (order) firestoreSync.syncOrder(order).catch(e => console.error('[firestore] order sync:', e.message));
   });
