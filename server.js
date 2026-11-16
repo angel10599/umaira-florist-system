@@ -46,9 +46,19 @@ const MIME_TYPES = {
 
 // ---------------------------------------------------------------- admin bootstrap
 async function bootstrapAdmin() {
-  if (await store.adminCount() > 0) return;
   const username = process.env.ADMIN_USERNAME || 'admin';
-  let password = process.env.ADMIN_PASSWORD;
+  const envPassword = process.env.ADMIN_PASSWORD;
+  if (await store.adminCount() > 0) {
+    // Admin exists: sync password from ADMIN_PASSWORD env var if set so deployments
+    // can rotate credentials without needing access to the change-password UI.
+    if (envPassword) {
+      if (envPassword.length < 8) { console.error('ADMIN_PASSWORD must be at least 8 characters.'); return; }
+      await store.forceSetAdminPassword(username, envPassword);
+      console.log('[bootstrap] Admin password synced from ADMIN_PASSWORD env var.');
+    }
+    return;
+  }
+  let password = envPassword;
   let generated = false;
   if (!password) { password = crypto.randomBytes(9).toString('base64url'); generated = true; }
   if (password.length < 8) { console.error('ADMIN_PASSWORD must be at least 8 characters.'); process.exit(1); }

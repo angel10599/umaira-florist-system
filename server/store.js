@@ -3045,6 +3045,11 @@ async function open() {
         .run(hashPassword(newPassword), ts, username);
       return { ok: true };
     },
+    async forceSetAdminPassword(username, newPassword) {
+      const ts = now();
+      await db.prepare('UPDATE admin_users SET password_hash = ?, updated_at = ? WHERE LOWER(username) = LOWER(?)')
+        .run(hashPassword(newPassword), ts, username);
+    },
     async createSession(username) {
       const token = 'adm_' + crypto.randomBytes(32).toString('hex');
       const t = Date.now();
