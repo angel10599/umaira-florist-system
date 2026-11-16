@@ -13,7 +13,7 @@ const stockOf = (row) => (row && row.stockCount !== undefined && row.stockCount 
 const notSellable = (row) => !row || row.archived || row.availability === 'unavailable' || row.availability === 'sold_out' ||
   (stockOf(row) !== undefined && stockOf(row) <= 0);
 
-function priceCartItems(cart, store) {
+async function priceCartItems(cart, store) {
   if (!Array.isArray(cart) || cart.length === 0 || cart.length > 50) return { error: 'Your cart is empty or invalid.' };
   const rows = [];
   const stockNeeds = {};
@@ -38,8 +38,8 @@ function priceCartItems(cart, store) {
         stockNeeds[item.id] = (stockNeeds[item.id] || 0) + q;
       };
       // Resolve a builder component from the database and check it is the right kind of item.
-      const resolve = (id, allowedTypes, label) => {
-        const item = id ? store.getFlower(String(id)) : null;
+      const resolve = async (id, allowedTypes, label) => {
+        const item = id ? await store.getFlower(String(id)) : null;
         if (!item || !allowedTypes.includes(item.itemType || 'flower')) return { error: `A selected ${label} is no longer available.` };
         if (notSellable(item)) return { error: `${item.name} is currently unavailable for purchase.` };
         return { item };
@@ -53,7 +53,7 @@ function priceCartItems(cart, store) {
       for (const f of (Array.isArray(s.mainFlowers) ? s.mainFlowers : [])) {
         const fq = Number(f && f.quantity);
         if (!Number.isInteger(fq) || fq < 1 || fq > 200) return { error: 'Invalid flower quantity in custom bouquet.' };
-        const r = resolve(idOf(f), ['flower'], 'flower');
+        const r = await resolve(idOf(f), ['flower'], 'flower');
         if (r.error) return { error: r.error === 'A selected flower is no longer available.' ? 'A selected flower is not available.' : r.error };
         if (seen.has(r.item.id)) return { error: 'Duplicate flower in custom bouquet.' };
         seen.add(r.item.id);
@@ -61,7 +61,7 @@ function priceCartItems(cart, store) {
         add('flower', r.item, fq);
       }
 
-      const bSettings = (store.getSetting ? store.getSetting('custom_builder') : null) || {};
+      const bSettings = (store.getSetting ? await store.getSetting('custom_builder') : null) || {};
       const minStems = bSettings.minStems !== undefined ? Number(bSettings.minStems) : 1;
       const maxStems = bSettings.maxStems !== undefined ? Number(bSettings.maxStems) : 50;
       if (stems < Math.max(1, minStems)) return { error: minStems <= 1 ? 'A custom bouquet needs at least one flower.' : `A custom bouquet needs at least ${minStems} flower stems.` };
@@ -76,7 +76,7 @@ function priceCartItems(cart, store) {
       for (const fi of fillerList) {
         const fqty = (fi && typeof fi === 'object' && fi.quantity !== undefined) ? Number(fi.quantity) : 1;
         if (!Number.isInteger(fqty) || fqty < 1 || fqty > MAX_FILLER_QTY) return { error: `Filler quantities must be whole numbers from 1 to ${MAX_FILLER_QTY}.` };
-        const r = resolve(idOf(fi), ['filler', 'foliage'], 'filler or greenery');
+        const r = await resolve(idOf(fi), ['filler', 'foliage'], 'filler or greenery');
         if (r.error) return { error: r.error };
         if (seenFill.has(r.item.id)) return { error: 'Duplicate filler in custom bouquet.' };
         seenFill.add(r.item.id);
@@ -89,7 +89,7 @@ function priceCartItems(cart, store) {
       if (wrapList.length > 3) return { error: 'You may select up to 3 wrapping types.' };
       const seenWrap = new Set();
       for (const w of wrapList) {
-        const r = resolve(idOf(w), ['wrapping'], 'wrapping');
+        const r = await resolve(idOf(w), ['wrapping'], 'wrapping');
         if (r.error) return { error: r.error };
         if (seenWrap.has(r.item.id)) return { error: 'Duplicate wrapping in custom bouquet.' };
         seenWrap.add(r.item.id);
@@ -102,7 +102,7 @@ function priceCartItems(cart, store) {
       if (ribbonList.length > 2) return { error: 'You may select up to 2 ribbon types.' };
       const seenRib = new Set();
       for (const rb of ribbonList) {
-        const r = resolve(idOf(rb), ['ribbon'], 'ribbon');
+        const r = await resolve(idOf(rb), ['ribbon'], 'ribbon');
         if (r.error) return { error: r.error };
         if (seenRib.has(r.item.id)) return { error: 'Duplicate ribbon in custom bouquet.' };
         seenRib.add(r.item.id);
@@ -112,12 +112,12 @@ function priceCartItems(cart, store) {
 
       // 5. Greeting card (0 or 1)
       if (s.cardDesign && s.cardDesign !== 'crd-none') {
-        const r = resolve(s.cardDesign, ['card'], 'greeting card');
+        const r = await resolve(s.cardDesign, ['card'], 'greeting card');
         if (r.error) return { error: r.error };
         add('card', r.item, 1);
       }
     } else {
-      const bq = store.getBouquet(raw.id);
+      const bq = await store.getBouquet(raw.id);
       if (bq) {
         // Ready-made bouquets carry their own stock; their recipe ingredients are NOT deducted.
         if (notSellable(bq)) return { error: `${bq.name} is currently unavailable.` };
@@ -128,7 +128,7 @@ function priceCartItems(cart, store) {
         rows.push({ bouquetName: bq.name, type: 'ready_bouquet', itemId: bq.id, name: bq.name, quantity: qty, unitPrice: bq.price, lineTotal: line, cardMessage: card });
         continue;
       }
-      const fl = store.getFlower(raw.id);
+      const fl = await store.getFlower(raw.id);
       if (!fl || fl.archived) return { error: 'An item in your cart is no longer available.' };
       if (notSellable(fl)) return { error: `${fl.name} is currently unavailable for purchase.` };
       if (stockOf(fl) !== undefined && stockOf(fl) < qty) return { error: `Only ${stockOf(fl)} ${fl.unitOfMeasure || 'stem(s)'} of ${fl.name} left in stock.` };
@@ -141,7 +141,7 @@ function priceCartItems(cart, store) {
   return { rows, subtotal: money(subtotal), stockNeeds };
 }
 
-const deliveryFee = (subtotal, fulfillment, store) => {
+const deliveryFee = async (subtotal, fulfillment, store) => {
   let threshold = 2500;
   let fee = 150;
   let currentStore = store;
@@ -149,7 +149,7 @@ const deliveryFee = (subtotal, fulfillment, store) => {
     try { currentStore = require('./store'); } catch (_) {}
   }
   if (currentStore && typeof currentStore.getSetting === 'function') {
-    const d = currentStore.getSetting('delivery');
+    const d = await currentStore.getSetting('delivery');
     if (d) {
       if (typeof d.freeThreshold === 'number') threshold = d.freeThreshold;
       else if (typeof d.freeDeliveryThreshold === 'number') threshold = d.freeDeliveryThreshold;

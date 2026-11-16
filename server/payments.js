@@ -26,8 +26,8 @@ const manilaDateTime = (iso) => {
   catch (_) { return d.toISOString(); }
 };
 
-function install(api, { db, tx, now, byNumber, eventHub, safeParse }) {
-  db.exec(`
+async function install(api, { db, tx, now, byNumber, eventHub, safeParse }) {
+  await db.exec(`
     CREATE TABLE IF NOT EXISTS payment_submissions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       order_id INTEGER NOT NULL REFERENCES orders(id),
@@ -95,49 +95,49 @@ function install(api, { db, tx, now, byNumber, eventHub, safeParse }) {
     amount: r.amount, note: r.note, createdAt: r.created_at
   });
 
-  function logEvent({ orderNumber, submissionId = null, action, from = null, to = null, actorType, actor = null, amount = null, note = null }) {
-    db.prepare(`INSERT INTO payment_events (order_number, submission_id, action, from_status, to_status, actor_type, actor, amount, note, created_at)
+  async function logEvent({ orderNumber, submissionId = null, action, from = null, to = null, actorType, actor = null, amount = null, note = null }) {
+    await db.prepare(`INSERT INTO payment_events (order_number, submission_id, action, from_status, to_status, actor_type, actor, amount, note, created_at)
       VALUES (?,?,?,?,?,?,?,?,?,?)`).run(orderNumber, submissionId, action, from, to, actorType, actor, amount, note, now());
   }
   const customerName = (row) => `${row.first_name || ''} ${row.last_name || ''}`.trim();
-  const notifyCustomer = (row, title, message, type) => {
+  const notifyCustomer = async (row, title, message, type) => {
     try {
-      api.createNotification({ recipientType: 'customer', userId: row.user_id, orderNumber: row.order_number, title, message, type, link: `/index.html#track=${row.order_number}` });
+      await api.createNotification({ recipientType: 'customer', userId: row.user_id, orderNumber: row.order_number, title, message, type, link: `/index.html#track=${row.order_number}` });
     } catch (_) {}
   };
-  const signal = (row) => {
+  const signal = async (row) => {
     try {
-      const order = api.get(row.order_number);
+      const order = await api.get(row.order_number);
       eventHub.emit('order:status', { orderNumber: row.order_number, status: order.status, previousStatus: order.status, order, payment: true });
     } catch (_) {}
   };
-  const codCollected = (orderNumber) => !!db.prepare("SELECT 1 FROM payment_events WHERE order_number = ? AND action = 'cash_collected_by_courier' LIMIT 1").get(orderNumber);
+  const codCollected = async (orderNumber) => !!(await db.prepare("SELECT 1 FROM payment_events WHERE order_number = ? AND action = 'cash_collected_by_courier' LIMIT 1").get(orderNumber));
   // The shop's GCash QR code (Shop Settings → Payment Accounts). Without it customers cannot be told where to pay.
-  const gcashReady = () => { const p = api.getSetting('payment') || {}; return !!(p.gcash && p.gcash.qrImage); };
+  const gcashReady = async () => { const p = (await api.getSetting('payment')) || {}; return !!(p.gcash && p.gcash.qrImage); };
 
   Object.assign(api, {
     gcashConfigured: gcashReady,
 
     // Courier collected the cash from the customer. Payment stays Unpaid: the shop has not received it yet.
     // Called inside an existing transaction (proof of delivery) or by confirmCashPayment.
-    recordCodCollection(row, actor, amount, note) {
-      if (codCollected(row.order_number)) return false;
+    async recordCodCollection(row, actor, amount, note) {
+      if (await codCollected(row.order_number)) return false;
       const cur = rules.normalizePaymentStatus(row.payment_status);
-      logEvent({ orderNumber: row.order_number, action: 'cash_collected_by_courier', from: cur, to: cur, actorType: 'admin', actor, amount, note: note || 'Courier collected the cash on delivery' });
+      await logEvent({ orderNumber: row.order_number, action: 'cash_collected_by_courier', from: cur, to: cur, actorType: 'admin', actor, amount, note: note || 'Courier collected the cash on delivery' });
       return true;
     },
 
     // ---------------------------------------------------------------- customer: submit GCash payment proof
-    submitPayment({ orderNumber, userId, amount, reference, receipt }) {
-      return tx(() => {
-        const row = byNumber(orderNumber);
+    async submitPayment({ orderNumber, userId, amount, reference, receipt }) {
+      return tx(async () => {
+        const row = await byNumber(orderNumber);
         // Same answer as "not found" for someone else's order, so order numbers cannot be probed.
         if (!row || !userId || row.user_id !== userId) return { ok: false, status: 404, error: 'Order not found.' };
         const n = row.order_number;
         if (rules.paymentKind(row.payment_method) !== 'online') {
           return { ok: false, status: 409, error: `This order is paid in cash (${row.payment_method}). No payment proof is needed — the shop records your payment when the cash is received.` };
         }
-        if (row.payment_method === 'GCash' && !gcashReady()) {
+        if (row.payment_method === 'GCash' && !(await gcashReady())) {
           return { ok: false, status: 409, code: 'GCASH_NOT_CONFIGURED', error: 'GCash payment is not available yet because the shop has not set up its GCash QR code. Please contact the shop.' };
         }
         if (row.status === 'Rejected/Cancelled') return { ok: false, status: 409, error: 'This order was cancelled, so payment proof can no longer be submitted. Please contact the shop.' };
@@ -152,7 +152,7 @@ function install(api, { db, tx, now, byNumber, eventHub, safeParse }) {
         if (!Number.isFinite(amt) || amt <= 0 || amt > 1000000) return { ok: false, status: 400, field: 'amount', error: 'Enter the amount you sent, in pesos.' };
         const amountSubmitted = Math.round(amt * 100) / 100;
 
-        const dup = db.prepare('SELECT order_number, status FROM payment_submissions WHERE reference_key = ?').get(key);
+        const dup = await db.prepare('SELECT order_number, status FROM payment_submissions WHERE reference_key = ?').get(key);
         if (dup) {
           return dup.order_number === n
             ? { ok: false, status: 409, field: 'reference', error: 'This reference number was already submitted for this order. If you made a new payment, enter the new transaction reference number.' }
@@ -163,46 +163,46 @@ function install(api, { db, tx, now, byNumber, eventHub, safeParse }) {
         if (Math.abs(amountSubmitted - row.total) > 0.009) {
           warnings.push({ code: 'amount_mismatch', message: `Customer entered ${peso(amountSubmitted)} but the order total is ${peso(row.total)} (${amountSubmitted > row.total ? 'over' : 'short'} by ${peso(Math.abs(amountSubmitted - row.total))}).` });
         }
-        const sameImage = db.prepare('SELECT order_number, reference FROM payment_submissions WHERE receipt_sha256 = ? ORDER BY id').all(receipt.sha256);
+        const sameImage = await db.prepare('SELECT order_number, reference FROM payment_submissions WHERE receipt_sha256 = ? ORDER BY id').all(receipt.sha256);
         if (sameImage.length) {
           const where = [...new Set(sameImage.map(s => s.order_number))].join(', ');
           warnings.push({ code: 'duplicate_receipt', message: `The same receipt image was already submitted before (order ${where}, reference ${sameImage.map(s => s.reference).join(', ')}).` });
         }
 
         const ts = now();
-        const ins = db.prepare(`INSERT INTO payment_submissions (order_id, order_number, user_id, method, amount_due, amount_submitted, reference, reference_key,
+        const ins = await db.prepare(`INSERT INTO payment_submissions (order_id, order_number, user_id, method, amount_due, amount_submitted, reference, reference_key,
           receipt_file, receipt_mime, receipt_sha256, warnings_json, status, submitted_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,'pending',?)`)
           .run(row.id, n, row.user_id, row.payment_method, row.total, amountSubmitted, ref, key, receipt.file, receipt.mime, receipt.sha256, JSON.stringify(warnings), ts);
         const subId = Number(ins.lastInsertRowid);
-        db.prepare("UPDATE orders SET payment_status = 'Pending Verification', updated_at = ? WHERE id = ?").run(ts, row.id);
-        logEvent({ orderNumber: n, submissionId: subId, action: 'proof_submitted', from: cur, to: 'Pending Verification', actorType: 'customer', actor: row.user_id, amount: amountSubmitted, note: `Reference ${ref}` + (warnings.length ? ` — flagged: ${warnings.map(w => w.code).join(', ')}` : '') });
+        await db.prepare("UPDATE orders SET payment_status = 'Pending Verification', updated_at = ? WHERE id = ?").run(ts, row.id);
+        await logEvent({ orderNumber: n, submissionId: subId, action: 'proof_submitted', from: cur, to: 'Pending Verification', actorType: 'customer', actor: row.user_id, amount: amountSubmitted, note: `Reference ${ref}` + (warnings.length ? ` — flagged: ${warnings.map(w => w.code).join(', ')}` : '') });
 
         const label = rules.paymentMethodLabel(row.payment_method);
         const details = {
           submissionId: subId, customerName: customerName(row), orderNumber: n, method: label,
           amountDue: row.total, amountSubmitted, reference: ref, submittedAt: ts, warnings
         };
-        api.createNotification({
+        await api.createNotification({
           recipientType: 'admin', userId: row.user_id, orderNumber: n,
           title: warnings.length ? '⚠️ Payment Proof Needs Careful Review' : 'Payment Proof Submitted',
           message: `${customerName(row)} • Order ${n} • ${label} • Amount due ${peso(row.total)} • Submitted ${peso(amountSubmitted)} • Ref ${ref} • ${manilaDateTime(ts)}` +
             (warnings.length ? ` • ${warnings.map(w => w.message).join(' ')}` : ''),
           type: 'payment_submitted', link: '/admin.html#orders', data: details
         });
-        notifyCustomer(row, 'Payment Proof Received', `We received your ${label} payment proof for ${n} (ref ${ref}). Status: Pending Verification.`, 'payment_submitted');
+        await notifyCustomer(row, 'Payment Proof Received', `We received your ${label} payment proof for ${n} (ref ${ref}). Status: Pending Verification.`, 'payment_submitted');
         try { eventHub.emit('payment:submitted', details); } catch (_) {}
-        signal(row);
-        return { ok: true, submission: customerSubView(db.prepare('SELECT * FROM payment_submissions WHERE id = ?').get(subId)), order: api.get(n) };
+        await signal(row);
+        return { ok: true, submission: customerSubView(await db.prepare('SELECT * FROM payment_submissions WHERE id = ?').get(subId)), order: await api.get(n) };
       });
     },
 
     // ---------------------------------------------------------------- admin: approve / reject proof
-    reviewPayment({ orderNumber, submissionId, decision, adminUsername, note, confirmReceived, acknowledgeWarnings }) {
-      return tx(() => {
-        const row = byNumber(orderNumber);
+    async reviewPayment({ orderNumber, submissionId, decision, adminUsername, note, confirmReceived, acknowledgeWarnings }) {
+      return tx(async () => {
+        const row = await byNumber(orderNumber);
         if (!row) return { ok: false, status: 404, error: 'Order not found.' };
         const n = row.order_number;
-        const sub = db.prepare('SELECT * FROM payment_submissions WHERE id = ? AND order_number = ?').get(Number(submissionId), n);
+        const sub = await db.prepare('SELECT * FROM payment_submissions WHERE id = ? AND order_number = ?').get(Number(submissionId), n);
         if (!sub) return { ok: false, status: 404, error: 'Payment submission not found for this order.' };
         if (sub.status !== 'pending') return { ok: false, status: 409, error: `This submission was already ${sub.status} by ${sub.reviewed_by || 'an administrator'}.` };
         const cur = rules.normalizePaymentStatus(row.payment_status);
@@ -219,31 +219,31 @@ function install(api, { db, tx, now, byNumber, eventHub, safeParse }) {
             return { ok: false, status: 409, code: 'REVIEW_REQUIRED', warnings, error: 'This submission has warnings (' + warnings.map(w => w.code.replace('_', ' ')).join(', ') + '). Confirm you reviewed them and write a short note explaining why it is correct.' };
           }
           if (cur === 'Paid') return { ok: false, status: 409, error: 'This order is already marked as paid.' };
-          db.prepare("UPDATE payment_submissions SET status = 'approved', reviewed_by = ?, reviewed_at = ?, review_note = ? WHERE id = ?").run(adminUsername, ts, text || null, sub.id);
-          db.prepare("UPDATE orders SET payment_status = 'Paid', paid_at = ?, paid_by = ?, paid_amount = ?, updated_at = ? WHERE id = ?").run(ts, adminUsername, sub.amount_submitted, ts, row.id);
-          logEvent({ orderNumber: n, submissionId: sub.id, action: 'payment_approved', from: cur, to: 'Paid', actorType: 'admin', actor: adminUsername, amount: sub.amount_submitted, note: `Money confirmed received in ${label} account. Ref ${sub.reference}` + (text ? ` — ${text}` : '') });
-          notifyCustomer(row, 'Payment Verified', `Your ${label} payment for ${n} (ref ${sub.reference}) has been verified. Thank you! The shop will now confirm and prepare your order.`, 'payment_approved');
-          signal(row);
-          return { ok: true, order: api.get(n), submission: subView(db.prepare('SELECT * FROM payment_submissions WHERE id = ?').get(sub.id)) };
+          await db.prepare("UPDATE payment_submissions SET status = 'approved', reviewed_by = ?, reviewed_at = ?, review_note = ? WHERE id = ?").run(adminUsername, ts, text || null, sub.id);
+          await db.prepare("UPDATE orders SET payment_status = 'Paid', paid_at = ?, paid_by = ?, paid_amount = ?, updated_at = ? WHERE id = ?").run(ts, adminUsername, sub.amount_submitted, ts, row.id);
+          await logEvent({ orderNumber: n, submissionId: sub.id, action: 'payment_approved', from: cur, to: 'Paid', actorType: 'admin', actor: adminUsername, amount: sub.amount_submitted, note: `Money confirmed received in ${label} account. Ref ${sub.reference}` + (text ? ` — ${text}` : '') });
+          await notifyCustomer(row, 'Payment Verified', `Your ${label} payment for ${n} (ref ${sub.reference}) has been verified. Thank you! The shop will now confirm and prepare your order.`, 'payment_approved');
+          await signal(row);
+          return { ok: true, order: await api.get(n), submission: subView(await db.prepare('SELECT * FROM payment_submissions WHERE id = ?').get(sub.id)) };
         }
 
         if (decision === 'reject') {
           if (text.length < 5) return { ok: false, status: 400, code: 'REASON_REQUIRED', error: 'Enter the reason for rejecting this payment proof. The customer will see it.' };
-          db.prepare("UPDATE payment_submissions SET status = 'rejected', reviewed_by = ?, reviewed_at = ?, review_note = ? WHERE id = ?").run(adminUsername, ts, text, sub.id);
-          db.prepare("UPDATE orders SET payment_status = 'Rejected', updated_at = ? WHERE id = ?").run(ts, row.id);
-          logEvent({ orderNumber: n, submissionId: sub.id, action: 'payment_rejected', from: cur, to: 'Rejected', actorType: 'admin', actor: adminUsername, amount: sub.amount_submitted, note: text });
-          notifyCustomer(row, 'Payment Not Verified', `We could not verify your payment proof for ${n}. Reason: ${text}. Please submit new proof with the correct reference number.`, 'payment_rejected');
-          signal(row);
-          return { ok: true, order: api.get(n), submission: subView(db.prepare('SELECT * FROM payment_submissions WHERE id = ?').get(sub.id)) };
+          await db.prepare("UPDATE payment_submissions SET status = 'rejected', reviewed_by = ?, reviewed_at = ?, review_note = ? WHERE id = ?").run(adminUsername, ts, text, sub.id);
+          await db.prepare("UPDATE orders SET payment_status = 'Rejected', updated_at = ? WHERE id = ?").run(ts, row.id);
+          await logEvent({ orderNumber: n, submissionId: sub.id, action: 'payment_rejected', from: cur, to: 'Rejected', actorType: 'admin', actor: adminUsername, amount: sub.amount_submitted, note: text });
+          await notifyCustomer(row, 'Payment Not Verified', `We could not verify your payment proof for ${n}. Reason: ${text}. Please submit new proof with the correct reference number.`, 'payment_rejected');
+          await signal(row);
+          return { ok: true, order: await api.get(n), submission: subView(await db.prepare('SELECT * FROM payment_submissions WHERE id = ?').get(sub.id)) };
         }
         return { ok: false, status: 400, error: 'Unknown decision.' };
       });
     },
 
     // ---------------------------------------------------------------- admin: cash actually received by the shop
-    confirmCashPayment({ orderNumber, adminUsername, amountReceived, note, confirmReceived, collectedByCourier, remittedToShop }) {
-      return tx(() => {
-        const row = byNumber(orderNumber);
+    async confirmCashPayment({ orderNumber, adminUsername, amountReceived, note, confirmReceived, collectedByCourier, remittedToShop }) {
+      return tx(async () => {
+        const row = await byNumber(orderNumber);
         if (!row) return { ok: false, status: 404, error: 'Order not found.' };
         const n = row.order_number;
         const method = row.payment_method;
@@ -260,7 +260,7 @@ function install(api, { db, tx, now, byNumber, eventHub, safeParse }) {
           if (!COD_DELIVERED.includes(row.status)) {
             return { ok: false, status: 409, code: 'NOT_DELIVERED', error: 'Cash on Delivery is confirmed only after the order is delivered and the courier has remitted the cash to the shop.' };
           }
-          if (!codCollected(n) && collectedByCourier !== true) {
+          if (!(await codCollected(n)) && collectedByCourier !== true) {
             return { ok: false, status: 400, code: 'COLLECTION_REQUIRED', error: 'Record that the courier collected the cash from the customer.' };
           }
           if (remittedToShop !== true) {
@@ -275,44 +275,44 @@ function install(api, { db, tx, now, byNumber, eventHub, safeParse }) {
         if (Math.abs(received - row.total) > 0.009 && text.length < 5) {
           return { ok: false, status: 409, code: 'REVIEW_REQUIRED', error: `The amount received (${peso(received)}) does not match the order total (${peso(row.total)}). Add a note explaining the difference.` };
         }
-        if (method === 'Cash on Delivery') api.recordCodCollection(row, adminUsername, received, 'Courier collected the cash (recorded at remittance)');
+        if (method === 'Cash on Delivery') await api.recordCodCollection(row, adminUsername, received, 'Courier collected the cash (recorded at remittance)');
         const ts = now();
-        db.prepare("UPDATE orders SET payment_status = 'Paid', paid_at = ?, paid_by = ?, paid_amount = ?, updated_at = ? WHERE id = ?").run(ts, adminUsername, received, ts, row.id);
-        logEvent({ orderNumber: n, action: 'cash_received', from: cur, to: 'Paid', actorType: 'admin', actor: adminUsername, amount: received,
+        await db.prepare("UPDATE orders SET payment_status = 'Paid', paid_at = ?, paid_by = ?, paid_amount = ?, updated_at = ? WHERE id = ?").run(ts, adminUsername, received, ts, row.id);
+        await logEvent({ orderNumber: n, action: 'cash_received', from: cur, to: 'Paid', actorType: 'admin', actor: adminUsername, amount: received,
           note: (method === 'Cash on Delivery' ? 'Cash on Delivery: courier remitted the cash; counted and received by the shop' : 'Cash on Pickup: cash counted and received at the shop') + (text ? ` — ${text}` : '') });
-        notifyCustomer(row, 'Payment Received', `We received your cash payment of ${peso(received)} for ${n}. Thank you!`, 'payment_approved');
-        signal(row);
-        return { ok: true, order: api.get(n) };
+        await notifyCustomer(row, 'Payment Received', `We received your cash payment of ${peso(received)} for ${n}. Thank you!`, 'payment_approved');
+        await signal(row);
+        return { ok: true, order: await api.get(n) };
       });
     },
 
     // ---------------------------------------------------------------- reads
-    getPaymentSubmission(id) { return db.prepare('SELECT * FROM payment_submissions WHERE id = ?').get(Number(id)) || null; },
-    listPaymentSubmissions({ status = 'pending', limit = 200 } = {}) {
+    async getPaymentSubmission(id) { return (await db.prepare('SELECT * FROM payment_submissions WHERE id = ?').get(Number(id))) || null; },
+    async listPaymentSubmissions({ status = 'pending', limit = 200 } = {}) {
       const rows = status === 'all'
-        ? db.prepare('SELECT * FROM payment_submissions ORDER BY id DESC LIMIT ?').all(limit)
-        : db.prepare('SELECT * FROM payment_submissions WHERE status = ? ORDER BY id ASC LIMIT ?').all(status, limit);
-      return rows.map(r => {
-        const o = db.prepare('SELECT first_name, last_name, email, phone, total, status, payment_status FROM orders WHERE id = ?').get(r.order_id) || {};
+        ? await db.prepare('SELECT * FROM payment_submissions ORDER BY id DESC LIMIT ?').all(limit)
+        : await db.prepare('SELECT * FROM payment_submissions WHERE status = ? ORDER BY id ASC LIMIT ?').all(status, limit);
+      return Promise.all(rows.map(async r => {
+        const o = (await db.prepare('SELECT first_name, last_name, email, phone, total, status, payment_status FROM orders WHERE id = ?').get(r.order_id)) || {};
         return { ...subView(r), customerName: `${o.first_name || ''} ${o.last_name || ''}`.trim(), customerEmail: o.email, customerPhone: o.phone, orderStatus: o.status, orderTotal: o.total };
-      });
+      }));
     },
-    getOrderPayments(orderNumber) {
-      const row = byNumber(orderNumber);
+    async getOrderPayments(orderNumber) {
+      const row = await byNumber(orderNumber);
       if (!row) return null;
       const n = row.order_number;
       return {
-        submissions: db.prepare('SELECT * FROM payment_submissions WHERE order_number = ? ORDER BY id DESC').all(n).map(subView),
-        events: db.prepare('SELECT * FROM payment_events WHERE order_number = ? ORDER BY id DESC').all(n).map(eventView),
-        codCashCollected: codCollected(n)
+        submissions: (await db.prepare('SELECT * FROM payment_submissions WHERE order_number = ? ORDER BY id DESC').all(n)).map(subView),
+        events: (await db.prepare('SELECT * FROM payment_events WHERE order_number = ? ORDER BY id DESC').all(n)).map(eventView),
+        codCashCollected: await codCollected(n)
       };
     },
-    getCustomerPayments(orderNumber, userId) {
-      const row = byNumber(orderNumber);
+    async getCustomerPayments(orderNumber, userId) {
+      const row = await byNumber(orderNumber);
       if (!row || !userId || row.user_id !== userId) return null;
-      return db.prepare('SELECT * FROM payment_submissions WHERE order_number = ? ORDER BY id DESC').all(row.order_number).map(customerSubView);
+      return (await db.prepare('SELECT * FROM payment_submissions WHERE order_number = ? ORDER BY id DESC').all(row.order_number)).map(customerSubView);
     },
-    paymentQueueCount() { return db.prepare("SELECT COUNT(*) c FROM payment_submissions WHERE status = 'pending'").get().c; }
+    async paymentQueueCount() { return (await db.prepare("SELECT COUNT(*) c FROM payment_submissions WHERE status = 'pending'").get()).c; }
   });
 }
 
