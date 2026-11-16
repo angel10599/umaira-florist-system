@@ -49,12 +49,6 @@ __pycache__/
 assets/uploads/*
 !assets/uploads/.gitkeep
 
-# Firebase credentials and private keys
-serviceAccountKey.json
-*serviceAccount*.json
-.env
-.env.*
-!.env.example
-
 # Customer information
 image/reciept.jpg
+.vercel
