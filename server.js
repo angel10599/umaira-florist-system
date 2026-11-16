@@ -1692,7 +1692,6 @@ async function start(port = process.env.PORT || 3000) {
 // Vercel serverless handler: each request re-enters here, DB is initialized lazily by the store proxy.
 let _bootstrapped = false;
 async function vercelHandler(req, res) {
-  console.log('[req]', req.method, req.url);
   if (!process.env.TRUST_PROXY) process.env.TRUST_PROXY = '1';
   if (!_bootstrapped) {
     _bootstrapped = true;
