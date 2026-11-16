@@ -3364,7 +3364,7 @@ async function open() {
     }
   };
   await payments.install(api, { db, tx, now, byNumber, eventHub, safeParse });
-  api.receiptDir = path.join(DATA_DIR, 'payment-receipts'); // private: never served as a static file
+  api.receiptDir = () => path.join(DATA_DIR, 'payment-receipts'); // private: never served as a static file
   api.db = db;
   api.purgeExpired();
   return api;

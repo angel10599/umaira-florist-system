@@ -783,7 +783,12 @@ async function adminWithRole(req, roles) {
 const paymentAdmin = async (req) => adminWithRole(req, PAYMENT_ADMIN_ROLES);
 const cashAdmin = async (req) => adminWithRole(req, CASH_CONFIRM_ROLES);
 async function sendReceipt(res, sub) {
-  const file = path.join((await store.receiptDir()), path.basename(sub.receipt_file));
+  // Cloudinary-stored receipts: redirect to the signed URL (unguessable but not access-controlled)
+  if (sub.receipt_file && sub.receipt_file.startsWith('https://')) {
+    res.writeHead(302, { 'Location': sub.receipt_file, 'Cache-Control': 'private, no-store', ...SECURITY_HEADERS });
+    return res.end();
+  }
+  const file = path.join(store.receiptDir(), path.basename(sub.receipt_file));
   fs.readFile(file, (err, data) => {
     if (err) return sendJson(res, 404, { error: 'Receipt file not found.' });
     res.writeHead(200, { 'Content-Type': sub.receipt_mime, 'Cache-Control': 'private, no-store', 'Content-Disposition': 'inline', ...SECURITY_HEADERS });
@@ -799,21 +804,37 @@ async function handleSubmitPayment(req, res, orderNumber, body) {
   if (!body.receiptDataUrl) return sendJson(res, 400, { error: 'Please attach your payment receipt or screenshot.', field: 'receipt' });
   const img = decodeImage(body.receiptDataUrl);
   if (img.error) return sendJson(res, 400, { error: img.error, field: 'receipt' });
-  fs.mkdirSync((await store.receiptDir()), { recursive: true });
-  const file = crypto.randomBytes(16).toString('hex') + '.' + img.ext;
-  const full = path.join((await store.receiptDir()), file);
-  fs.writeFileSync(full, img.buf);
+  let receiptFile;
+  if (process.env.CLOUDINARY_CLOUD_NAME) {
+    // On Vercel / when Cloudinary is configured: upload to cloud so receipts survive redeployment
+    try {
+      const dataUrl = `data:${img.mime};base64,${img.buf.toString('base64')}`;
+      const { url } = await uploadToCloudinary(dataUrl, 'pod');
+      receiptFile = url;
+    } catch (e) {
+      console.error('[upload] Receipt Cloudinary upload failed:', e.message);
+      return sendJson(res, 500, { error: 'Failed to upload receipt. Please try again.' });
+    }
+  } else {
+    // Local dev: write to disk
+    fs.mkdirSync(store.receiptDir(), { recursive: true });
+    receiptFile = crypto.randomBytes(16).toString('hex') + '.' + img.ext;
+    fs.writeFileSync(path.join(store.receiptDir(), receiptFile), img.buf);
+  }
   let r;
   try {
     r = await store.submitPayment({
       orderNumber, userId: user.id, amount: body.amount, reference: clean(body.reference, 40),
-      receipt: { file, mime: img.mime, sha256: crypto.createHash('sha256').update(img.buf).digest('hex') }
+      receipt: { file: receiptFile, mime: img.mime, sha256: crypto.createHash('sha256').update(img.buf).digest('hex') }
     });
   } catch (e) {
     r = /UNIQUE/i.test(String(e.message)) ? { ok: false, status: 409, field: 'reference', error: 'This transaction reference number has already been used. Each payment can only be used once.' } : null;
     if (!r) { console.error('submitPayment failed:', e); r = { ok: false, status: 500, error: 'We could not save your payment proof. Please try again.' }; }
   }
-  if (!r.ok) { try { fs.unlinkSync(full); } catch (_) {} return sendJson(res, r.status || 400, { error: r.error, field: r.field, code: r.code }); }
+  if (!r.ok) {
+    if (receiptFile && !receiptFile.startsWith('https://')) { try { fs.unlinkSync(path.join(store.receiptDir(), receiptFile)); } catch (_) {} }
+    return sendJson(res, r.status || 400, { error: r.error, field: r.field, code: r.code });
+  }
   sendJson(res, 201, { ok: true, submission: r.submission, order: publicOrder(r.order) });
 }
 
