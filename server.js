@@ -1703,7 +1703,13 @@ async function vercelHandler(req, res) {
   });
 }
 
-module.exports = { server, start, googleKeyFetcher: undefined, vercelHandler };
+// Export vercelHandler as the main export so Vercel (which reads package.json "main") accepts
+// server.js as a valid serverless function. Named exports are attached as properties so that
+// require('./server') destructuring still works in tests and api/index.js.
+module.exports = vercelHandler;
+module.exports.server = server;
+module.exports.start = start;
+module.exports.vercelHandler = vercelHandler;
 if (require.main === module) {
   process.on('uncaughtException', e => console.error('uncaughtException:', e));
   process.on('unhandledRejection', e => console.error('unhandledRejection:', e));
