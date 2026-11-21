@@ -466,6 +466,17 @@
       pill.textContent = g.qrImage ? 'GCash active' : 'GCash not set up';
       pill.className = 'text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ' + (g.qrImage ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-amber-50 text-amber-800 border-amber-200');
     }
+    // If all payment fields are empty, the settings may not have loaded yet — fetch once and re-render.
+    if (!g.accountName && !g.number && !g.qrImage && !this._paymentSettingsFetching) {
+      this._paymentSettingsFetching = true;
+      this.apiRequest('/api/admin/settings').then(res => {
+        this._paymentSettingsFetching = false;
+        if (res.ok && res.data && res.data.settings) {
+          this.shopSettings = res.data.settings;
+          this.renderPaymentAccountSettings();
+        }
+      }).catch(() => { this._paymentSettingsFetching = false; });
+    }
   };
   P.renderQrPreview = function () {
     const img = document.getElementById('setting-gcash-qr-preview');

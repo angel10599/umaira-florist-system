@@ -399,7 +399,7 @@ async function handleRegister(req, res, body) {
     // Do not leave pending registration if delivery failed completely
     await store.deletePendingRegistration(email);
     return sendJson(res, 503, {
-      error: 'Unable to deliver verification email. Please ensure your email address is correct and can receive messages, or try again later.'
+      error: 'Could not send verification email. Please try again shortly, or contact support if the issue persists.'
     });
   }
 }
