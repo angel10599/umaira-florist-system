@@ -506,6 +506,17 @@
     this.renderPaymentAccountSettings();
     return r;
   };
+
+  // Render immediately on navigation using cached data (before the fetch completes),
+  // so the form never flashes "GCASH NOT SET UP" while settings are loading.
+  const origSwitchTab = P.switchTab;
+  if (typeof origSwitchTab === 'function') {
+    P.switchTab = function (target) {
+      const r = origSwitchTab.apply(this, arguments);
+      if (target === 'settings') this.renderPaymentAccountSettings();
+      return r;
+    };
+  }
   P.savePaymentSettings = async function (e) {
     if (e) e.preventDefault();
     const v = (id) => (document.getElementById(id)?.value || '').trim();
