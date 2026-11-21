@@ -18,6 +18,31 @@ const BASE_DIR = __dirname;
 // Tests point UMAIRA_UPLOAD_DIR at a temporary folder so they never add files to the real uploads folder.
 const UPLOAD_DIR = process.env.UMAIRA_UPLOAD_DIR || path.join(BASE_DIR, 'assets', 'uploads');
 
+// Awaited before every status-change response so the email completes within the serverless window.
+// Fire-and-forget inside store.js is not safe on Vercel: the function freezes after sendJson().
+const STATUS_EMAIL_STAGES = new Set(['Confirmed', 'Preparing', 'Ready for Pickup', 'Rider Assigned',
+  'On the Way', 'Out for Delivery', 'Awaiting Customer Confirmation',
+  'Delivered — Awaiting Confirmation', 'Picked Up', 'Rejected/Cancelled']);
+async function notifyStatusByEmail(order, reason) {
+  if (!mailer.isConfigured() || !order) return;
+  if (!order.email) {
+    console.warn(`[mail:status] skipped ${order.orderNumber} — no email on order`);
+    return;
+  }
+  if (!STATUS_EMAIL_STAGES.has(order.status)) return;
+  const name = [order.firstName, order.lastName].filter(Boolean).join(' ') || undefined;
+  console.log(`[mail:status] sending "${order.status}" -> ${order.email} (${order.orderNumber})`);
+  try {
+    await mailer.sendOrderStatusEmail({
+      to: order.email, name, orderNumber: order.orderNumber,
+      status: order.status, fulfillment: order.fulfillment, reason
+    });
+    console.log(`[mail:status] sent OK -> ${order.email}`);
+  } catch (err) {
+    console.error(`[mail:status] FAILED -> ${order.email}:`, err && err.message);
+  }
+}
+
 // Firestore sync listeners — fire-and-forget; failures are logged but never propagated.
 if (typeof firestoreSync.enabled === 'function' && firestoreSync.enabled()) {
   eventHub.on('order:created', ({ order }) => {
@@ -963,6 +988,7 @@ async function handleAdmin(req, res, urlPath, query) {
       }
       r = await store.setStatus(om[1], clean(body.status, 40), { grabTrackingUrl: grab, rejectReason: body.rejectReason !== undefined ? clean(body.rejectReason, 200) : undefined, adminUsername: currentAdminUser });
     }
+    if (r.ok) await notifyStatusByEmail(r.order, om[2] === 'reject' ? (clean(body.reason, 200) || 'Order declined by shop.') : r.order.rejectReason);
     return r.ok ? sendJson(res, 200, { ok: true, order: r.order, unchanged: !!r.unchanged }) : sendJson(res, r.error === 'Order not found.' ? 404 : (r.code === 'PAYMENT_NOT_VERIFIED' ? 409 : 400), { error: r.error, code: r.code });
   }
 
@@ -970,6 +996,7 @@ async function handleAdmin(req, res, urlPath, query) {
   const pickupMatch = urlPath.match(/^\/api\/admin\/orders\/([^/]+)\/confirm-pickup$/);
   if (pickupMatch && m === 'POST') {
     const r = await store.confirmPickupHandover(pickupMatch[1], { adminUsername: currentAdminUser });
+    if (r.ok) await notifyStatusByEmail(r.order);
     return r.ok ? sendJson(res, 200, { ok: true, order: r.order }) : sendJson(res, r.status || 400, { error: r.error, code: r.code });
   }
 
@@ -994,6 +1021,7 @@ async function handleAdmin(req, res, urlPath, query) {
       deliveredAt,
       codCashCollected: body.codCashCollected === true // courier collected COD cash; payment stays Unpaid until remitted
     });
+    if (r.ok) await notifyStatusByEmail(r.order);
     return r.ok ? sendJson(res, 200, { ok: true, order: r.order }) : sendJson(res, r.status || 400, { error: r.error });
   }
 
