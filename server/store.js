@@ -1050,11 +1050,18 @@ async function open() {
             'Picked Up', 'Rejected/Cancelled'];
           if (EMAIL_STATUSES.includes(newStatus)) {
             const customerName = [updated.firstName, updated.lastName].filter(Boolean).join(' ') || undefined;
+            console.log(`[mail:status] sending "${newStatus}" email to ${updated.email} for ${updated.orderNumber}`);
             mailer.sendOrderStatusEmail({
               to: updated.email, name: customerName, orderNumber: updated.orderNumber,
               status: newStatus, fulfillment: updated.fulfillment, reason
-            }).catch(() => {});
+            }).then(() => {
+              console.log(`[mail:status] sent OK -> ${updated.email}`);
+            }).catch(err => {
+              console.error(`[mail:status] FAILED -> ${updated.email}:`, err && err.message);
+            });
           }
+        } else if (!updated.email) {
+          console.warn(`[mail:status] skipped ${updated.orderNumber} — no email on order`);
         }
 
         statusNotice(updated, order.status, newStatus);
