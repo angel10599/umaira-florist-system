@@ -1,9 +1,10 @@
-// Umaira Florist outgoing transactional email service.
-// Supports:
-// 1. Resend API (recommended for production: set RESEND_API_KEY in .env)
-// 2. SMTP Server (set SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM in .env)
-// 3. Webhook Relay (set MAIL_WEBHOOK_URL, optional MAIL_WEBHOOK_TOKEN in .env)
-// 4. Test / Local Development console mode (when UMAIRA_TEST=1 or ALLOW_DEV_CONSOLE_OTP=true)
+// Umaira Florist outgoing transactional email service. Providers, in order of preference:
+// 1. SMTP (SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, optional SMTP_FROM) — e.g. Gmail with an App Password.
+//    Delivers to any recipient without owning a domain.
+// 2. Resend API (RESEND_API_KEY, MAIL_FROM). Without a domain verified in Resend, its test sender
+//    onboarding@resend.dev can only deliver to the Resend account owner's own address.
+// 3. Webhook relay (MAIL_WEBHOOK_URL, optional MAIL_WEBHOOK_TOKEN).
+// Test runs (UMAIRA_TEST=1) never send real email.
 
 const https = require('https');
 const http = require('http');
@@ -11,12 +12,54 @@ const { URL } = require('url');
 
 const DEFAULT_FROM = process.env.MAIL_FROM || 'Umaira Florist Atelier <onboarding@resend.dev>';
 
+function smtpConfigured() {
+  return !!(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS);
+}
+
 function isConfigured() {
   if (process.env.UMAIRA_TEST === '1') return true;
+  if (smtpConfigured()) return true;
   if (process.env.RESEND_API_KEY) return true;
   if (process.env.MAIL_WEBHOOK_URL) return true;
-  if (process.env.SMTP_HOST && process.env.SMTP_USER) return true;
   return false;
+}
+
+let smtpTransport = null;
+function getSmtpTransport() {
+  if (!smtpTransport) {
+    const nodemailer = require('nodemailer');
+    const port = Number(process.env.SMTP_PORT) || 465;
+    smtpTransport = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port,
+      secure: port === 465,
+      requireTLS: port !== 465 && process.env.SMTP_REQUIRE_TLS !== 'false',
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 20000
+    });
+  }
+  return smtpTransport;
+}
+
+// Resolves only after the SMTP server has accepted the message for delivery.
+async function sendViaSmtp({ to, subject, text, html }) {
+  const from = process.env.SMTP_FROM || `Umaira Florist <${process.env.SMTP_USER}>`;
+  let info;
+  try {
+    info = await getSmtpTransport().sendMail({ from, to, subject, text, html });
+  } catch (e) {
+    const err = new Error(`SMTP error${e.responseCode ? ' (' + e.responseCode + ')' : ''}: ${e.message}`);
+    err.code = e.code === 'EAUTH' ? 'EMAIL_AUTH_FAILED' : 'EMAIL_SEND_FAILED';
+    throw err;
+  }
+  if (info.rejected && info.rejected.length) {
+    const err = new Error('SMTP server rejected the recipient address.');
+    err.code = 'EMAIL_RECIPIENT_REJECTED';
+    throw err;
+  }
+  return { delivered: true, via: 'smtp', id: info.messageId };
 }
 
 /**
@@ -51,7 +94,10 @@ async function sendViaResend({ to, subject, html, text }) {
         if (res.statusCode >= 200 && res.statusCode < 300) {
           resolve({ delivered: true, via: 'resend', id: data });
         } else {
-          reject(new Error(`Resend API error (${res.statusCode}): ${data}`));
+          const err = new Error(`Resend API error (${res.statusCode}): ${data}`);
+          // Resend's test sender only reaches the account owner until a domain is verified.
+          err.code = res.statusCode === 403 && /only send testing emails/i.test(data) ? 'EMAIL_PROVIDER_RESTRICTED' : 'EMAIL_SEND_FAILED';
+          reject(err);
         }
       });
     });
@@ -113,6 +159,10 @@ async function send({ to, subject, text, html }) {
     return { delivered: true, via: 'console' };
   }
 
+  if (smtpConfigured()) {
+    return sendViaSmtp({ to, subject, text, html });
+  }
+
   if (process.env.RESEND_API_KEY) {
     return sendViaResend({ to, subject, html, text });
   }
@@ -121,7 +171,9 @@ async function send({ to, subject, text, html }) {
     return sendViaWebhook({ to, subject, text, html });
   }
 
-  throw new Error('Email delivery service is not configured. Please set RESEND_API_KEY in .env.');
+  const err = new Error('Email delivery service is not configured. Set SMTP_HOST/SMTP_USER/SMTP_PASS or RESEND_API_KEY.');
+  err.code = 'EMAIL_NOT_CONFIGURED';
+  throw err;
 }
 
 /**

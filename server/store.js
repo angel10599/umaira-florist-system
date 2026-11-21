@@ -86,7 +86,7 @@ const CORE_CATEGORY_IDS = ['cat-ready-made-bouquets', 'cat-fresh-flowers', 'cat-
 // Order rows store one line per custom-bouquet component. A row belongs to a custom bouquet when it is a
 // material, or a flower whose bouquet name differs from the flower itself (single stems store their own name).
 const CUSTOM_COMPONENT_TYPES = ['filler', 'greenery', 'foliage', 'wrapping', 'ribbon', 'card'];
-async function isCustomComponent(it) {
+function isCustomComponent(it) {
   if (!it || !it.bouquetName || it.type === 'ready_bouquet') return false;
   if (CUSTOM_COMPONENT_TYPES.includes(it.type)) return true;
   return it.type === 'flower' && it.bouquetName !== it.name;
@@ -733,7 +733,8 @@ async function open() {
     google: Boolean(u.google_id), verified: Boolean(u.verified || u.google_id), createdAt: u.created_at,
     address: u.address_json ? safeParse(u.address_json, {}) : {}
   });
-  async function safeParse(s, fb) { try { return JSON.parse(s); } catch (e) { return fb; } }
+  // Must stay synchronous: callers use the parsed value directly (an async version silently returned Promises).
+  function safeParse(s, fb) { try { return JSON.parse(s); } catch (e) { return fb; } }
 
   // In-app notice for a status that has no other customer notification (all others are created in setStatus
   // and the delivery-confirmation paths). Order and payment updates are in-app only: no email is sent.
@@ -868,7 +869,7 @@ async function open() {
       });
     },
 
-    async validateTransition(cur, next, fulfillment) {
+    validateTransition(cur, next, fulfillment) {
       const flow = fulfillment === 'pickup' ? VALID_TRANSITIONS.pickup : VALID_TRANSITIONS.delivery;
       return (flow[cur] || []).includes(next);
     },
@@ -924,7 +925,7 @@ async function open() {
           api.logOrderEvent(n, 'delivery_reattempt', extra.adminUsername ? 'admin' : 'system', extra.adminUsername || null, 'Delivery re-attempted');
         }
         if (restock) {
-          for (const it of itemsOf(row.id)) {
+          for (const it of await itemsOf(row.id)) {
             if (['flower', 'filler', 'greenery', 'wrapping', 'ribbon', 'card', 'accessory'].includes(it.item_type) && it.item_id) {
               const fl = await db.prepare('SELECT stock_count, unit_cost, low_stock_threshold FROM flowers WHERE id = ?').get(it.item_id);
               const prev = fl ? fl.stock_count : 0;
@@ -1131,7 +1132,7 @@ async function open() {
       const rows = await db.prepare(`SELECT order_number FROM orders WHERE status IN (?, ?)`).all(AWAITING_STATUS.pickup, AWAITING_STATUS.delivery);
       for (const { order_number } of rows) {
         try {
-          tx(async () => {
+          await tx(async () => {
             const row = await byNumber(order_number);
             if (!row) return;
             const kind = row.fulfillment_type === 'pickup' ? 'pickup' : 'delivery';
@@ -2957,7 +2958,7 @@ async function open() {
       return out;
     },
     async saveSettings(patch) {
-      const updated = tx(async () => {
+      const updated = await tx(async () => {
         const ins = await db.prepare(`INSERT INTO shop_settings (key, value_json, updated_at) VALUES (?,?,?)
           ON CONFLICT(key) DO UPDATE SET value_json=excluded.value_json, updated_at=excluded.updated_at`);
         const existing = await api.getSettings();

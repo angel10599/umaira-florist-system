@@ -16,6 +16,9 @@ fs.mkdirSync(uploadDir, { recursive: true });
 process.env.UMAIRA_DATA_DIR = dataDir;
 process.env.UMAIRA_UPLOAD_DIR = uploadDir;
 process.env.UMAIRA_TEST = '1';
+// Never reach the live Turso database from a test, whatever .env contains (empty values are not overridden by .env).
+process.env.TURSO_DATABASE_URL = '';
+process.env.TURSO_AUTH_TOKEN = '';
 // A fresh database gets an 'admin' account with this password. Values set here are never
 // overridden by .env (server.js loads .env without replacing existing variables).
 if (!process.env.ADMIN_PASSWORD) process.env.ADMIN_PASSWORD = 'Test-Admin-Pass-1';

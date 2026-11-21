@@ -3,7 +3,8 @@
 // failure must never block or crash the main request.
 const { db } = require('./firebase');
 
-function enabled() { return !!db; }
+// Test runs use a throw-away database and must never write to the live Firestore backup.
+function enabled() { return !!db && process.env.UMAIRA_TEST !== '1'; }
 
 async function syncUser(user) {
   if (!enabled() || !user || !user.id) return;

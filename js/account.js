@@ -908,7 +908,8 @@
   var prevNavigate = proto.navigate;
   proto.navigate = function (view, replace, options) {
     var r = prevNavigate.call(this, view, replace, options);
-    if (CATALOG_VIEWS.indexOf(this.currentView) >= 0 && appState.catalogReady && Date.now() - lastRefresh > 20000) {
+    // Checkout always re-checks, so payment availability (e.g. GCash) is current when the customer arrives.
+    if (CATALOG_VIEWS.indexOf(this.currentView) >= 0 && appState.catalogReady && (this.currentView === 'checkout' || Date.now() - lastRefresh > 20000)) {
       lastRefresh = Date.now(); appState.loadCatalog();
     }
     return r;
@@ -929,6 +930,21 @@
     } else if (info && info.changed && (v === 'checkout' || v === 'builder')) {
       showToast('Prices or availability were just updated. Please review your selection.', 'info');
     }
+  });
+  // The shop can turn GCash on or off at any time. On checkout only the payment choices are redrawn, so
+  // everything else the customer typed stays as it is.
+  appState.on('payment_accounts_change', function () {
+    if (router.currentView !== 'checkout' || typeof router.renderPaymentOptions !== 'function') return;
+    var cur = document.querySelector('input[name="paymentMethod"]:checked');
+    var hadGcash = !!(cur && cur.value === 'GCash');
+    router.renderPaymentOptions();
+    if (hadGcash && !(appState.paymentAccounts && appState.paymentAccounts.gcash)) {
+      showToast('GCash is no longer available for this order. Please choose a cash option.', 'warning');
+    }
+  });
+  // Live events do not reach every server instance on serverless hosting, so re-check when the customer returns.
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible' && router.currentView === 'checkout' && appState.catalogReady) appState.loadCatalog();
   });
   appState.on('cart_notice', function (notes) { notes.forEach(function (n) { showToast(n, 'warning'); }); });
   appState.on('session_expired', function () {

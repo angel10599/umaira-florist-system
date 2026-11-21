@@ -318,8 +318,12 @@ class StateManager {
       customBuilder: r.data.customBuilder,
       inventory: r.data.inventory
     });
-    // GCash / BDO accounts exactly as saved in Shop Settings (null until the admin enters them).
-    this.paymentAccounts = r.data.payment || { gcash: null, bank: null };
+    // GCash account exactly as configured in Admin → Payment Accounts (null while GCash is unavailable).
+    const payment = r.data.payment || { gcash: null, bank: null };
+    const paySig = JSON.stringify(payment);
+    const paymentChanged = this.paymentSig !== undefined && paySig !== this.paymentSig;
+    this.paymentSig = paySig;
+    this.paymentAccounts = payment;
     const sig = JSON.stringify([r.data.flowers, r.data.bouquets, r.data.materials, r.data.delivery, r.data.store, r.data.hours]);
     const changed = sig !== this.catalogSig;
     this.catalogSig = sig;
@@ -327,6 +331,7 @@ class StateManager {
     this.catalogError = false; this.catalogReady = true;
     this.reconcileCart();
     this.triggerListeners('catalog_change', { changed });
+    if (paymentChanged) this.triggerListeners('payment_accounts_change', payment);
     return true;
   }
 

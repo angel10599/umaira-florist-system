@@ -280,19 +280,21 @@ async function handleCreateOrder(req, res, body) {
   } catch (cartErr) {
     console.error('Failed to update remaining cart items:', cartErr);
   }
-  sendJson(res, 201, summary(result.order));
-
-  // Fire-and-forget order confirmation email — never blocks or fails the response
+  // Awaited before responding (a serverless function may stop once the response is sent); a mail failure
+  // never fails the order.
   if (mailer.isConfigured()) {
     const o = result.order;
-    mailer.sendOrderConfirmation({
-      to: o.email, name: `${o.firstName || ''} ${o.lastName || ''}`.trim(),
-      orderNumber: o.orderNumber, fulfillment: o.fulfillment,
-      date: o.date, time: o.time,
-      paymentMethod: o.paymentMethod, paymentMethodLabel: rules.paymentMethodLabel(o.paymentMethod),
-      total: o.total, items: o.items || [], giftMessage: o.giftMessage || null
-    }).catch(e => console.error('[mail] order confirmation failed:', e.message));
+    try {
+      await mailer.sendOrderConfirmation({
+        to: o.email, name: `${o.firstName || ''} ${o.lastName || ''}`.trim(),
+        orderNumber: o.orderNumber, fulfillment: o.fulfillment,
+        date: o.date, time: o.time,
+        paymentMethod: o.paymentMethod, paymentMethodLabel: rules.paymentMethodLabel(o.paymentMethod),
+        total: o.total, items: o.items || [], giftMessage: o.giftMessage || null
+      });
+    } catch (e) { console.error('[mail] order confirmation failed:', e.message); }
   }
+  sendJson(res, 201, summary(result.order));
 }
 function store_norm(n) { n = String(n).trim(); return n.startsWith('#') ? n : '#' + n; }
 const summary = (o, duplicate = false) => ({
@@ -329,6 +331,21 @@ function publicOrder(o) {
 }
 
 // ---------------------------------------------------------------- customer: auth
+// A verification email that could not be sent. The customer's address is not blamed: provider errors are logged
+// with the exact cause, and shop-side configuration problems get an actionable hint for whoever reads the logs.
+const EMAIL_CONFIG_HINTS = {
+  EMAIL_PROVIDER_RESTRICTED: 'Resend test sender (onboarding@resend.dev) only delivers to the Resend account owner. Configure SMTP_HOST/SMTP_PORT/SMTP_USER/SMTP_PASS (e.g. Gmail App Password) or verify a domain in Resend and set MAIL_FROM.',
+  EMAIL_AUTH_FAILED: 'SMTP login was rejected. Check SMTP_USER and SMTP_PASS (for Gmail, use a 16-character App Password).',
+  EMAIL_NOT_CONFIGURED: 'No email provider is configured. Set SMTP_* or RESEND_API_KEY in the deployment environment.'
+};
+function verificationEmailFailed(where, err) {
+  console.error(`[mail:otp] ${where} failed (${(err && err.code) || 'error'}): ${err && err.message}`);
+  const hint = err && EMAIL_CONFIG_HINTS[err.code];
+  if (hint) console.error('[mail:otp] ACTION NEEDED: ' + hint);
+  return 'We could not send the verification email right now. Please try again in a few minutes'
+    + (process.env.GOOGLE_CLIENT_ID ? ', or continue with Google instead.' : '.');
+}
+
 async function handleRegister(req, res, body) {
   if (rateLimited('reg:' + clientIp(req), 15, 600000)) {
     return sendJson(res, 429, { error: 'Too many registration attempts. Please try again later.' });
@@ -395,12 +412,9 @@ async function handleRegister(req, res, body) {
 
     sendJson(res, 200, resp);
   } catch (err) {
-    console.error('Email delivery error during registration:', err.message);
-    // Do not leave pending registration if delivery failed completely
+    // Do not leave a pending registration behind when the code never reached the customer.
     await store.deletePendingRegistration(email);
-    return sendJson(res, 503, {
-      error: 'Could not send verification email. Please try again shortly, or contact support if the issue persists.'
-    });
+    return sendJson(res, 503, { error: verificationEmailFailed('registration', err), code: 'EMAIL_NOT_SENT' });
   }
 }
 
@@ -499,10 +513,7 @@ async function handleResendOTP(req, res, body) {
 
     sendJson(res, 200, resp);
   } catch (err) {
-    console.error('Failed to resend verification OTP:', err.message);
-    return sendJson(res, 503, {
-      error: 'Unable to deliver verification email. Please try again later.'
-    });
+    return sendJson(res, 503, { error: verificationEmailFailed('resend', err), code: 'EMAIL_NOT_SENT' });
   }
 }
 
@@ -538,10 +549,11 @@ async function handleGoogleAuth(req, res, body) {
   catch (e) { return sendJson(res, 401, { error: 'Google sign-in could not be verified. Please try again.' }); }
   const user = await store.upsertGoogleCustomer(identity);
   if (!user) return sendJson(res, 409, { error: 'This email is linked to a different Google account.' });
-  sendJson(res, 200, { ok: true, token: await store.createCustomerSession(user.id), user: userView(user) });
-  // Fire-and-forget login notification. Delivery failure must never affect the authenticated session.
-  mailer.sendGoogleLoginNotification({ to: user.email, name: user.name })
-    .catch(e => console.error('[mail] Google login notification failed:', e.message));
+  const token = await store.createCustomerSession(user.id);
+  // Awaited before responding so it is not cut off on serverless; a delivery failure never affects the session.
+  try { await mailer.sendGoogleLoginNotification({ to: user.email, name: user.name }); }
+  catch (e) { console.error('[mail] Google login notification failed:', e.message); }
+  sendJson(res, 200, { ok: true, token, user: userView(user) });
   firestoreSync.syncUser(user).catch(e => console.error('[firestore] user sync:', e.message));
 }
 
@@ -554,9 +566,13 @@ async function handleForgot(req, res, body) {
   if (user && user.password_hash !== undefined) {
     const token = await store.createPasswordReset(user.id);
     const base = process.env.PUBLIC_URL || `http://${req.headers.host || 'localhost:3000'}`;
-    mailer.send({ to: user.email, subject: 'Reset your Umaira Florist password',
-      text: `Hello ${user.name},\n\nUse this link within 1 hour to choose a new password:\n${base}/#reset?token=${token}\n\nIf you did not ask for this, you can ignore this email.` })
-      .catch(e => console.error('mail failed:', e.message));
+    try {
+      await mailer.send({ to: user.email, subject: 'Reset your Umaira Florist password',
+        text: `Hello ${user.name},\n\nUse this link within 1 hour to choose a new password:\n${base}/#reset?token=${token}\n\nIf you did not ask for this, you can ignore this email.` });
+    } catch (e) {
+      console.error(`[mail:reset] failed (${e.code || 'error'}): ${e.message}`);
+      if (EMAIL_CONFIG_HINTS[e.code]) console.error('[mail:reset] ACTION NEEDED: ' + EMAIL_CONFIG_HINTS[e.code]);
+    }
   }
   sendJson(res, 200, generic); // same answer whether or not the account exists
 }
@@ -1283,7 +1299,7 @@ function validatePaymentSettings(val, current = {}) {
     // name or number alone always keeps the QR code that is already configured.
     let qrImage = prev.qrImage || '';
     if (g.qrImage !== undefined) {
-      qrImage = clean(g.qrImage, 120);
+      qrImage = clean(g.qrImage, 500);
       if (qrImage && !validImage(qrImage)) return { error: 'Upload the GCash QR code as a PNG, JPG or WebP image.' };
       // Only locally-uploaded files or Cloudinary URLs are accepted — no external links.
       if (qrImage && /^https:\/\//.test(qrImage) && !/^https:\/\/res\.cloudinary\.com\//.test(qrImage))
@@ -1562,7 +1578,8 @@ async function route(req, res) {
       const onOrderStatus = () => sendEvent('order:status', { changed: true });
       const onCatalogUpdated = (data) => sendEvent('catalog:updated', data);
       const onInventoryUpdated = (data) => sendEvent('catalog:updated', { ...data, reason: 'inventory' });
-      const onSettingsUpdated = (data) => sendEvent('settings:updated', data);
+      // Public stream: only say that settings changed; browsers re-fetch the curated public catalog.
+      const onSettingsUpdated = () => sendEvent('settings:updated', { changed: true });
 
       eventHub.on('order:status', onOrderStatus);
       eventHub.on('catalog:updated', onCatalogUpdated);
