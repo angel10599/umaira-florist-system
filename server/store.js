@@ -581,24 +581,10 @@ async function open() {
       .run(JSON.stringify({ synced: true, at: t }), t);
   })();
 
-  // One-time migration: pre-configure GCash payment account so customers can pay via GCash on every
-  // fresh deployment (Render free tier resets the DB on each restart). QR image must be uploaded via
-  // Admin → Shop Settings → Payment Accounts after the first deploy; this migration only sets the
-  // account name and number so the payment option is visible and the account details are present.
-  await (async function paymentConfigV1() {
-    const done = await db.prepare("SELECT value_json FROM shop_settings WHERE key='payment_config_v1'").get();
-    if (done) return;
-    const existing = await db.prepare("SELECT value_json FROM shop_settings WHERE key='payment'").get();
-    const cur = existing ? JSON.parse(existing.value_json || '{}') : {};
-    // Only set if not already configured via admin panel
-    if (cur.gcash && cur.gcash.accountName) return;
-    const t = now();
-    const val = JSON.stringify({ gcash: { accountName: 'Angel Baldonado', number: '09617380537', qrImage: '' } });
-    await db.prepare(`INSERT INTO shop_settings (key,value_json,updated_at) VALUES ('payment',?,?)
-      ON CONFLICT(key) DO UPDATE SET value_json=excluded.value_json, updated_at=excluded.updated_at`).run(val, t);
-    await db.prepare(`INSERT OR IGNORE INTO shop_settings (key,value_json,updated_at) VALUES ('payment_config_v1',?,?)`)
-      .run(JSON.stringify({ synced: true, at: t }), t);
-  })();
+  // Mark payment config as admin-managed; GCash must be configured through Admin → Shop Settings → Payment Accounts.
+  // No hardcoded values are seeded — the admin uploads their own QR code, name and number.
+  await db.prepare(`INSERT OR IGNORE INTO shop_settings (key,value_json,updated_at) VALUES ('payment_config_v1',?,?)`)
+    .run(JSON.stringify({ synced: true, at: now() }), now());
 
   // Products created before created_at existed: use the earliest recorded evidence — the catalog import time
   // for imported items, the first stock movement, or the last update. New products get the real time on insert.

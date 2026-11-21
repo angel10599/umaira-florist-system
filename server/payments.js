@@ -112,8 +112,8 @@ async function install(api, { db, tx, now, byNumber, eventHub, safeParse }) {
     } catch (_) {}
   };
   const codCollected = async (orderNumber) => !!(await db.prepare("SELECT 1 FROM payment_events WHERE order_number = ? AND action = 'cash_collected_by_courier' LIMIT 1").get(orderNumber));
-  // The shop's GCash QR code (Shop Settings → Payment Accounts). Without it customers cannot be told where to pay.
-  const gcashReady = async () => { const p = (await api.getSetting('payment')) || {}; return !!(p.gcash && p.gcash.qrImage); };
+  // GCash is considered configured only when the admin has set all three: QR code image, account name, and mobile number.
+  const gcashReady = async () => { const p = (await api.getSetting('payment')) || {}; return !!(p.gcash && p.gcash.qrImage && p.gcash.accountName && p.gcash.number); };
 
   Object.assign(api, {
     gcashConfigured: gcashReady,

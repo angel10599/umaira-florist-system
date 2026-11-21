@@ -2824,7 +2824,7 @@ class AppRouter {
     // when the shop has set up its GCash QR code (Shop Settings → Payment Accounts).
     const gcashReady = !!(window.appState && appState.paymentAccounts && appState.paymentAccounts.gcash);
     const methods = [
-      { value: 'GCash', title: 'GCash', hint: gcashReady ? 'Pay in advance via QR, then upload receipt' : 'Not available right now', disabled: !gcashReady },
+      { value: 'GCash', title: 'GCash', hint: gcashReady ? 'Pay in advance via QR, then upload receipt' : 'GCash unavailable — choose a cash option', disabled: !gcashReady },
       { value: cashLabel, title: cashLabel, hint: cashHint }
     ];
     const current = document.querySelector ? document.querySelector('input[name="paymentMethod"]:checked')?.value : null;

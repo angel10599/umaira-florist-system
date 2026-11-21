@@ -1377,8 +1377,9 @@ function validateSettingsPatch(body, current) {
 // are shown when entered. Nothing is ever hardcoded or pre-filled.
 async function publicPaymentAccounts() {
   const g = (await store.getSetting('payment') || {}).gcash || {};
+  const configured = !!(g.qrImage && g.accountName && g.number);
   return {
-    gcash: g.qrImage ? { qrImage: g.qrImage, accountName: g.accountName || '', number: g.number || '' } : null
+    gcash: configured ? { qrImage: g.qrImage, accountName: g.accountName, number: g.number } : null
   };
 }
 

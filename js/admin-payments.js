@@ -463,8 +463,9 @@
     this.renderQrPreview();
     const pill = document.getElementById('payment-accounts-pill');
     if (pill) {
-      pill.textContent = g.qrImage ? 'GCash active' : 'GCash not set up';
-      pill.className = 'text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ' + (g.qrImage ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-amber-50 text-amber-800 border-amber-200');
+      const gcashActive = !!(g.qrImage && g.accountName && g.number);
+      pill.textContent = gcashActive ? 'GCash active' : 'GCash not set up';
+      pill.className = 'text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ' + (gcashActive ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-amber-50 text-amber-800 border-amber-200');
     }
     // If all payment fields are empty, the settings may not have loaded yet — fetch once and re-render.
     if (!g.accountName && !g.number && !g.qrImage && !this._paymentSettingsFetching) {
@@ -539,8 +540,15 @@
     if (!r.ok) { this.toast(errOf(r, 'Payment accounts could not be saved.'), 'error'); return; }
     this.shopSettings = r.data.settings || this.shopSettings;
     const form = document.getElementById('settings-payment-form');
-    if (form) delete form.dataset.dirty; // saved: show exactly what the server stored
+    if (form) delete form.dataset.dirty;
     this.renderPaymentAccountSettings();
-    this.toast(((this.shopSettings.payment || {}).gcash || {}).qrImage ? 'GCash details saved. Customers now see this QR code at checkout and on unpaid GCash orders.' : 'Saved. GCash is unavailable to customers until a QR code is uploaded.', 'success');
+    const saved = ((this.shopSettings.payment || {}).gcash || {});
+    const gcashActive = !!(saved.qrImage && saved.accountName && saved.number);
+    if (gcashActive) {
+      this.toast('GCash is now active. Customers can see the QR code and pay at checkout.', 'success');
+    } else {
+      const missing = [!saved.qrImage && 'QR code', !saved.accountName && 'account name', !saved.number && 'mobile number'].filter(Boolean);
+      this.toast(`Saved. GCash is unavailable to customers until you add: ${missing.join(', ')}.`, 'info');
+    }
   };
 })();
