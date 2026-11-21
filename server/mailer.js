@@ -379,10 +379,110 @@ async function sendOrderConfirmation({ to, name, orderNumber, fulfillment, date,
   return send({ to, subject, text, html });
 }
 
+function buildOrderStatusEmailHtml({ name, orderNumber, status, fulfillment, reason }) {
+  const esc = s => String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const safeName = esc(name) || 'Valued Customer';
+  const safeOrder = esc(orderNumber);
+  const safeReason = esc(reason);
+  const isPickup = fulfillment === 'pickup';
+  const fulfillmentLabel = isPickup ? 'Store Pickup' : 'Delivery';
+
+  const configs = {
+    'Confirmed':                       { icon: '✅', headline: 'Order Confirmed',                   color: '#647D69', message: `Great news, <strong>${safeName}</strong>! Your order has been reviewed and confirmed by Umaira Florist Atelier. Our florists will begin preparing your beautiful arrangement soon.` },
+    'Preparing':                       { icon: '🌸', headline: 'Preparing Your Blooms',              color: '#B76E79', message: `Hello <strong>${safeName}</strong>, our florists have begun handcrafting your arrangement with the freshest blooms. Every petal is placed with care and artistry.` },
+    'Ready for Pickup':                { icon: '🏪', headline: 'Ready for Pickup',                   color: '#4A7C59', message: `Hello <strong>${safeName}</strong>, your arrangement is freshly made and waiting for you at Umaira Florist Atelier. Please come pick it up at your earliest convenience.` },
+    'Rider Assigned':                  { icon: '🛵', headline: 'Rider Assigned',                     color: '#5B7FA6', message: `Hello <strong>${safeName}</strong>, a delivery rider has been assigned to your order and will pick it up shortly for delivery to your address.` },
+    'On the Way':                      { icon: '🚀', headline: 'On the Way',                         color: '#5B7FA6', message: `Hello <strong>${safeName}</strong>, your flowers are on their way! Our rider is heading to your address now. Please be ready to receive your beautiful arrangement.` },
+    'Out for Delivery':                { icon: '🚀', headline: 'Out for Delivery',                   color: '#5B7FA6', message: `Hello <strong>${safeName}</strong>, your flowers are out for delivery! Our rider is heading to your address. Please be ready to receive your beautiful arrangement.` },
+    'Awaiting Customer Confirmation':  { icon: '📋', headline: 'Please Confirm Your Pickup',         color: '#8C6D3F', message: `Hello <strong>${safeName}</strong>, your order is ready for handover at our Atelier. Please confirm receipt through your order tracking page when you pick it up.` },
+    'Delivered — Awaiting Confirmation': { icon: '📦', headline: 'Order Delivered',                  color: '#4A7C59', message: `Hello <strong>${safeName}</strong>, your flowers have been delivered! Our rider has uploaded a proof-of-delivery photo. Please check your order tracking page to confirm receipt.` },
+    'Picked Up':                       { icon: '🌷', headline: 'Order Complete — Thank You!',        color: '#4A7C59', message: `Hello <strong>${safeName}</strong>, your order has been successfully picked up. Thank you for choosing Umaira Florist Atelier — we hope your blooms bring joy and beauty!` },
+    'Rejected/Cancelled':              { icon: '❌', headline: 'Order Cancelled',                    color: '#8C3D52', message: `Hello <strong>${safeName}</strong>, we're sorry to inform you that your order has been cancelled.${safeReason ? ` <strong>Reason:</strong> ${safeReason}` : ' Please contact us if you have any questions.'}` }
+  };
+
+  const cfg = configs[status] || {
+    icon: '📋',
+    headline: `Order Update: ${esc(status)}`,
+    color: '#647D69',
+    message: `Hello <strong>${safeName}</strong>, your order status has been updated to: <strong>${esc(status)}</strong>.`
+  };
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>${cfg.headline} — Umaira Florist</title><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background-color:#F7FAF8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#302C2A;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#F7FAF8;padding:32px 16px;">
+    <tr><td align="center">
+      <table role="presentation" width="100%" style="max-width:540px;background-color:#FFFFFF;border:1px solid #E5ECE6;border-radius:24px;box-shadow:0 12px 32px rgba(48,44,42,0.06);overflow:hidden;">
+        <tr><td style="background-color:#FFF9F5;padding:36px 32px 24px;text-align:center;border-bottom:1px solid #E5ECE6;">
+          <span style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#647D69;display:block;margin-bottom:6px;">UMAIRA FLORIST ATELIER</span>
+          <div style="font-size:32px;margin:8px 0 10px;">${cfg.icon}</div>
+          <h1 style="margin:0;font-family:Georgia,serif;font-size:24px;font-weight:700;color:#302C2A;">${cfg.headline}</h1>
+          <p style="margin:6px 0 0;font-size:12px;color:#6E6864;">Thoughtfully arranged flowers &amp; bespoke bouquets · Manila</p>
+        </td></tr>
+        <tr><td style="padding:32px;">
+          <p style="margin:0 0 20px;font-size:14px;line-height:1.7;color:#302C2A;">${cfg.message}</p>
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#F7FAF8;border:1px solid #E5ECE6;border-radius:14px;margin-bottom:20px;">
+            <tr><td style="padding:16px 20px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                <tr><td style="padding:5px 0;font-size:12px;color:#6E6864;width:42%;">Order Number</td><td style="padding:5px 0;font-size:12px;color:#302C2A;font-weight:700;">${safeOrder}</td></tr>
+                <tr><td style="padding:5px 0;font-size:12px;color:#6E6864;">Status</td><td style="padding:5px 0;font-size:12px;font-weight:600;"><span style="background-color:${cfg.color};color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;">${esc(status)}</span></td></tr>
+                <tr><td style="padding:5px 0;font-size:12px;color:#6E6864;">Fulfillment</td><td style="padding:5px 0;font-size:12px;color:#302C2A;font-weight:600;">${fulfillmentLabel}</td></tr>
+              </table>
+            </td></tr>
+          </table>
+          <p style="margin:0 0 8px;font-size:12px;color:#6E6864;line-height:1.6;">Track your order at any time using your order number on our website.</p>
+          <p style="margin:0;font-size:12px;color:#302C2A;line-height:1.6;"><strong>Warm regards,<br>Umaira Florist Atelier</strong></p>
+        </td></tr>
+        <tr><td style="background-color:#FFF9F5;padding:20px 32px;text-align:center;border-top:1px solid #E5ECE6;">
+          <p style="margin:0;font-size:11px;color:#6E6864;">&copy; 2026 Umaira Florist Atelier · BGC, Taguig &amp; Metro Manila, Philippines</p>
+          <p style="margin:4px 0 0;font-size:10px;color:#9E9894;">Handcrafted daily with fresh blooms. All rights reserved.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
+async function sendOrderStatusEmail({ to, name, orderNumber, status, fulfillment, reason }) {
+  const subjects = {
+    'Confirmed':                         `Your Order is Confirmed — ${orderNumber} · Umaira Florist`,
+    'Preparing':                         `We're Preparing Your Blooms — ${orderNumber} · Umaira Florist`,
+    'Ready for Pickup':                  `Your Order is Ready for Pickup — ${orderNumber} · Umaira Florist`,
+    'Rider Assigned':                    `Rider Assigned to Your Order — ${orderNumber} · Umaira Florist`,
+    'On the Way':                        `Your Order is On the Way — ${orderNumber} · Umaira Florist`,
+    'Out for Delivery':                  `Your Order is Out for Delivery — ${orderNumber} · Umaira Florist`,
+    'Awaiting Customer Confirmation':    `Please Confirm Your Pickup — ${orderNumber} · Umaira Florist`,
+    'Delivered — Awaiting Confirmation': `Your Order Has Been Delivered — ${orderNumber} · Umaira Florist`,
+    'Picked Up':                         `Order Complete — Thank You! · ${orderNumber} · Umaira Florist`,
+    'Rejected/Cancelled':                `Order Cancelled — ${orderNumber} · Umaira Florist`
+  };
+  const textMessages = {
+    'Confirmed':                         `Great news! Your order has been reviewed and confirmed by Umaira Florist Atelier. Our florists will begin preparing your arrangement soon.`,
+    'Preparing':                         `Our florists have begun handcrafting your arrangement with the freshest blooms.`,
+    'Ready for Pickup':                  `Your arrangement is freshly made and waiting for you at Umaira Florist Atelier.`,
+    'Rider Assigned':                    `A delivery rider has been assigned to your order and will pick it up shortly.`,
+    'On the Way':                        `Your flowers are on their way! Our rider is heading to your address now.`,
+    'Out for Delivery':                  `Your flowers are out for delivery! Our rider is heading to your address.`,
+    'Awaiting Customer Confirmation':    `Your order is ready for handover. Please confirm receipt through your order tracking page.`,
+    'Delivered — Awaiting Confirmation': `Your flowers have been delivered! Please confirm receipt on your order tracking page.`,
+    'Picked Up':                         `Your order has been successfully picked up. Thank you for choosing Umaira Florist Atelier!`,
+    'Rejected/Cancelled':                `We're sorry, your order has been cancelled.${reason ? ' Reason: ' + reason : ''}`
+  };
+  const isPickup = fulfillment === 'pickup';
+  const subject = subjects[status] || `Order Update: ${status} — ${orderNumber} · Umaira Florist`;
+  const msg = textMessages[status] || `Your order status has been updated to: ${status}.`;
+  const text = `Hello ${name || 'Valued Customer'},\n\n${msg}\n\nOrder Number: ${orderNumber}\nStatus: ${status}\nFulfillment: ${isPickup ? 'Store Pickup' : 'Delivery'}\n\nTrack your order using your order number on our website.\n\nWarm regards,\nUmaira Florist Atelier`;
+  const html = buildOrderStatusEmailHtml({ name, orderNumber, status, fulfillment, reason });
+  return send({ to, subject, text, html });
+}
+
 module.exports = {
   send,
   sendVerificationOTP,
   sendGoogleLoginNotification,
   sendOrderConfirmation,
+  sendOrderStatusEmail,
   isConfigured
 };

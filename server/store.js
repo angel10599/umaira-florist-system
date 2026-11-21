@@ -21,6 +21,7 @@ fs.mkdirSync(DATA_DIR, { recursive: true });
 
 const db = require('./db');
 const eventHub = require('./events');
+const mailer = require('./mailer');
 const rules = require('../js/shop-rules.js');
 const payments = require('./payments');
 const {
@@ -1041,6 +1042,21 @@ async function open() {
             });
           }
         } catch (_) {}
+
+        // Status-change email notifications (supplement in-app notifications)
+        if (mailer.isConfigured() && updated.email) {
+          const EMAIL_STATUSES = ['Confirmed', 'Preparing', 'Ready for Pickup', 'Rider Assigned',
+            'On the Way', 'Out for Delivery', 'Awaiting Customer Confirmation',
+            'Picked Up', 'Rejected/Cancelled'];
+          if (EMAIL_STATUSES.includes(newStatus)) {
+            const customerName = [updated.firstName, updated.lastName].filter(Boolean).join(' ') || undefined;
+            mailer.sendOrderStatusEmail({
+              to: updated.email, name: customerName, orderNumber: updated.orderNumber,
+              status: newStatus, fulfillment: updated.fulfillment, reason
+            }).catch(() => {});
+          }
+        }
+
         statusNotice(updated, order.status, newStatus);
 
         return { ok: true, order: updated };
@@ -1125,6 +1141,14 @@ async function open() {
         try {
           eventHub.emit('order:status', { orderNumber: n, status: newStatus, previousStatus: order.status, order: updated });
         } catch (_) {}
+
+        if (mailer.isConfigured() && updated.email) {
+          const customerName = [updated.firstName, updated.lastName].filter(Boolean).join(' ') || undefined;
+          mailer.sendOrderStatusEmail({
+            to: updated.email, name: customerName, orderNumber: updated.orderNumber,
+            status: newStatus, fulfillment: 'delivery'
+          }).catch(() => {});
+        }
 
         return { ok: true, order: updated };
       });
