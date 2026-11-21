@@ -57,6 +57,7 @@ BDO Bank Transfer is no longer offered. Older orders paid that way still display
 - Production sends email through **Resend** using its testing sender `onboarding@resend.dev` (the default `MAIL_FROM`).
 - In this mode Resend only delivers to the **email address of the Resend account owner**. For every other address Resend answers `403 — "You can only send testing emails to your own email address … please verify a domain"`. The production logs show this for every failed sign-up.
 - The website's email validation is **not** the cause; valid addresses are accepted.
+- Confirmed after the 21 November deployment: production logs show `[mail:otp] registration failed (EMAIL_PROVIDER_RESTRICTED)` followed by the `ACTION NEEDED` hint. No `SMTP_*` or `MAIL_FROM` variables are set in production yet.
 
 **Effect until production email is configured:**
 
@@ -118,6 +119,8 @@ Gmail applies daily sending limits, which suit a small shop.
 
 ## Recent changes (November 2026)
 
+All changes below were deployed to production on 21 November 2026 (up to commit `9865403`).
+
 ### Fixes for problems introduced by the Turso migration (commit `b40083c`)
 - **Admin settings and saved customer addresses appeared empty.** The JSON-parsing helper `safeParse` in `server/store.js` had been made `async`. Every caller that did not `await` it stored an unresolved Promise, which reaches the browser as `{}`. As a result:
   - every Shop Settings form showed blanks or defaults;
@@ -158,7 +161,7 @@ Gmail applies daily sending limits, which suit a small shop.
 - **Images:** Cloudinary (`server/cloudinary.js`, `server/upload.js`).
 - **Email:** `server/mailer.js` (SMTP, Resend or webhook; see above).
 - **Google sign-in:** ID tokens are verified on the server (`server/google.js`).
-- **Firestore backup:** one-way copy of users, products, orders and settings (`server/firestore-sync.js`). Active only when a service-account file (`serviceAccountKey.json` or `config/firebase-service-account.json`) is present. These files are git-ignored, so deployments built from GitHub do not have them. The SQL database is always the source of truth.
+- **Firestore backup:** one-way copy of users, products, orders and settings (`server/firestore-sync.js`). Active only when a service-account file (`serviceAccountKey.json` or `config/firebase-service-account.json`) is present. These files are git-ignored, so deployments built from GitHub do not have them. **In the current production deployment the backup is inactive** (the logs show `[firebase] Init skipped`). The SQL database is always the source of truth.
 - **Dependencies:** `@libsql/client`, `cloudinary`, `dotenv`, `firebase-admin`, `nodemailer`; `playwright` (dev, browser tests).
 
 ### Run locally
@@ -199,6 +202,15 @@ Never commit `.env` (it is git-ignored).
 - `vercel.json` builds `server.js` with `@vercel/node` (max duration 30 s) and routes every request to it. Static files (`*.html`, `styles.css`, `js/`, `image/`, `assets/`) are bundled with the function.
 - Set the environment variables above in Vercel (at least Turso, Cloudinary, the admin account, `GOOGLE_CLIENT_ID`, `PUBLIC_URL` and an email provider), then redeploy.
 - Vercel has no persistent disk, so the database must be Turso and uploads must go to Cloudinary.
+- Pushing to the `main` branch on GitHub deploys to production automatically. After changing environment variables, redeploy (Deployments → ⋯ → Redeploy); new values apply only to new deployments.
+
+**Current production configuration (21 November 2026, variable names only)**
+
+| Set | Not set |
+|---|---|
+| `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, `GOOGLE_CLIENT_ID`, `RESEND_API_KEY`, `ADMIN_PASSWORD` | `SMTP_*` and `MAIL_FROM` (so email uses Resend's testing sender), `PUBLIC_URL` (reset links use the request's host) |
+
+Because `ADMIN_PASSWORD` is set, the admin password returns to that value on every cold start.
 - Serverless caveats are listed under [Known limitations](#known-limitations).
 
 ### Self-hosting alternative
