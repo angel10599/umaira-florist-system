@@ -643,6 +643,16 @@
             </span>
           </button>
 
+          <!-- 8. Decorations (storefront decorative images, placed by hand) -->
+          <button type="button" onclick="window.adminApp.switchTab('decorations')" data-tab-nav="decorations" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-full border border-transparent hover:bg-white/10 text-[#D6C7CC] hover:text-white transition-all duration-150 text-left group btn-tactile font-medium">
+            <span class="flex items-center gap-3 min-w-0">
+              <svg class="w-[18px] h-[18px] text-[#D6C7CC] group-hover:text-white shrink-0 stroke-[1.8]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="12" cy="12" r="2.6"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 9.4C10 6 10.4 3 12 3s2 3 0 6.4M14.6 12c3.4-2 6.4-1.6 6.4 0s-3 2-6.4 0M12 14.6c2 3.4 1.6 6.4 0 6.4s-2-3 0-6.4M9.4 12C6 14 3 13.6 3 12s3-2 6.4 0"/>
+              </svg>
+              <span class="text-xs font-medium truncate">Decorations</span>
+            </span>
+          </button>
+
         </nav>
       </div>
 
@@ -1603,6 +1613,17 @@
           <!-- Pagination: Max 6 records/page -->
           <div id="reportsStock-pagination" class="border-t border-[#E5ECE6] px-5 py-3.5 bg-[#FFFFFF]"></div>
         </div>
+      </div>
+
+      <!-- =====================================================================
+           SCREEN 7: DECORATIONS — decorative images on the storefront, placed by hand (js/admin-decor.js)
+           ===================================================================== -->
+      <div data-tab-content="decorations" class="space-y-5">
+        <div>
+          <h1 class="font-serif font-bold text-2xl sm:text-3xl text-[#302C2A] tracking-tight">Storefront Decorations</h1>
+          <p class="text-xs text-[#6E6864] mt-1 max-w-3xl">Add flowers, butterflies and other decorative images to the website, separately for guests and for signed-in customers. Nothing decorative appears on a page until you place it here and save.</p>
+        </div>
+        <div id="decor-app"></div>
       </div>
 
       <!-- =====================================================================
@@ -3466,5 +3487,6 @@
   <script src="js/admin.js"></script>
   <script src="js/admin-payments.js"></script>
   <script src="js/admin-pickup.js"></script>
+  <script src="js/admin-decor.js?v=20261122-decor2"></script>
 </body>
 </html>

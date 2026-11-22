@@ -1445,6 +1445,56 @@ html .pt-auth > .auth-card-wrapper { grid-area: card; margin: 0; }
   .pt-mtile, .pt-join-perks li { transition-duration: .01ms !important; }
 }
 
+/* 17. SHOP-MANAGED DECORATIONS (js/decor.js) ------------------------------ */
+/* Only what the shop adds in Admin → Decorations. Behind-content decorations sit under the page content;
+   front ones float over it. Neither ever takes a click or tap. */
+.pt-deco { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.pt-deco-back { z-index: -1; }
+.pt-deco-front { z-index: 12; }
+.pt-deco-item { position: absolute; min-width: 24px; pointer-events: none; user-select: none; }
+.pt-deco-item img { display: block; width: 100%; height: auto; max-width: none; pointer-events: none; -webkit-user-drag: none; }
+.pt-deco-item.is-float { animation: pt-deco-float 7s ease-in-out infinite alternate; }
+.pt-deco-item.is-sway { animation: pt-deco-sway 6s ease-in-out infinite alternate; transform-origin: 50% 90%; }
+@keyframes pt-deco-float { from { translate: 0 6px; } to { translate: 0 -10px; } }
+@keyframes pt-deco-sway { from { rotate: -3deg; } to { rotate: 3deg; } }
+@media (min-width: 1024px) { .pt-deco-item.no-desktop { display: none; } }
+@media (min-width: 640px) and (max-width: 1023px) { .pt-deco-item.no-tablet { display: none; } }
+@media (max-width: 639px) { .pt-deco-item.no-phone { display: none; } }
+@media (prefers-reduced-motion: reduce) { .pt-deco-item.is-float, .pt-deco-item.is-sway { animation: none; } }
+
+/* Editing surface inside Admin → Decorations: the page is a still backdrop, only decorations respond */
+html.pt-editor #main-content *, html.pt-editor .pt-top-wrap, html.pt-editor .pt-rail, html.pt-editor .announcement-bar,
+html.pt-editor .pt-foot, html.pt-editor #mobile-nav-drawer { pointer-events: none !important; }
+html.pt-editor #main-content .pt-deco-item, html.pt-editor #main-content .pt-deco-item * { pointer-events: auto !important; }
+html.pt-editor .pt-deco-item { cursor: grab; touch-action: none; }
+html.pt-editor .pt-deco-item:active { cursor: grabbing; }
+html.pt-editor .pt-deco-item:hover { outline: 1.5px dashed rgba(63, 122, 79, .55); outline-offset: 3px; }
+html.pt-editor .pt-deco-item.is-selected { outline: 2px solid #3f7a4f; outline-offset: 4px; }
+html.pt-editor .pt-deco-item.is-float, html.pt-editor .pt-deco-item.is-sway { animation-play-state: paused; }
+.pt-deco-h { position: absolute; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 2px solid #3f7a4f; box-shadow: 0 2px 6px rgba(40, 50, 44, .3); }
+.pt-deco-h.is-size { right: -10px; bottom: -10px; cursor: nwse-resize; }
+.pt-deco-h.is-rot { left: 50%; top: -34px; margin-left: -8px; cursor: grab; }
+.pt-deco-h.is-rot::after { content: ""; position: absolute; left: 50%; top: 14px; width: 2px; height: 16px; margin-left: -1px; background: #3f7a4f; }
+html.pt-editor [data-reveal], html.pt-editor .pt-in, html.pt-editor .pt-swap { opacity: 1 !important; transform: none !important; animation: none !important; }
+html.pt-editor #toast-container, html.pt-editor #pt-gate { display: none !important; }
+.pt-editor-ph { max-width: 1100px; margin: 0 auto; padding: 48px 20px 80px; }
+.pt-editor-ph-title { font: 400 clamp(34px, 4.4vw, 48px)/1.05 var(--pt-serif) !important; margin: 10px 0 8px; }
+.pt-editor-ph-note { color: var(--pt-ink-2); font-size: 14px; max-width: 60ch; }
+.pt-editor-ph-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; margin-top: 28px; }
+@media (min-width: 1024px) { .pt-editor-ph-grid { grid-template-columns: minmax(0, 1fr) 340px; } }
+.pt-editor-row { height: 120px; margin-bottom: 14px; border-radius: 28px; }
+.pt-editor-side { min-height: 320px; border-radius: 30px; }
+
+/* Customer Favorites: a little more compact */
+html #home-featured { padding-top: 3.25rem !important; padding-bottom: 3.25rem !important; }
+html #home-featured > div { max-width: 1060px; }
+html #home-featured .pt-grid-3 { gap: 18px; }
+html #home-featured .pt-pc-art { aspect-ratio: 1 / 1; }
+html #home-featured .pt-pc-bd { padding-top: 11px; }
+@media (min-width: 640px) {
+  html #home-featured > div > div:first-child { margin-bottom: 1.5rem; }
+}
+
 /* 15. GENERATED COLOUR REMAP ---------------------------------------------- */
 /* @generated-remap:start — produced by a script from the class names used in the customer templates; do not edit by hand */
 html .divide-\[\#E5ECE6\]\/60 > :not([hidden]) ~ :not([hidden]){border-color:rgb(227 231 220 / 0.6)}
@@ -1506,15 +1556,10 @@ html .group:hover .group-hover\:text-\[\#647D69\]{color:rgb(63 122 79 / var(--tw
 html .border-\[\#E5ECE6\]\/60{border-color:rgb(227 231 220 / 0.6)}
 html .bg-\[\#EBF1EC\]\/50{background-color:rgb(227 241 223 / 0.5)}
 html .bg-\[\#FFF9F7\]{background-color:rgb(253 251 243 / var(--tw-bg-opacity, 1))}
-html .bg-\[\#647D69\]\/20{background-color:rgb(40 50 44 / 0.2)}
-html .accent-\[\#B76E79\]{accent-color:rgb(185 76 54)}
-html .hover\:bg-\[\#647D69\]:hover{background-color:rgb(40 50 44 / var(--tw-bg-opacity, 1))}
-html .hover\:border-\[\#647D69\]:hover{border-color:rgb(127 174 126 / var(--tw-border-opacity, 1))}
-html .hover\:bg-\[\#FAF6F0\]:hover{background-color:rgb(247 245 236 / var(--tw-bg-opacity, 1))}
-html .group:hover .group-hover\:bg-\[\#647D69\]{background-color:rgb(40 50 44 / var(--tw-bg-opacity, 1))}
 html .text-\[\#647D69\]\/70{color:rgb(63 122 79 / 0.7)}
 html .border-\[\#E5ECE6\]\/90{border-color:rgb(227 231 220 / 0.9)}
 html .text-\[\#647D69\]\/85{color:rgb(63 122 79 / 0.85)}
+html .hover\:border-\[\#647D69\]:hover{border-color:rgb(127 174 126 / var(--tw-border-opacity, 1))}
 html .bg-\[\#647D69\]\/35{background-color:rgb(40 50 44 / 0.35)}
 html .bg-\[\#EBF1EC\]\/30{background-color:rgb(227 241 223 / 0.3)}
 html .bg-\[\#647D69\]\/40{background-color:rgb(40 50 44 / 0.4)}

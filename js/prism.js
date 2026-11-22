@@ -98,6 +98,7 @@
     ], { duration: 700, easing: 'cubic-bezier(.5,0,.3,1)' });
     anim.onfinish = function () { dot.remove(); bump(); };
     anim.oncancel = function () { dot.remove(); };
+    setTimeout(function () { if (dot.isConnected) dot.remove(); }, 1500); // never leave a dot behind (e.g. tab hidden mid-flight)
   }
   document.addEventListener('click', function (e) {
     var t = e.target && e.target.closest ? e.target.closest('button,[role="button"]') : null;
@@ -112,7 +113,10 @@
   /* ------------------------------------------------ guest / signed-in layout */
   var isMember = function () { return Boolean(state.isAuthenticated && state.isAuthenticated()); };
   function syncLayout() {
-    var member = isMember();
+    // Inside the Admin → Decorations preview only (js/decor.js), the layout follows the side being decorated.
+    // That is presentation; sign-in state and every access rule still come from the real session.
+    var override = window.ptLayoutOverride;
+    var member = override === 'customer' ? true : override === 'guest' ? false : isMember();
     var body = document.body;
     if (body.classList.contains('pt-member') === member && body.classList.contains('pt-guest') === !member) return;
     body.classList.toggle('pt-member', member);
@@ -121,6 +125,8 @@
     if (member) closeGate(false);
     requestAnimationFrame(placeNavIndicator);
   }
+
+  window.ptSyncLayout = function () { try { syncLayout(); } catch (e) {} };
 
   // Guest navigation: the ink pill glides to the active page.
   function placeNavIndicator() {
@@ -152,6 +158,8 @@
     var rehydrate = function () { if (router.currentView === 'home' && typeof window.suHydrateMemberStrip === 'function') window.suHydrateMemberStrip(); };
     state.on('cart_change', rehydrate);
     state.on('orders_change', rehydrate);
+    // Home is redrawn in place when the catalog refreshes; fill the account strip again afterwards.
+    state.on('catalog_change', function () { setTimeout(rehydrate, 0); });
   }
 
   /* --------------------------------------------- guest menu: focus & scroll */
@@ -517,6 +525,11 @@
 
   /* -------------------------------------------------------------------- boot */
   try { syncLayout(); updateHello(); updateCartPill(); placeNavIndicator(); } catch (e) {}
+  // The first page may have been drawn before this file finished loading: finish its home strip too.
+  try {
+    if (document.querySelector('#main-content .homepage-canvas, #main-content .customer-page-canvas')) booted = true;
+    if (router.currentView === 'home' && typeof window.suHydrateMemberStrip === 'function') window.suHydrateMemberStrip();
+  } catch (e) {}
   // The first layout is drawn without motion; transitions switch on after two frames.
   requestAnimationFrame(function () { requestAnimationFrame(function () { document.documentElement.classList.remove('pt-no-anim'); }); });
 })();
