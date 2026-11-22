@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Umaira Florist | Premium Artisan Florist & Custom Bouquet Studio</title>
   
-  <!-- Google Fonts: Cormorant Garamond & Manrope -->
+  <!-- Google Fonts: Italiana (display) & Nunito (interface) — Prism-Terra theme -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
   
   <!-- Google Identity Services (GIS) for Google Sign-In -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -20,66 +20,80 @@
       theme: {
         extend: {
           fontFamily: {
-            serif: ['"Cormorant Garamond"', 'Garamond', 'Georgia', 'serif'],
-            sans: ['"Manrope"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-            heading: ['"Cormorant Garamond"', 'Garamond', 'Georgia', 'serif'],
-            body: ['"Manrope"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            serif: ['"Italiana"', 'Georgia', 'serif'],
+            sans: ['"Nunito"', 'system-ui', '-apple-system', 'sans-serif'],
+            heading: ['"Italiana"', 'Georgia', 'serif'],
+            body: ['"Nunito"', 'system-ui', '-apple-system', 'sans-serif'],
           },
+          // Prism-Terra palette: ink, matcha, coral and soft prism pastels (named scales used by the templates)
           colors: {
             brand: {
-              primary: '#647D69',
-              primaryHover: '#526B57',
-              deepSage: '#344F3B',
-              secondary: '#F9DFE8',
-              accent: '#B76E79',
-              gold: '#B88746',
-              dark: '#302C2A',
-              velvet: '#344F3B',
-              muted: '#6E6864',
-              border: '#E5ECE6',
-              borderHover: '#C8D6CA',
-              bg: '#FFF9F5',
+              primary: '#28322c',
+              primaryHover: '#3a4a40',
+              deepSage: '#28322c',
+              secondary: '#ffe8dc',
+              accent: '#b94c36',
+              gold: '#d9a12d',
+              dark: '#28322c',
+              velvet: '#28322c',
+              muted: '#56625a',
+              border: 'rgba(40,50,44,.12)',
+              borderHover: 'rgba(79,138,93,.45)',
+              bg: '#fbf8ee',
               white: '#FFFFFF',
-              footerText: '#FFF9F5'
+              footerText: '#fffdf6'
             },
             theme: {
-              50: '#FFF9F5',
-              100: '#F9DFE8',
-              200: '#F2CEDB',
-              300: '#D4DFD6',
-              400: '#8FA895',
-              500: '#647D69',
-              600: '#526B57',
-              700: '#344F3B',
-              800: '#2A4030',
-              900: '#302C2A',
-              950: '#201E1D',
+              50: '#fbf8ee',
+              100: '#ffe8dc',
+              200: '#ffd6c4',
+              300: '#d6e8d2',
+              400: '#7fae7e',
+              500: '#4f8a5d',
+              600: '#3f7a4f',
+              700: '#28322c',
+              800: '#222a25',
+              900: '#28322c',
+              950: '#1b221e',
             },
             rose: {
-              50: '#FFF9F5',
-              100: '#F9DFE8',
-              200: '#F2CEDB',
-              300: '#E4A5BA',
-              400: '#CD7F96',
-              500: '#B76E79',
-              600: '#9C5862',
-              700: '#7F434C',
-              800: '#62323A',
-              900: '#302C2A',
-              950: '#201E1D',
+              50: '#fff5f0',
+              100: '#ffe8dc',
+              200: '#ffd6c4',
+              300: '#ffb59a',
+              400: '#ff9a80',
+              500: '#ff7f6b',
+              600: '#e7664f',
+              700: '#b94c36',
+              800: '#9b4231',
+              900: '#28322c',
+              950: '#1b221e',
             },
             sage: {
-              50: '#F4F7F4',
-              100: '#EBF1EC',
-              200: '#D4DFD6',
-              300: '#B3C6B6',
-              400: '#8FA895',
-              500: '#647D69',
-              600: '#526B57',
-              700: '#344F3B',
-              800: '#2A4030',
-              900: '#1F3024',
-              950: '#142018',
+              50: '#f3f8f1',
+              100: '#e3f1df',
+              200: '#d6e8d2',
+              300: '#a9cfa6',
+              400: '#7fae7e',
+              500: '#4f8a5d',
+              600: '#3f7a4f',
+              700: '#2f5f3d',
+              800: '#28322c',
+              900: '#222a25',
+              950: '#1b221e',
+            },
+            stone: {
+              50: '#f8f7f0',
+              100: '#efefe6',
+              200: '#e2e5da',
+              300: '#c6cdc3',
+              400: '#8a958d',
+              500: '#6b766e',
+              600: '#56625a',
+              700: '#46524a',
+              800: '#333f37',
+              900: '#28322c',
+              950: '#1b221e',
             }
           }
         }
@@ -87,13 +101,31 @@
     }
   </script>
 
-  <!-- Bespoke Stylesheet -->
+  <!-- Bespoke Stylesheet + Prism-Terra theme layer (loaded last so it wins) -->
   <link rel="stylesheet" href="styles.css?v=20261115-remove-studio-badges">
+  <link rel="stylesheet" href="assets/prism-terra.css?v=20261122-dual">
 </head>
-<body class="bg-[#FFF9F5] text-[#302C2A] min-h-screen flex flex-col selection:bg-[#F9DFE8] selection:text-[#344F3B]">
+<body class="pt-theme min-h-screen flex flex-col">
+  <script>
+    /* Choose the guest or signed-in layout before the first paint, from the same stored session the app reads.
+       This only picks a layout; js/prism.js keeps it in sync with appState.isAuthenticated() afterwards. */
+    (function () {
+      var member = false;
+      try {
+        var u = JSON.parse(localStorage.getItem('umaira_current_user') || 'null');
+        var t = JSON.parse(localStorage.getItem('umaira_customer_token') || '""');
+        member = Boolean(u && u.id && t);
+      } catch (e) {}
+      document.body.classList.add(member ? 'pt-member' : 'pt-guest');
+      document.documentElement.classList.add('pt-no-anim');
+    })();
+  </script>
 
-  <!-- Announcement bar: Continuous smooth marquee animation -->
-  <div class="announcement-bar bg-[#647D69] text-white border-b border-[#526B57] text-xs py-2 overflow-hidden whitespace-nowrap font-medium relative select-none" role="region" aria-label="Announcement">
+  <!-- Ambient prism background: drifting pastel light + dot grid -->
+  <div class="pt-bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+  <!-- Announcement ribbon: continuous marquee (content is written by the app from Shop Settings) -->
+  <div class="announcement-bar pt-ribbon text-xs overflow-hidden whitespace-nowrap relative select-none" role="region" aria-label="Announcement">
     <div class="announcement-marquee flex items-center">
       <div class="announcement-track flex shrink-0 items-center">
         <span class="inline-flex items-center gap-2 px-6 sm:px-10">
@@ -122,147 +154,169 @@
     </div>
   </div>
 
-  <!-- Floating Navigation Bar -->
-  <header class="floating-navbar-wrapper">
-    <nav id="floating-navbar" class="floating-navbar px-3.5 sm:px-6 lg:px-7 h-[64px] sm:h-[72px] flex items-center justify-between gap-2.5 sm:gap-6" aria-label="Customer Navigation">
+  <!-- Signed-in customers: pill rail (desktop) / tab bar (phones). Hidden for guests.
+       Links keep .nav-link + data-view so the router marks the active page. -->
+  <nav class="pt-rail" aria-label="Customer navigation">
+    <a href="#home" onclick="window.appRouter.navigate('home'); return false;" class="pt-mark" title="Umaira Florist — home" aria-label="Umaira Florist, back to home">
+      <img src="/image/Logo.png" alt="" class="pt-mark-img">
+    </a>
+    <a href="#home" data-view="home" onclick="window.appRouter.navigate('home'); return false;" class="nav-link pt-rail-link">
+      <span class="pt-bub" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9.5 9-7 9 7V20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
+      <span class="pt-rail-label">Home</span>
+    </a>
+    <a href="#collections" data-view="collections" onclick="window.appRouter.navigate('collections'); return false;" class="nav-link pt-rail-link">
+      <span class="pt-bub" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg></span>
+      <span class="pt-rail-label">Collections</span>
+    </a>
+    <a href="#builder" data-view="builder" onclick="window.appRouter.navigate('builder'); return false;" class="nav-link pt-rail-link">
+      <span class="pt-bub" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><path d="M12 9.4C10 6 10.4 3 12 3s2 3 0 6.4M14.6 12c3.4-2 6.4-1.6 6.4 0s-3 2-6.4 0M12 14.6c2 3.4 1.6 6.4 0 6.4s-2-3 0-6.4M9.4 12C6 14 3 13.6 3 12s3-2 6.4 0"/></svg></span>
+      <span class="pt-rail-label">Build Bouquet</span>
+    </a>
+    <a href="#about" data-view="about" onclick="window.appRouter.navigate('about'); return false;" class="nav-link pt-rail-link">
+      <span class="pt-bub" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+      <span class="pt-rail-label">About Us</span>
+    </a>
+    <a href="#care" data-view="care" onclick="window.appRouter.navigate('care'); return false;" class="nav-link pt-rail-link">
+      <span class="pt-bub" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span>
+      <span class="pt-rail-label">Florist Guide</span>
+    </a>
+    <div class="pt-rail-sp" aria-hidden="true"></div>
+    <a href="#tracking" data-view="tracking" onclick="window.appRouter.navigate('tracking'); return false;" class="nav-link pt-rail-orb" title="Track your order" aria-label="Track your order">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+    </a>
+  </nav>
 
-      <!-- Left — Brand Identity (Official Floral Logo) -->
-      <a href="#home" onclick="window.appRouter.navigate('home'); return false;" class="flex items-center gap-2.5 sm:gap-3 group min-w-0" aria-label="Umaira Florist - Return to Home">
-        <img src="/image/Logo.png" alt="Umaira Florist" class="w-9 h-9 sm:w-10 sm:h-10 object-contain shrink-0 group-hover:scale-105 transition-transform duration-300">
-        <!-- min-w-0 + truncate: a long saved store name/tagline must never push the menu button off-screen -->
-        <span class="block min-w-0">
-          <span class="font-serif text-lg sm:text-xl lg:text-[22px] font-bold tracking-tight text-[#344F3B] block leading-tight truncate group-hover:text-[#647D69] transition-colors store-name-val">Umaira Florist</span>
-          <span class="hidden sm:block truncate text-[8px] sm:text-[9.5px] tracking-[0.22em] uppercase font-semibold text-[#6E6864] mt-0.5 store-tagline-val">Boutique &amp; Atelier</span>
+  <!-- Glass top bar (sticky). IDs are the ones the router, cart and notification code update. -->
+  <header class="pt-top-wrap">
+    <div id="floating-navbar" class="pt-top" role="navigation" aria-label="Shop actions">
+
+      <!-- Brand (guests everywhere; signed-in customers on phones and tablets, where the rail is a tab bar) -->
+      <a href="#home" onclick="window.appRouter.navigate('home'); return false;" class="pt-top-brand" aria-label="Umaira Florist - Return to Home">
+        <img src="/image/Logo.png" alt="" class="pt-top-logo">
+        <span class="pt-top-words">
+          <span class="pt-top-name store-name-val">Umaira Florist</span>
+          <span class="pt-top-tag store-tagline-val">Boutique &amp; Atelier</span>
         </span>
       </a>
 
-      <!-- Center — Main Navigation (Pill-styled links with soft sage active indicator) -->
-      <nav id="desktop-nav-links" aria-label="Primary" class="hidden lg:flex items-center gap-1 xl:gap-2">
-        <a href="#home" data-view="home" onclick="window.appRouter.navigate('home'); return false;" class="nav-link nav-link-pill">Home</a>
-        <a href="#collections" data-view="collections" onclick="window.appRouter.navigate('collections'); return false;" class="nav-link nav-link-pill">Collections</a>
-        <a href="#builder" data-view="builder" onclick="window.appRouter.navigate('builder'); return false;" class="nav-link nav-link-pill">Build Your Bouquet</a>
-        
-        <!-- About Dropdown -->
-        <div class="relative">
-          <button type="button" id="about-dropdown-btn" data-menu-toggle="about-dropdown-menu" aria-haspopup="menu" aria-expanded="false" aria-controls="about-dropdown-menu" class="nav-link nav-link-pill gap-1 cursor-pointer">
-            <span>About</span>
-            <svg class="w-3.5 h-3.5 transition-transform duration-200 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div id="about-dropdown-menu" role="menu" aria-labelledby="about-dropdown-btn" hidden class="ui-pop nav-glass-dropdown absolute left-1/2 -translate-x-1/2 mt-3 w-52 py-2 z-50">
-            <a role="menuitem" href="#about" data-view="about" onclick="window.appRouter.navigate('about'); return false;" class="dropdown-item flex items-center gap-2.5 px-4 py-2.5 mx-1.5 rounded-xl text-xs sm:text-sm font-medium text-[#302C2A] hover:text-[#344F3B] hover:bg-[#EBF1EC] transition">
-              <svg class="w-4 h-4 text-[#647D69]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-              <span>About Us</span>
-            </a>
-            <a role="menuitem" href="#care" data-view="care" onclick="window.appRouter.navigate('care'); return false;" class="dropdown-item flex items-center gap-2.5 px-4 py-2.5 mx-1.5 rounded-xl text-xs sm:text-sm font-medium text-[#302C2A] hover:text-[#344F3B] hover:bg-[#EBF1EC] transition">
-              <svg class="w-4 h-4 text-[#647D69]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-              <span>Florist Guide</span>
-            </a>
-          </div>
-        </div>
+      <!-- Guest storefront navigation (wide screens). The ink pill slides to the active page. -->
+      <nav class="pt-gnav" aria-label="Shop">
+        <span class="pt-gnav-ind" aria-hidden="true"></span>
+        <a href="#home" data-view="home" onclick="window.appRouter.navigate('home'); return false;" class="nav-link pt-glink">Home</a>
+        <a href="#collections" data-view="collections" onclick="window.appRouter.navigate('collections'); return false;" class="nav-link pt-glink">Collections</a>
+        <a href="#builder" data-view="builder" onclick="window.appRouter.navigate('builder'); return false;" class="nav-link pt-glink">Build a Bouquet</a>
+        <a href="#about" data-view="about" onclick="window.appRouter.navigate('about'); return false;" class="nav-link pt-glink">About Us</a>
+        <a href="#care" data-view="care" onclick="window.appRouter.navigate('care'); return false;" class="nav-link pt-glink">Florist Guide</a>
       </nav>
 
-      <!-- Right — Customer Actions -->
-      <div class="flex items-center gap-1.5 sm:gap-2.5">
+      <!-- Greeting + live shop status (desktop) -->
+      <p class="pt-hello"><span id="pt-hello-greet">Welcome to</span> <b id="pt-hello-name">Umaira Florist</b><span class="pt-hello-sep" aria-hidden="true"></span><span id="pt-hello-note" class="pt-hello-note"></span></p>
 
-        <!-- Search Action Button -->
-        <button type="button" id="nav-search-btn" onclick="window.appRouter.openNavSearch()" aria-label="Search bouquets and flowers" title="Search catalog" class="w-10 h-10 shrink-0 flex items-center justify-center rounded-full text-[#302C2A] hover:text-[#647D69] hover:bg-[#EBF1EC] transition-all duration-200">
-          <svg class="w-4 h-4 sm:w-[19px] sm:h-[19px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <!-- Search (opens the quick-search spotlight; Ctrl/⌘ K works too) -->
+      <button type="button" id="nav-search-btn" onclick="window.appRouter.openNavSearch()" aria-label="Search bouquets and flowers" title="Search catalog" class="pt-search">
+        <svg class="pt-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <span class="pt-search-text">Search bouquets &amp; stems</span>
+        <kbd class="pt-kbd" aria-hidden="true">Ctrl K</kbd>
+      </button>
+
+      <!-- Notifications (authenticated only) -->
+      <div id="customer-notif-container" class="hidden relative">
+        <button type="button" id="customer-notif-bell-btn" onclick="window.customerNotifications && window.customerNotifications.toggleDropdown()" aria-label="Notifications" title="Notifications" class="pt-orb">
+          <svg class="pt-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+          <span id="customer-notif-badge" class="pt-badge hidden">0</span>
         </button>
 
-        <!-- Shopping Cart Action Button (authenticated only) -->
-        <button type="button" id="nav-cart-btn" onclick="window.appRouter.navigate('cart')" aria-label="Cart, 0 items" title="Shopping Cart" class="hidden relative items-center justify-center w-10 h-10 shrink-0 rounded-full text-[#302C2A] hover:text-[#647D69] hover:bg-[#EBF1EC] transition-all duration-200">
-          <svg class="w-4 h-4 sm:w-[20px] sm:h-[20px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-          <span id="nav-cart-count" aria-hidden="true" class="hidden absolute top-0.5 right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#647D69] text-white font-bold items-center justify-center text-[9px] leading-none shadow-xs border-2 border-white">0</span>
-        </button>
-
-        <!-- Customer Notifications Bell & Dropdown (authenticated only) -->
-        <div id="customer-notif-container" class="hidden relative">
-          <button type="button" id="customer-notif-bell-btn" onclick="window.customerNotifications && window.customerNotifications.toggleDropdown()" aria-label="Notifications" title="Notifications" class="relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full text-[#302C2A] hover:text-[#647D69] hover:bg-[#EBF1EC] transition-all duration-200">
-            <svg class="w-4 h-4 sm:w-[20px] sm:h-[20px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-            <span id="customer-notif-badge" class="hidden absolute top-0.5 right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#647D69] text-white font-bold items-center justify-center text-[9px] leading-none shadow-xs border-2 border-white">0</span>
-          </button>
-          
-          <!-- Dropdown Popover -->
-          <div id="customer-notif-dropdown" class="hidden absolute right-0 mt-2 w-80 sm:w-96 bg-white/95 backdrop-blur-md rounded-2xl shadow-[0_15px_40px_rgba(48,44,42,0.12)] border border-[#E5ECE6] z-50 overflow-hidden animate-fade-in">
-            <div class="px-4 py-3 bg-[#F9DFE8]/60 border-b border-[#E5ECE6] flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-[#647D69]"></span>
-                <h4 class="text-xs font-bold uppercase tracking-wider text-[#344F3B]">Notifications</h4>
-              </div>
-              <button type="button" onclick="window.customerNotifications && window.customerNotifications.markAllRead()" class="text-[11px] font-semibold text-[#647D69] hover:text-[#526B57] hover:underline">Mark all read</button>
-            </div>
-            <div id="customer-notif-list" class="max-h-80 overflow-y-auto divide-y divide-[#E5ECE6]/60 text-xs">
-              <div class="p-6 text-center text-[#6E6864]">No notifications yet.</div>
-            </div>
+        <!-- Dropdown Popover -->
+        <div id="customer-notif-dropdown" class="hidden absolute right-0 mt-3 w-80 sm:w-96 pt-pop z-50 overflow-hidden">
+          <div class="pt-pop-h">
+            <h4 class="pt-pop-title">Notifications</h4>
+            <button type="button" onclick="window.customerNotifications && window.customerNotifications.markAllRead()" class="pt-pop-link">Mark all read</button>
+          </div>
+          <div id="customer-notif-list" class="max-h-80 overflow-y-auto divide-y divide-[#E5ECE6]/60 text-xs">
+            <div class="p-6 text-center text-[#6E6864]">No notifications yet.</div>
           </div>
         </div>
-
-        <!-- Customer Account / Profile / Sign In -->
-        <div id="nav-auth-container" class="flex items-center">
-          <button type="button" onclick="window.appRouter.navigate('auth')" class="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold text-white bg-[#647D69] hover:bg-[#526B57] shadow-xs hover:shadow transition-all duration-200 flex items-center gap-1.5 shrink-0">
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span>Sign In</span>
-          </button>
-        </div>
-
-        <!-- Mobile Hamburger Toggle Button -->
-        <button type="button" id="mobile-menu-btn" onclick="window.appRouter.toggleMobileMenu()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-nav-drawer" class="lg:hidden w-10 h-10 shrink-0 flex items-center justify-center rounded-full text-[#302C2A] hover:text-[#647D69] hover:bg-[#EBF1EC] transition-all duration-200">
-          <svg id="mobile-menu-icon-open" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-          <svg id="mobile-menu-icon-close" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-        </button>
-
       </div>
-    </nav>
 
-    <!-- Mobile Nav Drawer -->
-    <div id="mobile-nav-drawer" class="hidden lg:hidden max-w-xl mx-auto mt-2 p-3 bg-white/95 backdrop-blur-md rounded-3xl border border-[#E5ECE6] shadow-[0_12px_36px_rgba(52,79,59,0.12)] space-y-1 pointer-events-auto">
-      <a href="#home" data-view="home" onclick="window.appRouter.navigate('home'); window.appRouter.closeMobileMenu(); return false;" class="mobile-nav-link">
-        <span>Home</span>
-        <svg class="w-3.5 h-3.5 text-[#647D69]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
-      <a href="#collections" data-view="collections" onclick="window.appRouter.navigate('collections'); window.appRouter.closeMobileMenu(); return false;" class="mobile-nav-link">
-        <span>Collections</span>
-        <svg class="w-3.5 h-3.5 text-[#647D69]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
-      <a href="#builder" data-view="builder" onclick="window.appRouter.navigate('builder'); window.appRouter.closeMobileMenu(); return false;" class="mobile-nav-link">
-        <span>Build Your Bouquet</span>
-        <svg class="w-3.5 h-3.5 text-[#647D69]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
-      <a href="#about" data-view="about" onclick="window.appRouter.navigate('about'); window.appRouter.closeMobileMenu(); return false;" class="mobile-nav-link">
-        <span>About Us</span>
-        <svg class="w-3.5 h-3.5 text-[#647D69]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
-      <a href="#care" data-view="care" onclick="window.appRouter.navigate('care'); window.appRouter.closeMobileMenu(); return false;" class="mobile-nav-link">
-        <span>Florist Guide</span>
-        <svg class="w-3.5 h-3.5 text-[#647D69]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
+      <!-- Cart pill: running total + item count (authenticated only) -->
+      <button type="button" id="nav-cart-btn" onclick="window.appRouter.navigate('cart')" aria-label="Cart, 0 items" title="Shopping Cart" class="hidden pt-cartpill">
+        <svg class="pt-ic pt-cartpill-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span id="pt-cart-total" class="pt-cartpill-total" aria-hidden="true">₱0</span>
+        <span id="nav-cart-count" aria-hidden="true" class="hidden pt-cartpill-n">0</span>
+      </button>
+
+      <!-- Guest entry points (wide screens): track an order, sign in, create an account -->
+      <div class="pt-gside">
+        <a href="#tracking" onclick="window.appRouter.navigate('tracking'); return false;" class="pt-orb pt-gtrack" title="Track your order" aria-label="Track your order">
+          <svg class="pt-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        </a>
+        <button type="button" onclick="window.appRouter.navigate('signin')" class="pt-gsignin">Sign in</button>
+        <button type="button" onclick="window.appRouter.navigate('signup')" class="pt-btn pt-btn-prism pt-gjoin">Create account</button>
+      </div>
+
+      <!-- Guest, phones and tablets: compact sign in + menu -->
+      <button type="button" onclick="window.appRouter.navigate('signin')" class="pt-gsignin-sm">Sign in</button>
+      <button type="button" id="mobile-menu-btn" onclick="window.appRouter.toggleMobileMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav-drawer" class="pt-orb pt-gmenu">
+        <svg id="mobile-menu-icon-open" class="pt-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h10"/></svg>
+        <svg id="mobile-menu-icon-close" class="pt-ic hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+
+      <!-- Signed-in account menu (rendered by the router; hidden for guests, who use the entry points above) -->
+      <div id="nav-auth-container" class="flex items-center">
+        <button type="button" onclick="window.appRouter.navigate('auth')" class="px-4 py-2 rounded-full text-sm font-bold text-white bg-[#647D69] hover:bg-[#526B57] flex items-center gap-1.5 shrink-0">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Sign In</span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- Floating Quick Search Modal -->
-  <div id="nav-search-modal" class="hidden fixed inset-0 z-50 flex items-start justify-center pt-20 sm:pt-24 px-4 bg-[#302C2A]/35 backdrop-blur-xs transition-opacity animate-fade-in" onclick="if(event.target === this) window.appRouter.closeNavSearch()">
-    <div class="w-full max-w-xl bg-[rgba(255,249,245,0.98)] backdrop-blur-md border border-[#E5ECE6] rounded-3xl shadow-[0_20px_50px_rgba(48,44,42,0.12)] p-5 sm:p-6 space-y-4">
-      <div class="flex items-center justify-between pb-3 border-b border-[#E5ECE6]">
-        <div class="flex items-center gap-2">
-          <svg class="w-4 h-4 text-[#647D69]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <span class="text-xs font-bold uppercase tracking-wider text-[#344F3B]">Search Bouquets</span>
-        </div>
-        <button type="button" onclick="window.appRouter.closeNavSearch()" class="w-7 h-7 rounded-full bg-[#EBF1EC] hover:bg-[#D4DFD6] text-[#302C2A] flex items-center justify-center transition" aria-label="Close search"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <!-- Guest menu (phones and tablets). The router's toggleMobileMenu/closeMobileMenu open and close it,
+       and every navigation closes it. -->
+  <div id="mobile-nav-drawer" class="hidden pt-gdrawer" role="dialog" aria-modal="true" aria-label="Menu" onclick="if(event.target === this) window.appRouter.closeMobileMenu()">
+    <div class="pt-gdrawer-panel">
+      <div class="pt-gdrawer-head">
+        <span class="pt-gdrawer-brand"><img src="/image/Logo.png" alt="" class="pt-top-logo"><span class="store-name-val">Umaira Florist</span></span>
+        <button type="button" onclick="window.appRouter.closeMobileMenu()" class="pt-orb" aria-label="Close menu">
+          <svg class="pt-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
       </div>
-      <form onsubmit="window.appRouter.submitNavSearch(event)" class="relative">
-        <input type="text" id="nav-quick-search-input" placeholder="Search bouquets..." class="w-full pl-10 pr-10 py-3 bg-white border border-[#E5ECE6] rounded-2xl text-sm text-[#302C2A] focus:outline-none focus:ring-2 focus:ring-[#647D69]/25 focus:border-[#647D69] shadow-xs">
-        <svg class="w-4 h-4 text-[#6E6864] absolute left-3.5 top-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <button type="button" onclick="document.getElementById('nav-quick-search-input').value='';document.getElementById('nav-quick-search-input').focus();" class="absolute right-3.5 top-3.5 text-[#6E6864] hover:text-[#302C2A]" aria-label="Clear input"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+      <nav class="pt-gdrawer-links" aria-label="Shop">
+        <a href="#home" data-view="home" onclick="window.appRouter.navigate('home'); return false;" class="mobile-nav-link pt-dlink"><span>Home</span><small>Bouquets, occasions and our shop</small></a>
+        <a href="#collections" data-view="collections" onclick="window.appRouter.navigate('collections'); return false;" class="mobile-nav-link pt-dlink"><span>Collections</span><small>Ready-made bouquets</small></a>
+        <a href="#builder" data-view="builder" onclick="window.appRouter.navigate('builder'); return false;" class="mobile-nav-link pt-dlink"><span>Build a Bouquet</span><small>Choose every stem yourself</small></a>
+        <a href="#about" data-view="about" onclick="window.appRouter.navigate('about'); return false;" class="mobile-nav-link pt-dlink"><span>About Us</span><small>The people behind the flowers</small></a>
+        <a href="#care" data-view="care" onclick="window.appRouter.navigate('care'); return false;" class="mobile-nav-link pt-dlink"><span>Florist Guide</span><small>Flower meanings and care</small></a>
+      </nav>
+      <a href="#tracking" onclick="window.appRouter.navigate('tracking'); return false;" class="pt-dtrack">
+        <svg class="pt-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        <span>Track your order</span>
+      </a>
+      <div class="pt-gdrawer-cta">
+        <button type="button" onclick="window.appRouter.navigate('signup')" class="pt-btn pt-btn-prism">Create account</button>
+        <button type="button" onclick="window.appRouter.navigate('signin')" class="pt-btn pt-btn-ink">Sign in</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick search spotlight -->
+  <div id="nav-search-modal" class="hidden pt-spot" role="dialog" aria-modal="true" aria-label="Search bouquets" onclick="if(event.target === this) window.appRouter.closeNavSearch()">
+    <div class="pt-spot-card">
+      <form onsubmit="window.appRouter.submitNavSearch(event)" class="pt-spot-form">
+        <svg class="pt-spot-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="nav-quick-search-input" placeholder="Search bouquets, flowers, occasions…" autocomplete="off" class="pt-spot-input" aria-label="Search bouquets">
+        <button type="button" onclick="document.getElementById('nav-quick-search-input').value='';document.getElementById('nav-quick-search-input').focus();" class="pt-spot-clear" aria-label="Clear input"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        <button type="button" onclick="window.appRouter.closeNavSearch()" class="pt-spot-esc" aria-label="Close search">Esc</button>
       </form>
-      <div>
-        <span class="text-[10px] font-bold uppercase tracking-wider text-[#6E6864] block mb-2">Popular Searches</span>
-        <div class="flex flex-wrap gap-2">
-          <button type="button" onclick="window.appRouter.quickSearchTag('Romance')" class="px-3 py-1 rounded-full bg-[#F9DFE8]/60 hover:bg-[#F9DFE8] text-[#302C2A] text-xs font-medium transition">Romance</button>
-          <button type="button" onclick="window.appRouter.quickSearchTag('Birthday')" class="px-3 py-1 rounded-full bg-[#F9DFE8]/60 hover:bg-[#F9DFE8] text-[#302C2A] text-xs font-medium transition">Birthday</button>
-          <button type="button" onclick="window.appRouter.quickSearchTag('Roses')" class="px-3 py-1 rounded-full bg-[#F9DFE8]/60 hover:bg-[#F9DFE8] text-[#302C2A] text-xs font-medium transition">Roses</button>
-          <button type="button" onclick="window.appRouter.quickSearchTag('Tulip')" class="px-3 py-1 rounded-full bg-[#F9DFE8]/60 hover:bg-[#F9DFE8] text-[#302C2A] text-xs font-medium transition">Tulips</button>
-          <button type="button" onclick="window.appRouter.quickSearchTag('Anniversary')" class="px-3 py-1 rounded-full bg-[#F9DFE8]/60 hover:bg-[#F9DFE8] text-[#302C2A] text-xs font-medium transition">Anniversary</button>
-          <button type="button" onclick="window.appRouter.quickSearchTag('Sympathy')" class="px-3 py-1 rounded-full bg-[#F9DFE8]/60 hover:bg-[#F9DFE8] text-[#302C2A] text-xs font-medium transition">Sympathy</button>
+      <div class="pt-spot-body">
+        <p class="pt-spot-label">Popular searches</p>
+        <div class="pt-spot-tags">
+          <button type="button" onclick="window.appRouter.quickSearchTag('Romance')" class="pt-chip">Romance</button>
+          <button type="button" onclick="window.appRouter.quickSearchTag('Birthday')" class="pt-chip">Birthday</button>
+          <button type="button" onclick="window.appRouter.quickSearchTag('Roses')" class="pt-chip">Roses</button>
+          <button type="button" onclick="window.appRouter.quickSearchTag('Tulip')" class="pt-chip">Tulips</button>
+          <button type="button" onclick="window.appRouter.quickSearchTag('Anniversary')" class="pt-chip">Anniversary</button>
+          <button type="button" onclick="window.appRouter.quickSearchTag('Sympathy')" class="pt-chip">Sympathy</button>
         </div>
       </div>
     </div>
@@ -272,83 +326,67 @@
 
   <!-- Main View Container -->
   <main id="main-content" class="flex-1 flex flex-col">
-    <div id="boot-loading" class="py-32 text-center text-sm text-[#6E6864]">Loading Umaira Florist&hellip;</div>
+    <div id="boot-loading" class="pt-boot" role="status">
+      <span class="pt-boot-bloom" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span>
+      <span class="pt-boot-text">Gathering today&rsquo;s flowers&hellip;</span>
+    </div>
   </main>
 
-  <!-- Compact Dark Glassmorphic Footer (Deep Sage Atelier Theme) -->
-  <footer class="footer-atelier text-[#FFF9F5]">
-    <div class="max-w-7xl mx-auto px-6 py-8 sm:py-9">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 items-start">
-        <!-- COLUMN 1: BRAND -->
-        <div class="space-y-3">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-white/10 border border-white/15 p-1.5 flex items-center justify-center shadow-xs">
-              <img src="/image/Logo.png" alt="Umaira Florist" class="w-full h-full object-contain">
-            </div>
-            <div>
-              <span class="font-serif text-lg font-bold text-white tracking-tight block store-name-val">Umaira Florist</span>
-              <span class="font-serif italic text-xs text-[#F9DFE8] block -mt-0.5 store-tagline-val">Flowers Made With Love.</span>
-              <p class="text-xs text-[#FFF9F5]/80 mt-1 store-desc-val max-w-sm"></p>
-            </div>
-          </div>
-          <!-- Social Media Icons -->
-          <div class="flex items-center gap-2 pt-1" role="list" aria-label="Social Media Links">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white/10 hover:bg-[#647D69] text-[#FFF9F5] hover:text-white flex items-center justify-center transition border border-white/10" title="Instagram" aria-label="Instagram">
-              <svg class="w-3.5 h-3.5 fill-currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
+  <!-- Footer: light glass panel (store details are filled in from Shop Settings) -->
+  <footer class="pt-foot">
+    <div class="pt-foot-panel">
+      <div class="pt-foot-grid">
+        <div class="pt-foot-brand">
+          <a href="#home" onclick="window.appRouter.navigate('home'); return false;" class="pt-foot-mark" aria-label="Umaira Florist - Return to Home">
+            <img src="/image/Logo.png" alt="" class="pt-foot-logo">
+            <span>
+              <span class="pt-foot-name store-name-val">Umaira Florist</span>
+              <span class="pt-foot-tag store-tagline-val">Flowers Made With Love.</span>
+            </span>
+          </a>
+          <p class="pt-foot-desc store-desc-val"></p>
+          <div class="pt-foot-social" role="list" aria-label="Social Media Links">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="pt-social" title="Instagram" aria-label="Instagram">
+              <svg class="pt-social-ic" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
             </a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white/10 hover:bg-[#647D69] text-[#FFF9F5] hover:text-white flex items-center justify-center transition border border-white/10" title="Facebook" aria-label="Facebook">
-              <svg class="w-3.5 h-3.5 fill-currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="pt-social" title="Facebook" aria-label="Facebook">
+              <svg class="pt-social-ic" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
             </a>
-            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white/10 hover:bg-[#647D69] text-[#FFF9F5] hover:text-white flex items-center justify-center transition border border-white/10" title="TikTok" aria-label="TikTok">
-              <svg class="w-3.5 h-3.5 fill-currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.068-.102a2.895 2.895 0 0 1 2.373-4.514c.264 0 .521.035.766.1v-3.52a6.386 6.386 0 0 0-.766-.046C5.972 9.333 3.125 12.18 3.125 15.688c0 3.507 2.847 6.354 6.354 6.354 3.508 0 6.355-2.847 6.355-6.354V8.337a8.216 8.216 0 0 0 4.755 1.503V6.395a4.83 4.83 0 0 1-1-.209z"/></svg>
+            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="pt-social" title="TikTok" aria-label="TikTok">
+              <svg class="pt-social-ic" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.068-.102a2.895 2.895 0 0 1 2.373-4.514c.264 0 .521.035.766.1v-3.52a6.386 6.386 0 0 0-.766-.046C5.972 9.333 3.125 12.18 3.125 15.688c0 3.507 2.847 6.354 6.354 6.354 3.508 0 6.355-2.847 6.355-6.354V8.337a8.216 8.216 0 0 0 4.755 1.503V6.395a4.83 4.83 0 0 1-1-.209z"/></svg>
             </a>
-            <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white/10 hover:bg-[#647D69] text-[#FFF9F5] hover:text-white flex items-center justify-center transition border border-white/10" title="Pinterest" aria-label="Pinterest">
-              <svg class="w-3.5 h-3.5 fill-currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.237 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.6-.299-1.486c0-1.39.806-2.428 1.81-2.428.852 0 1.264.64 1.264 1.408 0 .858-.546 2.14-.828 3.33-.236.995.5 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-2.393-1.72-4.068-4.176-4.068-2.845 0-4.515 2.135-4.515 4.34 0 .859.331 1.781.745 2.281a.3.3 0 01.069.288l-.278 1.133c-.044.183-.145.222-.335.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.965-.527-2.291-1.148l-.623 2.378c-.226.868-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z" clip-rule="evenodd" /></svg>
+            <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" class="pt-social" title="Pinterest" aria-label="Pinterest">
+              <svg class="pt-social-ic" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.237 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.6-.299-1.486c0-1.39.806-2.428 1.81-2.428.852 0 1.264.64 1.264 1.408 0 .858-.546 2.14-.828 3.33-.236.995.5 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-2.393-1.72-4.068-4.176-4.068-2.845 0-4.515 2.135-4.515 4.34 0 .859.331 1.781.745 2.281a.3.3 0 01.069.288l-.278 1.133c-.044.183-.145.222-.335.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.965-.527-2.291-1.148l-.623 2.378c-.226.868-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z" clip-rule="evenodd" /></svg>
             </a>
           </div>
         </div>
 
-        <!-- COLUMN 2: QUICK LINKS -->
-        <div class="space-y-2 md:pl-4">
-          <h4 class="font-serif font-bold text-white text-sm tracking-wide">Quick Links</h4>
-          <ul class="space-y-1.5 text-xs sm:text-[13px]">
+        <nav class="pt-foot-col" aria-label="Footer">
+          <h4 class="pt-foot-h">Shop</h4>
+          <ul>
             <li><a href="#collections" onclick="window.appRouter.navigate('collections'); return false;" class="footer-nav-link">Collections</a></li>
-            <li><a href="#builder" onclick="window.appRouter.navigate('builder'); return false;" class="footer-nav-link">Build Bouquet</a></li>
+            <li><a href="#builder" onclick="window.appRouter.navigate('builder'); return false;" class="footer-nav-link">Build Your Bouquet</a></li>
             <li><a href="#tracking" onclick="window.appRouter.navigate('tracking'); return false;" class="footer-nav-link">Track Your Order</a></li>
+            <li><a href="#care" onclick="window.appRouter.navigate('care'); return false;" class="footer-nav-link">Florist Guide</a></li>
+            <li><a href="#about" onclick="window.appRouter.navigate('about'); return false;" class="footer-nav-link">About Us</a></li>
           </ul>
-        </div>
+        </nav>
 
-        <!-- COLUMN 3: CONTACT -->
-        <div class="space-y-2">
-          <h4 class="font-serif font-bold text-white text-sm tracking-wide">Contact &amp; Atelier</h4>
-          <div class="space-y-1.5 text-xs sm:text-[13px]">
-            <div>
-              <a id="footer-contact-email" href="mailto:concierge@umairaflorist.com" class="footer-nav-link inline-flex items-center gap-2">
-                <svg class="w-3.5 h-3.5 text-[#B76E79] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                <span class="store-email-val">concierge@umairaflorist.com</span>
-              </a>
-            </div>
-            <div>
-              <a id="footer-contact-phone" href="tel:+639178924310" class="footer-nav-link inline-flex items-center gap-2">
-                <svg class="w-3.5 h-3.5 text-[#B76E79] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                <span class="store-phone-val">+63 917 892 4310</span>
-              </a>
-            </div>
-            <div class="inline-flex items-start gap-2 pt-1 text-xs text-[#FFF9F5]/90">
-              <svg class="w-3.5 h-3.5 text-[#B76E79] shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-              <span class="store-address-val">128 Rosa Street, BGC, Taguig City, Metro Manila</span>
-            </div>
-          </div>
+        <div class="pt-foot-col">
+          <h4 class="pt-foot-h">Visit &amp; contact</h4>
+          <ul>
+            <li><a id="footer-contact-email" href="mailto:concierge@umairaflorist.com" class="footer-nav-link pt-foot-row"><svg class="pt-foot-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><span class="store-email-val">concierge@umairaflorist.com</span></a></li>
+            <li><a id="footer-contact-phone" href="tel:+639178924310" class="footer-nav-link pt-foot-row"><svg class="pt-foot-ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="store-phone-val">+63 917 892 4310</span></a></li>
+            <li class="pt-foot-row pt-foot-addr"><svg class="pt-foot-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg><span class="store-address-val">128 Rosa Street, BGC, Taguig City, Metro Manila</span></li>
+          </ul>
         </div>
       </div>
 
-      <!-- BOTTOM DIVIDER & COPYRIGHT -->
-      <div class="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs text-[#FFF9F5]/70">
-        <p>© 2026 <span class="store-name-val">Umaira Florist</span>. All rights reserved.</p>
-        <div class="flex items-center gap-4">
-          <a href="#privacy" onclick="window.appRouter && window.appRouter.navigate('privacy'); return false;" class="hover:text-[#F9DFE8] transition-colors">Privacy Policy</a>
-          <span class="text-white/20">·</span>
-          <a href="#terms" onclick="window.appRouter && window.appRouter.navigate('terms'); return false;" class="hover:text-[#F9DFE8] transition-colors">Terms of Service</a>
+      <div class="pt-foot-base">
+        <p>&copy; 2026 <span class="store-name-val">Umaira Florist</span>. All rights reserved.</p>
+        <div class="pt-foot-legal">
+          <a href="#privacy" onclick="window.appRouter && window.appRouter.navigate('privacy'); return false;">Privacy Policy</a>
+          <a href="#terms" onclick="window.appRouter && window.appRouter.navigate('terms'); return false;">Terms of Service</a>
         </div>
       </div>
     </div>
@@ -610,8 +648,9 @@
   <script src="js/builder.js"></script>
   <script src="js/app.js?v=20261115-selective-typewriter"></script>
   <script src="js/fx.js?v=20261115-care-timeline"></script>
-  <script src="js/site-update.js?v=20261115-remove-studio-badges"></script>
-  <script src="js/account.js?v=20261115-care-timeline"></script>
+  <script src="js/site-update.js?v=20261122-dual"></script>
+  <script src="js/account.js?v=20261122-prism"></script>
   <script src="js/payments.js"></script>
+  <script src="js/prism.js?v=20261122-dual"></script>
 </body>
 </html>

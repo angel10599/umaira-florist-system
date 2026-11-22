@@ -266,48 +266,72 @@
   }
 
   function renderHero() {
-    var isAuth = Boolean(window.appState && window.appState.isAuthenticated && window.appState.isAuthenticated());
+    var st = window.appState;
+    var isAuth = Boolean(st && st.isAuthenticated && st.isAuthenticated());
+    var fmt = function (n) { return typeof formatCurrency === 'function' ? formatCurrency(n) : '₱' + Number(n).toLocaleString(); };
 
-    var headlineAndCtas = '' +
-      '<h1 class="hero-title-anim font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-[#344F3B] leading-[1.08] tracking-tight" aria-label="Flowers, thoughtfully made.">' +
-        '<span class="su-typewriter" data-typewriter="Flowers, thoughtfully made.">' +
-          '<span class="typewriter-ghost" aria-hidden="true">Flowers,<br><span class="italic text-[#B76E79] font-normal">thoughtfully made.</span></span>' +
-          '<span class="typewriter-visible" aria-hidden="true"><span class="typewriter-text" data-tw-text="Flowers,"></span><span class="typewriter-cursor">|</span><br><span class="typewriter-text italic text-[#B76E79] font-normal" data-tw-text="thoughtfully made."></span></span>' +
-        '</span>' +
-      '</h1>' +
-      '<p class="hero-desc-anim text-[#302C2A] text-base sm:text-lg max-w-lg mx-auto lg:mx-0 leading-relaxed font-normal">' +
-        'Handcrafted bouquets and single stems sourced daily, arranged with love, and delivered across Manila.' +
-      '</p>' +
-      '<div class="hero-ctas-anim flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">' +
-        '<button type="button" data-magnetic onclick="window.appRouter.navigate(\'collections\')" class="btn-liquid-bloom py-4 px-8 rounded-2xl bg-[#302C2A] hover:bg-[#1C1318] text-white font-bold text-base shadow-lg shadow-[#302C2A]/20 transition duration-300 hover:shadow-xl hover:-translate-y-0.5 flex items-center gap-2">' +
-          '<span>Explore Collections</span>' +
-          '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>' +
-        '</button>' +
-        '<button type="button" data-magnetic onclick="window.appRouter.navigate(\'builder\')" class="btn-liquid-bloom py-4 px-8 rounded-2xl bg-white/95 hover:bg-white text-[#302C2A] border border-white/80 font-bold text-base shadow-xs transition duration-300 hover:border-white hover:-translate-y-0.5 flex items-center gap-2">' +
-          '<svg class="w-4 h-4 text-[#526B57]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>' +
-          '<span>Build Your Bouquet</span>' +
-        '</button>' +
-      '</div>';
+    // Service chips come from the saved Shop Settings (delivery fee / free-delivery minimum, pickup preparation time).
+    var chips = [];
+    var deliveryOn = !(st && st.deliverySettings && st.deliverySettings.enabled === false);
+    if (deliveryOn) {
+      var fee = st ? st.getDeliveryFee(1, 'delivery') : 0;
+      var thr = st ? st.getFreeDeliveryThreshold() : 0;
+      var deliveryText = !(fee > 0) ? '<b>Free delivery</b>across the City of Manila'
+        : (thr > 0 ? '<b>Free delivery</b>on <span class="announcement-threshold-val">' + fmt(thr) + '</span>+ in Manila'
+          : '<b>Manila delivery</b>flat ' + fmt(fee) + ' fee');
+      chips.push('<div class="pt-hero-chip pt-glass"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg><span>' + deliveryText + '</span></div>');
+    }
+    var pickupOn = !(st && st.pickupSettings && st.pickupSettings.enabled === false);
+    if (pickupOn) {
+      var lead = Number(st && st.pickupSettings && st.pickupSettings.leadTimeHours);
+      var pickupText = Number.isFinite(lead) && lead > 0
+        ? '<b>Store pickup</b>ready in ' + lead + ' hour' + (lead === 1 ? '' : 's')
+        : '<b>Store pickup</b>at our flower shop';
+      chips.push('<div class="pt-hero-chip pt-glass"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7"/></svg><span>' + pickupText + '</span></div>');
+    }
 
-    var subtext = isAuth ? '' : (
-      '<div class="hero-desc-anim pt-2 text-xs text-[#6E6864] flex items-center justify-center lg:justify-start gap-2.5 font-medium">' +
-        '<span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> Manila Delivery</span>' +
-        '<span class="text-stone-400">•</span>' +
-        '<span>Guests welcome &middot; <button type="button" onclick="window.appRouter.navigate(\'auth\')" class="text-[#526B57] font-bold underline underline-offset-2 hover:text-[#7A153B]">Sign In</button> to track orders</span>' +
-      '</div>'
+    var guest = isAuth ? '' : (
+      '<p class="pt-hero-guest"><span class="pt-dot" aria-hidden="true"></span><span>Guests are welcome to browse.</span> ' +
+        '<button type="button" onclick="window.appRouter.navigate(\'signin\')">Sign in</button> <span>to order and track deliveries.</span></p>'
     );
 
     return '' +
-    '<section class="su-hero hero-garden relative overflow-hidden" id="home-hero">' +
-      '<div class="hero-garden-overlay" aria-hidden="true"></div>' +
-      '<div class="max-w-7xl mx-auto w-full px-6 sm:px-8 lg:px-12 py-16 sm:py-20 lg:py-24 relative z-10 flex items-center">' +
-        '<div class="max-w-xl lg:max-w-2xl space-y-5 text-center lg:text-left">' +
-          '<div class="hero-eyebrow-anim inline-flex items-center px-4 py-1.5 rounded-full bg-white/95 border border-white/80 text-[#526B57] text-xs font-bold tracking-wider uppercase shadow-xs">UMAIRA FLORIST &middot; BOTANICAL ATELIER</div>' +
-          headlineAndCtas +
-          subtext +
+    '<section class="pt-hero" id="home-hero" data-hero>' +
+      '<div class="pt-hero-copy" data-hero-content>' +
+        '<span class="pt-kick">Umaira Florist &middot; Botanical Atelier</span>' +
+        '<h1 class="pt-hero-title" aria-label="Flowers, thoughtfully made.">' +
+          '<span class="pt-w" style="--i:0" aria-hidden="true">Flowers,</span> ' +
+          '<em aria-hidden="true"><span class="pt-w" style="--i:1">thoughtfully</span> <span class="pt-w" style="--i:2">made.</span></em>' +
+        '</h1>' +
+        '<p class="pt-lede">Handcrafted bouquets and single stems sourced daily, arranged with love, and delivered across Manila.</p>' +
+        '<div class="pt-hero-ctas">' +
+          '<button type="button" data-magnetic onclick="window.appRouter.navigate(\'collections\')" class="pt-btn pt-btn-ink">' +
+            '<span>Explore Collections</span>' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>' +
+          '</button>' +
+          '<button type="button" data-magnetic onclick="window.appRouter.navigate(\'builder\')" class="pt-btn pt-btn-prism">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>' +
+            '<span>Build Your Bouquet</span>' +
+          '</button>' +
+        '</div>' +
+        (chips.length ? '<div class="pt-hero-chips">' + chips.join('') + '</div>' : '') +
+        guest +
+      '</div>' +
+      '<div class="pt-hero-art" data-hero-card>' +
+        '<div class="pt-arch">' +
+          '<img src="/image/taniman.jpg?v=20261103-v2" alt="Rows of flowers in bloom" fetchpriority="high" decoding="async">' +
+          '<div class="pt-arch-cap pt-glass">' +
+            '<span class="pt-disc" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-9"/><path d="M12 13c-3.5 0-6-2.5-6-6 3.5 0 6 2.5 6 6Z"/><path d="M12 13c3.5 0 6-2.5 6-6-3.5 0-6 2.5-6 6Z"/><path d="M9 22h6"/></svg></span>' +
+            '<div><b>Arranged by hand</b><small>Delivery across the City of Manila, or pick up at the shop</small></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="pt-stamp-wrap" aria-hidden="true">' +
+          '<div class="pt-stamp pt-glass">' +
+            '<svg class="pt-stamp-ring" viewBox="0 0 120 120"><defs><path id="pt-stamp-path" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs><text font-family="Nunito, sans-serif" font-size="10.5" font-weight="800" letter-spacing="3.2" fill="#4f8a5d"><textPath href="#pt-stamp-path">HAND-TIED &#183; FRESH DAILY &#183; MANILA &#183; </textPath></text></svg>' +
+            '<span class="pt-stamp-core"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><path d="M12 9.4C10 6 10.4 3 12 3s2 3 0 6.4M14.6 12c3.4-2 6.4-1.6 6.4 0s-3 2-6.4 0M12 14.6c2 3.4 1.6 6.4 0 6.4s-2-3 0-6.4M9.4 12C6 14 3 13.6 3 12s3-2 6.4 0"/></svg></span>' +
+          '</div>' +
         '</div>' +
       '</div>' +
-      '<div class="absolute bottom-0 left-0 right-0 h-12 sm:h-16 bg-gradient-to-t from-[#FAF6F0] to-transparent pointer-events-none z-10"></div>' +
     '</section>';
   }
 
@@ -475,44 +499,30 @@
       isSoldOut = !window.appRouter.isBouquetAvailable(bq);
     }
 
+    // Prism-Terra arch card. Handlers are the same as before: open details, Add to Cart, Buy Now.
     return '' +
-    '<article data-reveal data-tilt="2" class="group atelier-card flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-floral-lg hover:border-[#E5ECE6] bg-white border border-[#E5ECE6] rounded-2xl sm:rounded-3xl h-full">' +
-      '<div class="flex-1 flex flex-col">' +
-        '<div role="button" tabindex="0" aria-label="Open details for ' + cardEsc(bq.name) + '" class="relative aspect-square overflow-hidden bg-[#EBF1EC]/40 cursor-pointer shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#647D69] focus-visible:ring-inset" onclick="' + openCall + '" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();' + openCall + ';}">' +
-          window.UI.renderImage(bq.image, bq.name, 'w-full h-full object-cover transition duration-500 group-hover:scale-105', 'card') +
-          '<div class="absolute bottom-2 right-2 px-2 py-0.5 bg-[#302C2A]/90 backdrop-blur-xs text-white rounded-md text-[11px] font-bold shadow-xs price">' +
-            formatCurrency(bq.price) +
-          '</div>' +
-        '</div>' +
-        '<div class="p-2.5 sm:p-3 flex-1 flex flex-col">' +
-          (cat.label ?
-            '<div class="flex items-center gap-1 mb-1">' +
-              '<span class="px-2 py-0.5 rounded-full bg-[#F9DFE8] text-[#526B57] font-bold uppercase tracking-wider text-[8px] sm:text-[8.5px] truncate max-w-full" title="' + cardEsc(cat.title) + '">' + cardEsc(cat.label) + '</span>' +
-            '</div>' : '') +
-          '<h3 class="font-serif font-bold text-xs sm:text-sm text-[#302C2A] leading-snug group-hover:text-[#647D69] transition-colors line-clamp-1" title="' + cardEsc(bq.name) + '">' + cardEsc(bq.name) + '</h3>' +
-          '<div class="pt-1.5">' +
-            '<button type="button" onclick="' + openCall + '" class="text-[10.5px] sm:text-[11px] font-semibold text-[#647D69] hover:text-[#526B57] hover:underline inline-flex items-center gap-0.5 transition-colors cursor-pointer" title="View Details">' +
-              '<span>View Details</span> &rarr;' +
-            '</button>' +
-          '</div>' +
-        '</div>' +
+    '<article data-reveal class="pt-pc' + (isSoldOut ? ' is-sold-out' : '') + '">' +
+      '<div role="button" tabindex="0" aria-label="Open details for ' + cardEsc(bq.name) + '" class="pt-pc-art" onclick="' + openCall + '" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();' + openCall + ';}">' +
+        window.UI.renderImage(bq.image, bq.name, 'w-full h-full object-cover', 'card') +
+        (isSoldOut ? '<div class="pt-pc-out"><span>Sold out</span></div>' : '') +
+        '<span class="pt-pc-price price">' + formatCurrency(bq.price) + '</span>' +
       '</div>' +
-      '<div class="p-2.5 sm:p-3 pt-0 mt-auto">' +
-        '<div class="pt-2 border-t border-[#E5ECE6]/60">' +
-          (isSoldOut ?
-            '<button disabled class="w-full py-2 px-2 rounded-xl bg-stone-100 text-stone-400 text-[10px] font-bold cursor-not-allowed">Sold Out</button>' :
-            '<div class="grid grid-cols-2 gap-1.5">' +
-              '<button type="button" onclick="window.appRouter.addPreMadeBouquetToCart(\'' + bq.id + '\')" class="w-full py-2 px-1 rounded-xl bg-white hover:bg-[#EBF1EC] text-[#647D69] hover:text-[#526B57] border border-[#647D69] hover:border-[#526B57] font-bold text-[10px] sm:text-[10.5px] transition shadow-2xs flex items-center justify-center gap-1 truncate text-center btn-tactile" title="Add to Cart">' +
-                '<svg class="w-3 h-3 shrink-0 hidden xs:inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>' +
-                '<span>Add to Cart</span>' +
-              '</button>' +
-              '<button type="button" onclick="window.appRouter.buyNowBouquet(\'' + bq.id + '\')" class="w-full py-2 px-1 rounded-xl bg-[#647D69] hover:bg-[#526B57] text-white font-bold text-[10px] sm:text-[10.5px] transition shadow-2xs flex items-center justify-center gap-1 truncate text-center btn-tactile" title="Buy Now">' +
-                '<svg class="w-3 h-3 shrink-0 hidden xs:inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' +
-                '<span>Buy Now</span>' +
-              '</button>' +
-            '</div>') +
-        '</div>' +
+      '<div class="pt-pc-bd">' +
+        (cat.label ? '<span class="pt-pc-tag" title="' + cardEsc(cat.title) + '">' + cardEsc(cat.label) + '</span>' : '') +
+        '<h3 class="pt-pc-name" title="' + cardEsc(bq.name) + '" onclick="' + openCall + '">' + cardEsc(bq.name) + '</h3>' +
+        '<button type="button" onclick="' + openCall + '" class="pt-pc-more" title="View Details">View details</button>' +
       '</div>' +
+      (isSoldOut ?
+        '<button disabled class="pt-pc-sold w-full">Sold Out</button>' :
+        '<div class="pt-pc-acts">' +
+          '<button type="button" onclick="window.appRouter.addPreMadeBouquetToCart(\'' + bq.id + '\')" class="pt-btn pt-btn-glass" title="Add to Cart" aria-label="Add ' + cardEsc(bq.name) + ' to cart">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>' +
+            '<span class="pt-l-long">Add to Cart</span><span class="pt-l-short" aria-hidden="true">Add</span>' +
+          '</button>' +
+          '<button type="button" onclick="window.appRouter.buyNowBouquet(\'' + bq.id + '\')" class="pt-btn pt-btn-ink" title="Buy Now">' +
+            '<span>Buy Now</span>' +
+          '</button>' +
+        '</div>') +
     '</article>';
   }
 
@@ -639,7 +649,7 @@
             '<span>View All Collections</span><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>' +
           '</button>' +
         '</div>' +
-        '<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">' +
+        '<div class="pt-grid pt-grid-3">' +
           cards +
         '</div>' +
       '</div>' +
@@ -1154,14 +1164,142 @@
       '</div>';
   }
 
+  /* ---------------------------------------------------------------------
+     Home, signed in: the customer's account at a glance (cart, latest order, builder, details).
+     Values are filled from the existing app state by suHydrateMemberStrip (orders via appState.refreshOrders).
+     --------------------------------------------------------------------- */
+  var PT_ICON = {
+    bag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>',
+    truck: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>',
+    flower: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="2.6"/><path d="M12 9.4C10 6 10.4 3 12 3s2 3 0 6.4M14.6 12c3.4-2 6.4-1.6 6.4 0s-3 2-6.4 0M12 14.6c2 3.4 1.6 6.4 0 6.4s-2-3 0-6.4M9.4 12C6 14 3 13.6 3 12s3-2 6.4 0"/></svg>',
+    user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+    arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>'
+  };
+  window.PT_ICON = PT_ICON;
+
+  function renderMemberStrip() {
+    var st = window.appState;
+    var u = (st && st.currentUser) || {};
+    var first = String(u.name || '').trim().split(/\s+/)[0] || '';
+    var tile = function (id, cls, go, onclick, icon, label, extra) {
+      return '<button type="button" id="' + id + '" class="pt-mtile' + (cls ? ' ' + cls : '') + '" data-go="' + go + '" onclick="' + onclick + '">' +
+        '<span class="pt-disc" aria-hidden="true">' + PT_ICON[icon] + '</span>' +
+        '<span class="pt-mtile-label">' + label + '</span>' + extra +
+      '</button>';
+    };
+    var goNav = "window.appRouter.navigate(this.getAttribute('data-go'))";
+    return '' +
+      '<section class="pt-mstrip" id="home-member" aria-label="Your account at a glance">' +
+        '<div class="pt-member-head">' +
+          '<div><span class="pt-kick">Your Umaira</span>' +
+          '<h2 class="pt-member-title">Welcome back' + (first ? ', <em>' + cardEsc(first) + '</em>' : '') + '.</h2></div>' +
+        '</div>' +
+        '<div class="pt-member-grid">' +
+          tile('pt-mtile-cart', 'is-ink', 'cart', goNav, 'bag', 'Your cart',
+            '<span class="pt-mtile-value" data-slot="value">&nbsp;</span><span class="pt-mtile-meta" data-slot="meta"></span>' +
+            '<span class="pt-mtile-go"><span data-slot="go">Review cart</span>' + PT_ICON.arrow + '</span>') +
+          tile('pt-mtile-order', '', 'tracking', goNav, 'truck', 'Latest order',
+            '<span class="pt-mtile-value" data-slot="value"><span class="pt-skel" aria-hidden="true"></span><span class="sr-only">Loading your latest order</span></span>' +
+            '<span class="pt-mtile-meta" data-slot="meta"></span>' +
+            '<span class="pt-mtile-go"><span data-slot="go">Track order</span>' + PT_ICON.arrow + '</span>') +
+          tile('pt-mtile-builder', '', 'builder', goNav, 'flower', 'Design a bouquet',
+            '<span class="pt-mtile-value">Build your own</span><span class="pt-mtile-meta">Choose the flowers, wrapping, ribbon and a card.</span>' +
+            '<span class="pt-mtile-go"><span>Open the builder</span>' + PT_ICON.arrow + '</span>') +
+          tile('pt-mtile-account', '', 'account', "window.appRouter.openAccount('profile')", 'user', 'Your details',
+            '<span class="pt-mtile-value">' + cardEsc(u.name || 'My account') + '</span><span class="pt-mtile-meta">Name, mobile number and delivery address.</span>' +
+            '<span class="pt-mtile-go"><span>Open my account</span>' + PT_ICON.arrow + '</span>') +
+        '</div>' +
+      '</section>';
+  }
+
+  var memberOrdersRequested = false;
+  window.suHydrateMemberStrip = function () {
+    var st = window.appState;
+    if (!st || !st.isAuthenticated || !st.isAuthenticated()) return;
+    var fmt = function (n) { return typeof formatCurrency === 'function' ? formatCurrency(n) : '₱' + Number(n || 0).toLocaleString(); };
+    var set = function (tile, slot, html) { var el = tile && tile.querySelector('[data-slot="' + slot + '"]'); if (el) el.innerHTML = html; };
+
+    var cart = document.getElementById('pt-mtile-cart');
+    if (cart) {
+      var n = st.getCartCount ? st.getCartCount() : 0;
+      cart.setAttribute('data-go', n > 0 ? 'cart' : 'collections');
+      set(cart, 'value', n > 0 ? n + ' item' + (n === 1 ? '' : 's') + ' &middot; ' + fmt(st.getCartSubtotal ? st.getCartSubtotal() : 0) : 'Your cart is empty');
+      set(cart, 'meta', n > 0 ? 'Saved to your account, ready when you are.' : 'Find something lovely in our collections.');
+      set(cart, 'go', n > 0 ? 'Review cart' : 'Browse collections');
+    }
+
+    var orderTile = document.getElementById('pt-mtile-order');
+    if (!orderTile) return;
+    if (!st.ordersLoaded && !st.ordersError) {
+      if (!memberOrdersRequested && st.refreshOrders) {
+        memberOrdersRequested = true;
+        st.refreshOrders().catch(function () {}).then(function () { memberOrdersRequested = false; window.suHydrateMemberStrip(); });
+      }
+      return;
+    }
+    if (st.ordersError) {
+      set(orderTile, 'value', 'Your orders');
+      set(orderTile, 'meta', 'We could not load your latest order just now.');
+      set(orderTile, 'go', 'Open order tracking');
+      return;
+    }
+    var o = (st.orders || [])[0];
+    if (!o) {
+      orderTile.setAttribute('data-go', 'collections');
+      set(orderTile, 'value', 'No orders yet');
+      set(orderTile, 'meta', 'Your orders and their progress will appear here.');
+      set(orderTile, 'go', 'Start shopping');
+      return;
+    }
+    var s = String(o.status || 'Pending Confirmation');
+    var tone = /Delivered — Confirmed|Picked Up|Completed/i.test(s) ? 'is-done'
+      : /Rejected|Cancel|Disputed|Failed/i.test(s) ? 'is-issue'
+      : /Pending|Awaiting/i.test(s) ? 'is-wait' : '';
+    orderTile.setAttribute('data-go', 'tracking');
+    set(orderTile, 'value', cardEsc(o.orderNumber || ''));
+    set(orderTile, 'meta', '<span class="pt-status ' + tone + '">' + cardEsc(s) + '</span>' +
+      (o.total ? ' <span>' + fmt(o.total) + (o.fulfillment ? ' &middot; ' + (o.fulfillment === 'pickup' ? 'Store pickup' : 'Delivery') : '') + '</span>' : ''));
+    set(orderTile, 'go', 'Track order');
+  };
+
+  /* Home, guests: what an account adds, with gentle sign-in / create-account entry points */
+  function renderGuestJoinSection() {
+    var perk = function (icon, title, text) {
+      return '<li data-reveal><span class="pt-disc" aria-hidden="true">' + PT_ICON[icon] + '</span><b>' + title + '</b><span>' + text + '</span></li>';
+    };
+    return '' +
+      '<section class="pt-join" id="home-join" aria-label="Create an account">' +
+        '<div class="pt-join-band" data-reveal>' +
+          '<div>' +
+            '<span class="pt-kick">Your Umaira account</span>' +
+            '<h2 class="pt-join-title">Order in a few taps, <em>follow every bloom.</em></h2>' +
+            '<p class="pt-join-lede">Browse as long as you like. When you are ready to order, an account keeps your cart, your address and your orders in one place.</p>' +
+            '<div class="pt-join-ctas">' +
+              '<button type="button" onclick="window.appRouter.navigate(\'signup\')" class="pt-btn pt-btn-prism">Create account</button>' +
+              '<button type="button" onclick="window.appRouter.navigate(\'signin\')" class="pt-btn pt-btn-glass">I already have one</button>' +
+            '</div>' +
+          '</div>' +
+          '<ul class="pt-join-perks">' +
+            perk('bag', 'Delivery or pickup', 'Order for delivery across the City of Manila, or pick up at the shop.') +
+            perk('flower', 'Your own designs', 'Bouquets you build go straight into your cart.') +
+            perk('truck', 'Every step, live', 'Follow each order from confirmed to delivered.') +
+            perk('user', 'Remembered for you', 'Your cart and delivery address stay with your account.') +
+          '</ul>' +
+        '</div>' +
+      '</section>';
+  }
+
   function renderHomeView() {
+    var isAuth = Boolean(window.appState && window.appState.isAuthenticated && window.appState.isAuthenticated());
     return '' +
       '<div class="homepage-canvas relative overflow-x-hidden bg-[#FAF6F0] w-full min-h-screen">' +
         renderHomepageDecorations() +
         '<div class="homepage-content-layer relative z-10 w-full">' +
           renderHero() +
+          (isAuth ? renderMemberStrip() : '') +
           renderShopByOccasionSection() +
           renderFeaturedFlowersSection() +
+          (isAuth ? '' : renderGuestJoinSection()) +
           renderWhyChooseUsSection() +
           renderHowToOrderSection() +
           renderAtelierLocationSection() +
@@ -2684,7 +2822,7 @@
       '</div>';
     }
 
-    return '<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-4">' + list.map(bouquetCard).join('') + '</div>';
+    return '<div class="pt-grid">' + list.map(bouquetCard).join('') + '</div>';
   }
 
   function renderCollectionsView() {

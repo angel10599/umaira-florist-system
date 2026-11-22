@@ -46,7 +46,12 @@
     else if (status !== 'Pending Confirmation') cls = 'bg-[#EBF1EC] text-[#302C2A] font-bold border border-[#E5ECE6]';
     return '<span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide inline-flex items-center gap-1 ' + cls + '">' + esc(status) + '</span>';
   }
-  function loadingPanel(msg) { return '<div class="py-24 text-center text-sm text-stone-500">' + esc(msg || 'Loading…') + '</div>'; }
+  // Shimmering placeholder rows while orders load; the message stays as the status text for screen readers.
+  function loadingPanel(msg) {
+    return '<div class="pt-loading" role="status">' +
+      '<div class="pt-skel-list" aria-hidden="true"><div class="pt-skel pt-skel-row"></div><div class="pt-skel pt-skel-row"></div><div class="pt-skel pt-skel-row"></div></div>' +
+      '<p class="pt-loading-text">' + esc(msg || 'Loading…') + '</p></div>';
+  }
   function errorPanel(msg, retry) {
     return '<div class="max-w-xl mx-auto my-16 p-6 rounded-3xl bg-red-50 border border-red-200 text-center space-y-3"><p class="text-sm text-red-800">' + esc(msg) + '</p>' +
       (retry ? '<button type="button" onclick="' + retry + '" class="px-5 py-2 rounded-xl bg-[#647D69] hover:bg-[#526B57] text-white text-xs font-bold font-semibold">Try again</button>' : '') + '</div>';
